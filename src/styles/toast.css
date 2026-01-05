@@ -1,0 +1,19 @@
+/* react-hot-toast custom style */
+.react-hot-toast {
+  font-family: "Poppins", sans-serif;
+}
+
+/* toast container */
+[data-sonner-toast],
+.react-hot-toast {
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: #0f172a; /* slate-900 */
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* progress bar color */
+[data-sonner-toast]::after {
+  background-color: #06b6d4 !important; /* cyan-500 */
+}
