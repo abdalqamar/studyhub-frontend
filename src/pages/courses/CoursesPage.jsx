@@ -28,7 +28,7 @@ const CoursesPage = () => {
       {isLoading && <LoadingSpinner />}
 
       <section>
-        <div className="text-center py-16 bg-slate-900  shadow-2xl border border-slate-800">
+        <div className="text-center py-16  px-6 bg-slate-900  shadow-2xl border border-slate-800">
           <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-indigo-400 to-sky-500 bg-clip-text text-transparent tracking-tight">
             The Catalog of Excellence
           </h1>
@@ -40,7 +40,7 @@ const CoursesPage = () => {
       </section>
 
       {/* Filters */}
-      <section className="max-w-7xl mx-auto py-8">
+      <section className="max-w-7xl mx-auto py-8 px-6">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full md:w-80">
             <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -54,7 +54,7 @@ const CoursesPage = () => {
           </div>
 
           {/* Category */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 ">
             {/* All button */}
             <button
               key="all"
@@ -86,7 +86,7 @@ const CoursesPage = () => {
       </section>
 
       {/* Course Grid */}
-      <section className="max-w-7xl mx-auto">
+      <section className="max-w-7xl mx-auto px-6">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((c) => (
             <div
