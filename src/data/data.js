@@ -9,7 +9,6 @@ import {
   TrendingUp,
   Settings,
   FileText,
-  GraduationCap,
   BarChart3,
   NotebookPen,
   CirclePlus,
@@ -17,60 +16,23 @@ import {
   Bell,
   CreditCard,
   Heart,
-  LifeBuoy,
   UsersRound,
   HelpCircle,
 } from "lucide-react";
 
 const partners = [
-  {
-    name: "Google",
-    logo: "https://logo.clearbit.com/google.com",
-  },
-  {
-    name: "Microsoft",
-    logo: "https://logo.clearbit.com/microsoft.com",
-  },
-  {
-    name: "Amazon",
-    logo: "https://logo.clearbit.com/amazon.com",
-  },
-  {
-    name: "Meta",
-    logo: "https://logo.clearbit.com/meta.com",
-  },
-  {
-    name: "Apple",
-    logo: "https://logo.clearbit.com/apple.com",
-  },
-  {
-    name: "Netflix",
-    logo: "https://logo.clearbit.com/netflix.com",
-  },
-  {
-    name: "Tesla",
-    logo: "https://logo.clearbit.com/tesla.com",
-  },
-  {
-    name: "Spotify",
-    logo: "https://logo.clearbit.com/spotify.com",
-  },
-  {
-    name: "Oracle",
-    logo: "https://logo.clearbit.com/oracle.com",
-  },
-  {
-    name: "Nvidia",
-    logo: "https://logo.clearbit.com/nvidia.com",
-  },
-  {
-    name: "Salesforce",
-    logo: "https://logo.clearbit.com/salesforce.com",
-  },
-  {
-    name: "Intel",
-    logo: "https://logo.clearbit.com/intel.com",
-  },
+  { name: "Google", logo: "/logos/google.svg" },
+  { name: "Amazon", logo: "/logos/amazon.svg" },
+  { name: "Apple", logo: "/logos/apple.svg" },
+  { name: "Microsoft", logo: "/logos/microsoft.svg" },
+  { name: "Meta", logo: "/logos/meta.svg" },
+  { name: "Netflix", logo: "/logos/netflix.svg" },
+  { name: "NVIDIA", logo: "/logos/nvidia.svg" },
+  { name: "Oracle", logo: "/logos/oracle.svg" },
+  { name: "Spotify", logo: "/logos/spotify.svg" },
+  { name: "DMS", logo: "/logos/dms.svg" },
+  { name: "IBM", logo: "/logos/ibm.svg" },
+  { name: "Adobe", logo: "/logos/adobe.svg" },
 ];
 
 const statsData = [

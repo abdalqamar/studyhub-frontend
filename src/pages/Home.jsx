@@ -146,7 +146,6 @@ bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-border-glass mb
 
       {/* 3. Feature Grid (Selling Points) */}
       <section className="py-20 px-6 lg:px-8 bg-slate-900/30">
-        {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-700/20 via-slate-900 to-slate-900"></div> */}
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">

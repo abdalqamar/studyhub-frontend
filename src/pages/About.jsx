@@ -6,62 +6,75 @@ const About = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-20 ">
+      <section className="relative overflow-hidden pt-20 sm:pt-32 pb-14 sm:pb-20">
+        {/* Page title */}
         <h1
-          className="text-4xl sm:text-5xl font-black tracking-tight 
-  bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent 
-  text-center mb-12 leading-tight "
+          className="text-3xl sm:text-5xl font-black tracking-tight
+    bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent
+    text-center mb-10 leading-tight"
         >
           About StudyHub
         </h1>
 
+        {/* Background effects */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_#3b82f644,_transparent_70%)] pointer-events-none" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />
 
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-          <div className="space-y-6">
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tight leading-tight">
-              We help teams turn <HiglitedText text={"Learning"} />
-              into a daily habit.
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 grid md:grid-cols-2 gap-10 items-center relative z-10">
+          {/* Content */}
+          <div className="space-y-5">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-snug">
+              Build <HiglitedText text={"Learning"} /> <br />
+              as a daily habit.
             </h2>
-            <p className="text-lg text-slate-300 max-w-xl leading-relaxed">
-              StudyHub is a modern Learning Management System built for
-              fast-moving organizations that want to scale their teams smarter.
+
+            <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
+              StudyHub is a modern learning platform that helps teams grow
+              skills faster with structured, practical courses.
             </p>
-            <div className="flex flex-wrap gap-3 pt-4">
+
+            {/* Feature list  */}
+            <ul className="space-y-2 pt-2">
               {[
                 "Cloud-native & secure",
                 "Built for HR & L&D teams",
                 "Loved by learners",
               ].map((b, i) => (
-                <span
+                <li
                   key={i}
-                  className="px-4 py-2 rounded-full border border-slate-700 bg-slate-900/40 backdrop-blur text-sm font-medium hover:border-blue-500/50 transition"
+                  className="flex items-center gap-2 text-slate-300 text-sm"
                 >
+                  <span className="h-2 w-2 rounded-full bg-blue-400" />
                   {b}
-                </span>
+                </li>
               ))}
-            </div>
-            <div className="flex flex-wrap gap-10 pt-8">
+            </ul>
+
+            {/* Stats  */}
+            <div className="grid grid-cols-3 gap-4 pt-6">
               {[
-                { value: "150k+", label: "Active Learners" },
-                { value: "480+", label: "Organizations" },
-                { value: "92%", label: "Completion Rate" },
+                { value: "150k+", label: "Learners" },
+                { value: "480+", label: "Teams" },
+                { value: "92%", label: "Completion" },
               ].map((s, i) => (
                 <div key={i}>
-                  <p className="text-3xl font-bold text-blue-400">{s.value}</p>
-                  <p className="text-sm text-slate-400">{s.label}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-blue-400">
+                    {s.value}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-400">{s.label}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-300" />
+
+          {/* Image */}
+          <div className="relative group mt-8 md:mt-0">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition" />
             <img
               src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt="About StudyHub"
-              className="relative rounded-3xl shadow-2xl border border-slate-800 w-full object-cover h-96"
+              className="relative rounded-2xl shadow-xl border border-slate-800 w-full object-cover h-64 sm:h-96"
             />
           </div>
         </div>

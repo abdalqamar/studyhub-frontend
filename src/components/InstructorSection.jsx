@@ -73,7 +73,7 @@ const InstructorSection = () => {
   };
 
   return (
-    <section className="min-h-screen py-20 px-6  relative overflow-hidden">
+    <section className="min-h-screen py-20 px-6 relative overflow-hidden">
       {/* Header */}
       <div className="mb-16 mx-auto max-w-7xl">
         <div className="flex justify-between items-start">
@@ -88,7 +88,7 @@ const InstructorSection = () => {
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <button
               onClick={handlePrev}
               className="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
