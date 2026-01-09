@@ -78,7 +78,7 @@ const RootLayout = () => {
   return (
     <>
       {isInitializing && <LoadingSpinner />}
-      {!isInitializing && <Outlet />}
+      <Outlet />
     </>
   );
 };
