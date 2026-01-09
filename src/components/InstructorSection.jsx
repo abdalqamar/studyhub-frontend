@@ -75,31 +75,33 @@ const InstructorSection = () => {
   return (
     <section className="min-h-screen py-20 px-6 relative overflow-hidden">
       {/* Header */}
-      <div className="mb-16 mx-auto max-w-7xl">
-        <div className="flex justify-between items-start">
-          <div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
+      <div className="mb-16 mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
               <HighlightedText text="Meet Our Instructors" theme="pink" />
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl">
+            <p className="text-slate-400 text-base md:text-lg max-w-2xl">
               Learn from industry experts dedicated to guiding you through every
               step of your coding journey at StudyHub.
             </p>
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             <button
               onClick={handlePrev}
-              className="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              aria-label="Previous instructor"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
             </button>
             <button
               onClick={handleNext}
-              className="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              aria-label="Next instructor"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
         </div>

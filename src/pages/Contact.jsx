@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, Loader } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Loader, ChevronDown } from "lucide-react";
 import HighlightedText from "../components/ui/HighlightedText";
 
 const Contact = () => {
@@ -44,8 +44,7 @@ const Contact = () => {
         {/* Title + Subtitle */}
         <div className="flex flex-col items-center text-center px-4 max-w-md mx-auto mb-8">
           <h1 className="text-2xl sm:text-4xl font-bold  ">
-            Get in Touch
-            {/* <HighlightedText text="Get in Touch" theme="blue" /> */}
+            <HighlightedText text="Get in Touch" theme="blue" />
           </h1>
 
           <p className="text-slate-400 mt-2 text-base sm:text-lg">
@@ -59,62 +58,66 @@ const Contact = () => {
         <div className="absolute bottom-20 right-0 w-72 h-72 sm:w-96 sm:h-96 bg-cyan-500/10 rounded-full blur-3xl" />
 
         {/* Hero Text */}
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16 px-2">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 tracking-tight leading-tight">
               Let's Connect and{" "}
               <HighlightedText text="Collaborate" theme="blue" />
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-xl mx-auto px-2">
               Whether you have questions, need support, or want to partner with
-              us, our team is ready to help you succeed with LearnFlow.
+              us, our team is ready to help you succeed with studyhubedu.
             </p>
           </div>
 
           {/* Contact Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12 sm:mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8 sm:mb-12 md:mb-16">
             {[
               {
-                icon: <Mail className="w-6 h-6" />,
+                icon: <Mail className="w-5 h-5 sm:w-6 sm:h-6" />,
                 title: "Email",
                 value: "studyhubinfo@gmail.com",
                 desc: "We respond within 24 hours",
                 gradient: "from-blue-500 to-cyan-500",
               },
               {
-                icon: <Phone className="w-6 h-6" />,
+                icon: <Phone className="w-5 h-5 sm:w-6 sm:h-6" />,
                 title: "Phone",
                 value: "+91 7091315565",
                 desc: "Available 24/7 for support",
                 gradient: "from-cyan-500 to-blue-500",
               },
               {
-                icon: <MapPin className="w-6 h-6" />,
+                icon: <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />,
                 title: "Location",
-                value: "india, Jharkhand",
+                value: "India, Jharkhand",
                 desc: "Serving teams worldwide",
                 gradient: "from-purple-500 to-cyan-500",
               },
             ].map((contact, i) => (
               <div
                 key={i}
-                className="group relative p-5 sm:p-6 rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-slate-700 transition"
+                className="group relative p-5 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
               >
                 <div
-                  className={`absolute inset-0 bg-gradient-to-r ${contact.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition`}
+                  className={`absolute inset-0 bg-gradient-to-r ${contact.gradient} opacity-0 group-hover:opacity-5 rounded-xl sm:rounded-2xl transition-opacity duration-300`}
                 />
-                <div className="relative space-y-3">
+                <div className="relative space-y-2.5 sm:space-y-3">
                   <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-r ${contact.gradient} p-2.5 text-white group-hover:shadow-lg transition`}
+                    className={`w-11 h-11 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-r ${contact.gradient} p-2 sm:p-2.5 text-white group-hover:shadow-lg group-hover:scale-105 transition-all duration-300`}
                   >
                     {contact.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-100">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-100">
                     {contact.title}
                   </h3>
-                  <p className="text-blue-400 font-medium">{contact.value}</p>
-                  <p className="text-sm text-slate-400">{contact.desc}</p>
+                  <p className="text-blue-400 font-medium text-sm sm:text-base break-words">
+                    {contact.value}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-400">
+                    {contact.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -188,21 +191,57 @@ const Contact = () => {
                 <label className="block text-sm font-medium text-slate-300 mb-2">
                   Subject
                 </label>
-                <select
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-800/50 bg-slate-900/30 text-slate-50 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition"
-                >
-                  <option value="">Select a subject</option>
-                  <option value="sales">Sales Inquiry</option>
-                  <option value="support">Technical Support</option>
-                  <option value="partnership">Partnership</option>
-                  <option value="feedback">Feedback</option>
-                  <option value="other">Other</option>
-                </select>
+                <div className="relative">
+                  <select
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 pr-10 rounded-xl border border-slate-700/50 bg-slate-800/50 text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 appearance-none cursor-pointer hover:bg-slate-800/70 backdrop-blur-sm"
+                  >
+                    <option
+                      value=""
+                      disabled
+                      className="bg-slate-900 text-slate-400"
+                    >
+                      Select a subject
+                    </option>
+                    <option
+                      value="sales"
+                      className="bg-slate-900 text-slate-100 py-2"
+                    >
+                      Sales Inquiry
+                    </option>
+                    <option
+                      value="support"
+                      className="bg-slate-900 text-slate-100 py-2"
+                    >
+                      Technical Support
+                    </option>
+                    <option
+                      value="partnership"
+                      className="bg-slate-900 text-slate-100 py-2"
+                    >
+                      Partnership
+                    </option>
+                    <option
+                      value="feedback"
+                      className="bg-slate-900 text-slate-100 py-2"
+                    >
+                      Feedback
+                    </option>
+                    <option
+                      value="other"
+                      className="bg-slate-900 text-slate-100 py-2"
+                    >
+                      Other
+                    </option>
+                  </select>
+                  <ChevronDown
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                    size={20}
+                  />
+                </div>
               </div>
-
               {/* Message */}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -290,15 +329,15 @@ const Contact = () => {
               <div className="space-y-3 text-sm">
                 <div>
                   <p className="text-slate-100 font-medium">Sales</p>
-                  <p className="text-slate-400">sales@learnflow.com</p>
+                  <p className="text-slate-400">sales@studyhubedu.com</p>
                 </div>
                 <div>
                   <p className="text-slate-100 font-medium">Support</p>
-                  <p className="text-slate-400">support@learnflow.com</p>
+                  <p className="text-slate-400">support@studyhubedu.com</p>
                 </div>
                 <div>
                   <p className="text-slate-100 font-medium">Partnerships</p>
-                  <p className="text-slate-400">partners@learnflow.com</p>
+                  <p className="text-slate-400">partners@studyhubedu.com</p>
                 </div>
               </div>
             </div>

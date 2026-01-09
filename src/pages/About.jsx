@@ -376,12 +376,16 @@ const About = () => {
           <div className="space-y-4">
             {[
               {
-                q: "Is StudyHub easy to use?",
-                a: "Absolutely! We've designed StudyHub with simplicity in mind. The intuitive interface requires minimal training, and most teams are up and running within hours.",
+                q: "Who can use StudyHub?",
+                a: "Anyone can use StudyHub: Students who want to learn new skills, Instructors who want to create and sell courses, and Businesses looking to upskill their teams.",
               },
               {
-                q: "Can it scale with my organization?",
-                a: "Yes. StudyHub is built to scale seamlessly from small teams to large enterprises. Our cloud infrastructure handles millions of learners globally.",
+                q: "Can I access courses on mobile?",
+                a: "Yes! StudyHub is fully responsive and works on: smartphones and tablets, allowing learners to study anytime, anywhere.",
+              },
+              {
+                q: "Can I enroll in multiple courses?",
+                a: "Yes, you can enroll in as many courses as you like and manage them from your dashboard.",
               },
               {
                 q: "What kind of support do you provide?",

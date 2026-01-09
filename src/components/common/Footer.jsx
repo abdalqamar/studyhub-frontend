@@ -53,7 +53,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-slate-400">
-              <Link>
+              <Link to={"/about"}>
                 <p className="hover:text-white transition-colors">About Us</p>
               </Link>
               <Link>
@@ -62,7 +62,7 @@ const Footer = () => {
               <Link>
                 <p className="hover:text-white transition-colors">Press</p>
               </Link>
-              <Link>
+              <Link to={"/contact"}>
                 <p className="hover:text-white transition-colors">Contact</p>
               </Link>
             </ul>
@@ -95,7 +95,7 @@ const Footer = () => {
 
         <div className="border-t border-slate-800 pt-8 text-center text-slate-400">
           <p>
-            &copy;2025 StudyHub. All rights reserved. Empowering learners
+            &copy;2026 StudyHub. All rights reserved. Empowering learners
             worldwide.
           </p>
         </div>
