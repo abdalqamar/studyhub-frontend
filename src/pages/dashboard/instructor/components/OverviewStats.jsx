@@ -1,4 +1,3 @@
-// src/pages/InstructorDashboard/components/OverviewStats.jsx
 const OverviewStats = () => {
   const stats = [
     {

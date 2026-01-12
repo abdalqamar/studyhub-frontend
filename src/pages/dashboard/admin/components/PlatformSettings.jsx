@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard/components/PlatformSettings.jsx
 import { useState } from "react";
 
 const PlatformSettings = () => {

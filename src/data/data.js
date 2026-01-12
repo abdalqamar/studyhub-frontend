@@ -382,6 +382,240 @@ const testimonials = [
   },
 ];
 
+const faqData = [
+  {
+    id: 1,
+    title: "Getting Started",
+    questions: [
+      {
+        q: "How do I create an account?",
+        a: "Click the 'Sign Up' button at the top right corner. Enter your email, create a password, and follow the verification steps. It's completely free to create a student account!",
+      },
+      {
+        q: "Is the platform free to use?",
+        a: "Yes! Creating an account is completely free. You can browse courses, and many instructors offer free courses. Paid courses have clear pricing displayed before purchase.",
+      },
+      {
+        q: "Can I use the platform on my phone?",
+        a: "Absolutely! Our platform works perfectly on phones, tablets, and computers. You can download our mobile app from the App Store or Google Play.",
+      },
+      {
+        q: "How do I find courses that interest me?",
+        a: "Use the search bar or browse categories on the homepage. You can filter by topic, difficulty level, price (free or paid), and instructor ratings.",
+      },
+      {
+        q: "What do I need to start learning?",
+        a: "Just a device (phone, tablet, or computer) with internet access. No special software needed - everything runs in your browser or through our app.",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Account & Profile",
+    questions: [
+      {
+        q: "How do I change my password?",
+        a: "Go to 'Account Settings' → 'Security' → 'Change Password'. Enter your current password, then create a new one. Remember to save your changes!",
+      },
+      {
+        q: "Can I update my email address?",
+        a: "Yes! Go to 'Account Settings' → 'Profile' → 'Email Address'. You'll need to verify your new email address before it becomes active.",
+      },
+      {
+        q: "How do I delete my account?",
+        a: "Go to 'Account Settings' → 'Advanced' → 'Delete Account'. Please note: this action is permanent and cannot be undone. All your course progress and certificates will be lost.",
+      },
+      {
+        q: "What if I forget my password?",
+        a: "Click 'Forgot Password' on the login page. Enter your email address, and we'll send you a link to reset your password. Check your spam folder if you don't see the email.",
+      },
+      {
+        q: "Can I have multiple accounts?",
+        a: "No, each person should have only one account. Multiple accounts may be considered a violation of our terms of service and could result in account suspension.",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Courses & Learning",
+    questions: [
+      {
+        q: "How do I enroll in a course?",
+        a: "Browse to the course you want, click the 'Enroll' button. For free courses, you'll get immediate access. For paid courses, you'll proceed to checkout.",
+      },
+      {
+        q: "Can I take multiple courses at once?",
+        a: "Yes! You can enroll in as many courses as you like and learn at your own pace. Your progress is saved separately for each course.",
+      },
+      {
+        q: "How long do I have access to a course?",
+        a: "Once enrolled, you have lifetime access to the course content. You can review materials anytime, even after completion.",
+      },
+      {
+        q: "Can I download course videos?",
+        a: "Most videos are streaming-only for copyright protection. However, some instructors may offer downloadable resources. Look for the download icon next to individual lessons.",
+      },
+      {
+        q: "What if I don't like a course?",
+        a: "We offer a 30-day money-back guarantee for paid courses if they don't meet your expectations. Contact support within 30 days of purchase for a refund.",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Payments & Billing",
+    questions: [
+      {
+        q: "What payment methods do you accept?",
+        a: "We accept credit/debit cards (Visa, MasterCard, American Express), PayPal, and in some regions, mobile payment options and bank transfers.",
+      },
+      {
+        q: "How do I know if a course is paid or free?",
+        a: "Free courses have a 'FREE' badge and a 'Enroll for Free' button. Paid courses show the price and a 'Buy Now' button.",
+      },
+      {
+        q: "Can I get a refund?",
+        a: "Yes! We offer a 30-day refund policy for all paid courses. Contact our support team with your purchase details for assistance.",
+      },
+      {
+        q: "Will I be billed monthly?",
+        a: "No, courses are one-time purchases unless specified as a subscription. You pay once and get lifetime access with no recurring charges.",
+      },
+      {
+        q: "How do I view my purchase history?",
+        a: "Go to 'Account' → 'Purchase History'. Here you'll see all your course purchases, dates, and amounts paid.",
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "Certificates",
+    questions: [
+      {
+        q: "How do I get my certificate?",
+        a: "Complete all required lessons and pass any required quizzes/exams. Once you finish, your certificate will be available in your 'Achievements' section.",
+      },
+      {
+        q: "Are certificates downloadable?",
+        a: "Yes! You can download your certificate as a PDF or share it directly to LinkedIn from your account dashboard.",
+      },
+      {
+        q: "Do certificates expire?",
+        a: "No, your certificates never expire. They remain in your account forever as proof of your accomplishment.",
+      },
+      {
+        q: "Can I share my certificate on social media?",
+        a: "Absolutely! Click the 'Share' button on your certificate to post it to LinkedIn, Twitter, Facebook, or copy a shareable link.",
+      },
+      {
+        q: "What if I lose my certificate?",
+        a: "No problem! All your certificates are stored securely in your account. You can download them again anytime from your 'Achievements' section.",
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "Instructors / Teaching on the Platform",
+    questions: [
+      {
+        q: "How do I become an instructor?",
+        a: "Click 'Teach on [Platform Name]' at the top of the page, or go to your account settings and select 'Become an Instructor'. Follow the application process.",
+      },
+      {
+        q: "How do I create a course?",
+        a: "After becoming an instructor, go to your instructor dashboard and click 'Create New Course'. Our step-by-step guide will help you through the process.",
+      },
+      {
+        q: "How do I get paid?",
+        a: "We handle all payments and pay instructors monthly. Set up your payment method in your instructor settings. Payments are sent around the 15th of each month.",
+      },
+      {
+        q: "Can I offer my course for free?",
+        a: "Yes! You can choose to make your course free or paid. For paid courses, you set the price within our pricing guidelines.",
+      },
+      {
+        q: "How much control do I have over my course?",
+        a: "You have full control over your course content, pricing (within guidelines), and can update it anytime. You also decide when to publish or unpublish.",
+      },
+    ],
+  },
+  {
+    id: 7,
+    title: "Technical Issues",
+    questions: [
+      {
+        q: "What if videos won't load?",
+        a: "First, check your internet connection. Try refreshing the page or clearing your browser cache. If issues persist, try a different browser or contact support.",
+      },
+      {
+        q: "What are the system requirements?",
+        a: "Any modern browser (Chrome, Firefox, Safari, Edge) and a stable internet connection. For best experience, use the latest browser version.",
+      },
+      {
+        q: "How do I clear my browser cache?",
+        a: "In your browser settings, find 'Privacy' or 'History' section, then select 'Clear Browsing Data'. Make sure to select 'Cached images and files'.",
+      },
+      {
+        q: "What if I can't log in?",
+        a: "First, ensure you're using the correct email and password. Try the 'Forgot Password' option. If still having issues, clear your browser cache or try a different browser.",
+      },
+      {
+        q: "The app keeps crashing. What should I do?",
+        a: "Update to the latest app version, restart your device, or reinstall the app. If problems continue, contact support with your device model and OS version.",
+      },
+    ],
+  },
+  {
+    id: 8,
+    title: "Support & Contact",
+    questions: [
+      {
+        q: "How do I contact support?",
+        a: "Click the 'Help' or 'Support' link at the bottom of any page, or email support@yourplatform.com. We typically respond within 24 hours.",
+      },
+      {
+        q: "What information should I include when contacting support?",
+        a: "Include your account email, a clear description of the issue, steps to reproduce it, and any screenshots or error messages you're seeing.",
+      },
+      {
+        q: "What are your support hours?",
+        a: "Our support team is available Monday-Friday, 9 AM to 6 PM (your local time). We aim to respond to all inquiries within 24 hours.",
+      },
+      {
+        q: "Is there a community forum?",
+        a: "Yes! Visit our Community Forum from the main menu. Connect with other learners, ask questions, and share your learning journey.",
+      },
+      {
+        q: "Can I suggest new features?",
+        a: "Absolutely! We love hearing from our users. Use the 'Feedback' button or visit our Community Forum's 'Suggestions' section.",
+      },
+    ],
+  },
+];
+
+const termsSections = [
+  { id: "acceptance", title: "1. Acceptance of Terms" },
+  { id: "eligibility", title: "2. Eligibility" },
+  { id: "user-accounts", title: "3. User Accounts" },
+  {
+    id: "instructor-accounts",
+    title: "4. Instructor Accounts & Responsibilities",
+  },
+  { id: "course-access", title: "5. Course Access & Usage" },
+  { id: "payments", title: "6. Payments, Pricing & Taxes" },
+  { id: "refund-policy", title: "7. Refund & Cancellation Policy" },
+  { id: "intellectual-property", title: "8. Intellectual Property Rights" },
+  { id: "user-content", title: "9. User-Generated Content" },
+  { id: "prohibited-activities", title: "10. Prohibited Activities" },
+  { id: "termination", title: "11. Termination & Suspension of Accounts" },
+  { id: "warranties", title: "12. Disclaimer of Warranties" },
+  { id: "liability", title: "13. Limitation of Liability" },
+  { id: "indemnification", title: "14. Indemnification" },
+  { id: "governing-law", title: "15. Governing Law & Jurisdiction" },
+  { id: "changes", title: "16. Changes to Terms" },
+  { id: "contact", title: "17. Contact Information" },
+];
+
 export {
   statsData,
   partners,
@@ -389,4 +623,6 @@ export {
   instructors,
   dashboardLinks,
   testimonials,
+  faqData,
+  termsSections,
 };

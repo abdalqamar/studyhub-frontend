@@ -49,6 +49,7 @@ export const API_ENDPOINTS = {
 
   // Categories
   CATEGORIES: "/categories",
+  CREATE_CATEGORY: "/categories",
   UPDATE_CATEGORY: (id) => `/categories/${id}`,
   DELETE_CATEGORY: (id) => `/categories/${id}`,
 

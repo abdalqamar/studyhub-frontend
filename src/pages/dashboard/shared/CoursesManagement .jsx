@@ -3,6 +3,8 @@ import CourseFilterBar from "../shared/CourseFilterBar";
 import CourseTableRow from "../instructor/manageCourses/CourseTableRow";
 import CourseModals from "../instructor/manageCourses/CourseModals";
 import Pagination from "../shared/Pagination";
+import { Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CoursesManagement = ({
   userType,
@@ -143,26 +145,39 @@ const CoursesManagement = ({
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-semibold text-white">
-            {userType === "admin" ? "📚 All Courses" : "📚 Manage Courses"}
-          </h1>
-          <p className="text-slate-400 mt-1">
-            {userType === "admin"
-              ? "Manage all platform courses and their status"
-              : "View, edit, and manage your created courses"}
-          </p>
-        </div>
+      <div className="mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="flex-1">
+            <h1 className="text-2xl font-semibold text-white">
+              {userType === "admin" ? "All Courses" : "Manage Courses"}
+            </h1>
+            <p className="text-slate-400 mt-1">
+              {userType === "admin"
+                ? "Manage all platform courses and their status"
+                : "View, edit, and manage your created courses"}
+            </p>
+          </div>
 
-        {userType === "instructor" && (
-          <button
-            onClick={onAddCourse}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 flex items-center mt-4 md:mt-0 transition-colors"
-          >
-            <span className="mr-2">+</span> Add New Course
-          </button>
-        )}
+          {userType === "admin" && (
+            <Link
+              to={"/admin/category"}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 whitespace-nowrap"
+            >
+              <Plus className="h-5 w-5" />
+              Add New Category
+            </Link>
+          )}
+
+          {userType === "instructor" && (
+            <button
+              onClick={onAddCourse}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 whitespace-nowrap"
+            >
+              <Plus className="h-5 w-5" />
+              Add New Course
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Stats Cards */}

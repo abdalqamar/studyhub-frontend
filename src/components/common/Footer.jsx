@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useCategories } from "../../hooks/useCategories";
 
 const Footer = () => {
+  const { data: categories = [] } = useCategories();
   return (
     <footer className="bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800 py-20 px-6">
       <div className="max-w-7xl mx-auto text-white">
@@ -24,32 +26,19 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Category Links */}
           <div>
             <h4 className="font-semibold mb-4">Courses</h4>
-            <ul className="space-y-2 text-slate-400">
-              <Link>
-                <p className="hover:text-white transition-colors">
-                  Web Development
+            {categories.map((category) => (
+              <Link key={category._id} to={"/courses"}>
+                <p className="hover:text-white space-y-2 text-slate-400 transition-colors">
+                  {category.name}
                 </p>
               </Link>
-              <Link>
-                <p className="hover:text-white transition-colors">
-                  Data Science
-                </p>
-              </Link>
-              <Link>
-                <p className="hover:text-white transition-colors">
-                  UI/UX Design
-                </p>
-              </Link>
-              <Link>
-                <p className="hover:text-white transition-colors">
-                  AI & Machine Learning
-                </p>
-              </Link>
-            </ul>
+            ))}
           </div>
 
+          {/* Pages Links */}
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-slate-400">
@@ -57,7 +46,9 @@ const Footer = () => {
                 <p className="hover:text-white transition-colors">About Us</p>
               </Link>
               <Link>
-                <p className="hover:text-white transition-colors">Careers</p>
+                <p className="hover:text-white transition-colors">
+                  Become an Instructor
+                </p>
               </Link>
               <Link>
                 <p className="hover:text-white transition-colors">Press</p>
@@ -68,27 +59,39 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Support Links */}
           <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-slate-400">
-              <Link>
-                <p className="hover:text-white transition-colors">
+              <li>
+                <Link to="/help" className="hover:text-white transition-colors">
                   Help Center
-                </p>
-              </Link>
-              <Link>
-                <p className="hover:text-white transition-colors">Community</p>
-              </Link>
-              <Link>
-                <p className="hover:text-white transition-colors">
+                </Link>
+              </li>
+
+              <li>
+                <Link className="hover:text-white transition-colors">
+                  Community
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/privacy-policy"
+                  className="hover:text-white transition-colors"
+                >
                   Privacy Policy
-                </p>
-              </Link>
-              <Link>
-                <p className="hover:text-white transition-colors">
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/terms"
+                  className="hover:text-white transition-colors"
+                >
                   Terms of Service
-                </p>
-              </Link>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

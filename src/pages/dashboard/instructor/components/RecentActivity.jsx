@@ -1,4 +1,3 @@
-// src/pages/InstructorDashboard/components/RecentActivity.jsx
 const RecentActivity = () => {
   const activities = [
     {

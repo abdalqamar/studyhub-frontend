@@ -52,6 +52,10 @@ import ForgotPassword from "../pages/auth/ForgotPassword";
 import ViewCourseLayout from "../pages/dashboard/student/ViewCourse/ViewCourseLayout";
 import ViewCoursePage from "../pages/dashboard/student/ViewCourse/ViewCoursePage";
 import CourseDetailsWithAI from "../pages/dashboard/instructor/CourseBuilder/CourseWithAi";
+import CategoryManager from "../pages/dashboard/admin/CategoryManager";
+import HelpCenter from "../pages/HelpCenter";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsOfService from "../pages/TermsOfService";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +71,9 @@ const router = createBrowserRouter([
           { path: "contact", element: <Contact /> },
           { path: "aisuggestion", element: <CourseDetailsWithAI /> },
           { path: "newdashboard", element: <NewDashboard /> },
+          { path: "help", element: <HelpCenter /> },
+          { path: "privacy-policy", element: <PrivacyPolicy /> },
+          { path: "terms", element: <TermsOfService /> },
           {
             path: "login",
             element: (
@@ -189,6 +196,7 @@ const router = createBrowserRouter([
           { path: "notifications", element: <AdminNotifications /> },
           { path: "settings", element: <SystemSettings /> },
           { path: "profile", element: <ProfileSettings /> },
+          { path: "category", element: <CategoryManager /> },
         ],
       },
     ],

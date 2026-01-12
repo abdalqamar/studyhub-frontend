@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
-import toast from "react-hot-toast";
 import CoursesManagement from "../shared/CoursesManagement ";
 import {
   useAdminCourses,
@@ -49,7 +48,7 @@ const AdminManageCourses = () => {
         break;
 
       default:
-        toast.error("Unknown action");
+        errorToast("Unknown action");
     }
   };
 
@@ -111,7 +110,7 @@ const AdminManageCourses = () => {
     a.download = `courses-report-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
 
-    toast.success("Report downloaded");
+    successToast("Report downloaded");
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const TagsInput = ({ register, setValue, watch, maxItems = 5 }) => {
   const tags = watch("tags") || [];

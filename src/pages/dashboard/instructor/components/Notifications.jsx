@@ -1,4 +1,3 @@
-// src/pages/InstructorDashboard/components/Notifications.jsx
 const Notifications = () => {
   const notifications = [
     {

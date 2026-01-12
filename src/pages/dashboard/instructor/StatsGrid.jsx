@@ -1,4 +1,3 @@
-// src/pages/Instructor/Dashboard/components/StatsGrid.jsx
 const StatsGrid = () => {
   const stats = [
     {

@@ -1,4 +1,3 @@
-// src/pages/InstructorDashboard/components/SummaryCards.jsx
 const SummaryCards = () => {
   const stats = [
     {

@@ -1,4 +1,3 @@
-// src/pages/Instructor/Dashboard/components/RecentEnrollments.jsx
 const RecentEnrollments = () => {
   const enrollments = [
     {
