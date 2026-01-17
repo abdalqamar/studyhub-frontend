@@ -63,11 +63,15 @@ const UsersManagement = () => {
 
   const handleToggleUserStatus = (user) => {
     const newStatus = user.status === "suspended" ? "active" : "suspended";
-    window.confirm(
+
+    const confirmed = window.confirm(
       `Are you sure you want to ${
         newStatus === "suspended" ? "suspend" : "activate"
       } this user?`
     );
+
+    if (!confirmed) return;
+
     updateUserStatus.mutate({
       userId: user._id,
       status: newStatus,
