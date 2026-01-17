@@ -4,13 +4,13 @@ import { errorToast, successToast } from "../../../utils/toastUtils";
 import CategoryForm from "./components/CategoryForm";
 import CategoryStats from "./components/CategoryStats";
 import CategoryTable from "./components/CategoryTable";
-import SearchBar from "./components/SearchBar";
 import {
   useCategories,
   useCreateCategory,
   useDeleteCategory,
   useUpdateCategory,
 } from "../../../hooks/useCategories";
+import SearchBar from "../../../components/common/SearchBar";
 
 const CategoryManager = () => {
   const { data: categories = [] } = useCategories();
@@ -150,8 +150,8 @@ const CategoryManager = () => {
                 {editingCategory
                   ? "Edit Category"
                   : isAdding
-                  ? "Add New Category"
-                  : "Category Form"}
+                    ? "Add New Category"
+                    : "Category Form"}
               </h2>
 
               {editingCategory ? (
@@ -212,7 +212,11 @@ const CategoryManager = () => {
                 <h2 className="text-xl font-semibold text-slate-200">
                   All Categories
                 </h2>
-                <SearchBar value={searchTerm} onChange={setSearchTerm} />
+                <SearchBar
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search categories..."
+                />
               </div>
 
               {filteredCategories.length === 0 ? (

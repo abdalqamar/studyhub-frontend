@@ -3,62 +3,44 @@ import CourseFilterBar from "../shared/CourseFilterBar";
 import CourseTableRow from "../instructor/manageCourses/CourseTableRow";
 import CourseModals from "../instructor/manageCourses/CourseModals";
 import Pagination from "../shared/Pagination";
-import { Plus } from "lucide-react";
+import {
+  BookOpen,
+  CheckCircle,
+  Clock,
+  XCircle,
+  Plus,
+  Download,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+import StatsGrid from "./StatsGrid";
+import { generateExcelReport } from "../../../utils/exportUtils";
+import { errorToast, successToast } from "../../../utils/toastUtils";
 
 const CoursesManagement = ({
   userType,
   courses,
   categories,
-  onCourseAction = () => {},
-  onAddCourse = () => {},
+  searchTerm,
+  onSearchChange,
+  statusFilter,
+  categoryFilter,
+  onCategoryChange,
+  currentPage,
+  totalPages,
+  onPageChange,
+  onCourseAction,
+  onStatusChange,
+  onAddCourse,
 }) => {
-  // State
-  const [activeTab, setActiveTab] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [coursesPerPage] = useState(5);
-
-  // Modal States
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [rejectFeedback, setRejectFeedback] = useState("");
 
-  const statusConfig = {
-    approved: { text: "Active", color: "bg-green-500", badge: "✅" },
-    published: { text: "Published", color: "bg-green-500", badge: "✅" },
-    pending: { text: "Pending Review", color: "bg-yellow-500", badge: "⏳" },
-    rejected: { text: "Rejected", color: "bg-red-500", badge: "❌" },
+  const handleExcelDownload = () => {
+    generateExcelReport(courses, successToast, errorToast);
   };
-
-  // Filter courses
-  const filteredCourses = courses.filter((course) => {
-    const matchesSearch =
-      course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      `${course.instructor?.firstName} ${course.instructor?.lastName}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-
-    const matchesCategory =
-      categoryFilter === "all" || course.category?._id === categoryFilter;
-
-    const matchesStatus = activeTab === "all" || course.status === activeTab;
-
-    return matchesSearch && matchesCategory && matchesStatus;
-  });
-
-  // Pagination
-  const indexOfLastCourse = currentPage * coursesPerPage;
-  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = filteredCourses.slice(
-    indexOfFirstCourse,
-    indexOfLastCourse
-  );
-  const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
 
   // Handle Actions
   const handleAction = (action, course) => {
@@ -122,23 +104,30 @@ const CoursesManagement = ({
       ? ["Course", "Instructor", "Students", "Rating", "Status", "Actions"]
       : ["Course", "Students", "Rating", "Status", "Actions"];
 
-  // // Tabs
-  const tabs = [
-    { id: "all", label: "All Courses", count: courses.length },
+  const adminStats = [
     {
-      id: "approved",
-      label: userType === "instructor" ? "Active" : "Published",
-      count: courses.filter((course) => course.status === "approved").length,
+      value: courses?.length || 0,
+      label: "Total Courses",
+      color: "blue",
+      icon: BookOpen,
     },
     {
-      id: "pending",
-      label: "Pending",
-      count: courses.filter((c) => c.status === "pending").length,
+      value: courses?.filter((c) => c.status === "approved").length,
+      label: userType === "instructor" ? "Active" : "Published Courses",
+      color: "green",
+      icon: CheckCircle,
     },
     {
-      id: "rejected",
-      label: "Rejected",
-      count: courses.filter((c) => c.status === "rejected").length,
+      value: courses?.filter((c) => c.status === "pending").length,
+      label: "Pending Courses",
+      color: "yellow",
+      icon: Clock,
+    },
+    {
+      value: courses?.filter((c) => c.status === "rejected").length,
+      label: "Rejected Courses",
+      color: "red",
+      icon: XCircle,
     },
   ];
 
@@ -158,64 +147,54 @@ const CoursesManagement = ({
             </p>
           </div>
 
-          {userType === "admin" && (
-            <Link
-              to={"/admin/category"}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 whitespace-nowrap"
-            >
-              <Plus className="h-5 w-5" />
-              Add New Category
-            </Link>
-          )}
-
-          {userType === "instructor" && (
+          <div className="flex items-center gap-3">
+            {/* Download Excel Button */}
             <button
-              onClick={onAddCourse}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 whitespace-nowrap"
+              onClick={handleExcelDownload}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:scale-105 whitespace-nowrap border border-green-500"
             >
-              <Plus className="h-5 w-5" />
-              Add New Course
+              <Download className="h-4 w-4" />
+              Download Excel
             </button>
-          )}
+
+            {/* Conditional Buttons */}
+            {userType === "admin" && (
+              <Link
+                to={"/admin/category"}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:scale-105 whitespace-nowrap border border-blue-500"
+              >
+                <Plus className="h-4 w-4" />
+                Add Category
+              </Link>
+            )}
+
+            {userType === "instructor" && (
+              <button
+                onClick={onAddCourse}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:scale-105 whitespace-nowrap border border-blue-500"
+              >
+                <Plus className="h-5 w-5" />
+                Add New Course
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`bg-slate-800 rounded-2xl p-5 border-l-4 border border-slate-700/50 transition-all duration-300 hover:shadow-xl transform hover:scale-[1.02] cursor-pointer ${
-              activeTab === tab.id
-                ? "border-l-blue-500 shadow-blue-900/20"
-                : "border-l-slate-700"
-            }`}
-          >
-            <div className="text-3xl font-extrabold text-blue-400 mb-1">
-              {tab.count}
-            </div>
-            <div className="text-slate-400 text-sm font-medium">
-              {tab.label}
-            </div>
-          </div>
-        ))}
-      </div>
+      <StatsGrid stats={adminStats} />
 
       {/* Filter Bar */}
       <CourseFilterBar
-        courses={courses}
         userType={userType}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        statusFilter={statusFilter}
+        onStatusChange={onStatusChange}
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        onSearchChange={onSearchChange}
         categoryFilter={categoryFilter}
-        setCategoryFilter={setCategoryFilter}
+        onCategoryChange={onCategoryChange}
         categories={categories}
-        setCurrentPage={setCurrentPage}
       />
-
       {/* Table */}
       <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
         <div className="overflow-x-auto">
@@ -233,13 +212,12 @@ const CoursesManagement = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-700">
-              {currentCourses.map((course) => (
+              {courses?.map((course) => (
                 <CourseTableRow
                   key={course._id}
                   course={course}
                   userType={userType}
                   onAction={handleAction}
-                  statusConfig={statusConfig}
                 />
               ))}
             </tbody>
@@ -247,31 +225,42 @@ const CoursesManagement = ({
         </div>
 
         {/* Empty State */}
-        {filteredCourses.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-4">📚</div>
-            <h3 className="text-lg font-medium text-white mb-2">
+        {courses?.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 px-4">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mb-6">
+              <BookOpen className="w-10 h-10 text-blue-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">
               No courses found
             </h3>
-            <p className="text-slate-400">
-              {searchTerm || categoryFilter !== "all" || activeTab !== "all"
-                ? "Try adjusting your search terms or filters"
+            <p className="text-slate-400 text-center max-w-md mb-6">
+              {searchTerm || categoryFilter || statusFilter
+                ? "Try adjusting your search terms or filters to find what you're looking for"
                 : userType === "admin"
-                ? "No courses available in the system"
-                : "You haven't created any courses yet"}
+                  ? "No courses available in the system yet"
+                  : "You haven't created any courses yet. Start by creating your first course!"}
             </p>
+            {!searchTerm &&
+              !categoryFilter &&
+              !statusFilter &&
+              userType !== "admin" && (
+                <Link
+                  to="/instructor/create-course"
+                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:scale-105"
+                >
+                  <Plus className="h-4 w-4" />
+                  Create Your First Course
+                </Link>
+              )}
           </div>
         )}
 
         {/* Pagination */}
-        {filteredCourses.length > coursesPerPage && (
+        {totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            totalItems={filteredCourses.length}
-            itemsPerPage={coursesPerPage}
-            itemName="courses"
+            onPageChange={onPageChange}
           />
         )}
       </div>

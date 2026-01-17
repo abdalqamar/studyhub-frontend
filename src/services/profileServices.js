@@ -26,6 +26,15 @@ export const profileService = {
     return data?.user;
   },
 
+  // Update user password
+  updatePassword: async (passwordData) => {
+    const { data } = await axiosInstance.put(
+      API_ENDPOINTS.UPDATE_PASSWORD,
+      passwordData
+    );
+    return data;
+  },
+
   //User Enrolled courses
   getEnrolledCourses: async () => {
     const { data } = await axiosInstance.get(API_ENDPOINTS.ENROLLED_COURSES);

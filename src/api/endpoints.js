@@ -10,7 +10,9 @@ export const API_ENDPOINTS = {
   REFRESH_TOKEN: "/auth/refresh-token",
 
   // Public Course Routes
-  COURSES: "/courses", // all approved courses
+  COURSES_PUBLIC: "/courses",
+
+  COURSES_MANAGE: "/courses/manage",
   COURSE_DETAILS: (id) => `/courses/${id}`,
   COURSE_PREVIEW: (id) => `/courses/${id}/preview`,
 
@@ -18,16 +20,25 @@ export const API_ENDPOINTS = {
   COURSE_CONTENT: (id) => `/courses/${id}/content`,
 
   // Instructor Routes
-  INSTRUCTOR_MY_COURSES: "/courses/instructor/my-courses",
+  // INSTRUCTOR_MY_COURSES: "/courses/instructor/my-courses",
+  INSTRUCTOR_MY_STUDENTS: "/instructor/students",
   CREATE_COURSE: "/courses",
   UPDATE_COURSE: (id) => `/courses/${id}`,
   DELETE_COURSE: (id) => `/courses/${id}`,
   GET_COURSE_BY_ID: (id) => `/courses/edit/${id}`,
 
+  // INSTRUCTOR_MY_COURSES: "/courses?instructor=me",
+  // ADMIN_ALL_COURSES: "/courses",
+
+  // Enrollment
+  ENROLL: (courseId) => `/courses/${courseId}/enroll`,
   // Admin Routes
-  ADMIN_ALL_COURSES: "/admin/courses",
+  // ADMIN_ALL_COURSES: "/admin/courses",
   ADMIN_APPROVE_COURSE: (id) => `/admin/courses/${id}/approve`,
   ADMIN_REJECT_COURSE: (id) => `/admin/courses/${id}/reject`,
+  ADMIN_ALL_USERS: "/admin/users",
+  ADMIN_UPDATE_USER_STATUS: (id) => `/admin/users/${id}/status`,
+  ADMIN_DELETE_USER: (id) => `/admin/users/${id}`,
 
   // Ratings
   COURSE_REVIEWS: (id) => `/courses/${id}/reviews`,

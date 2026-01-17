@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authService } from "../services/authServices";
 import toast from "react-hot-toast";
-import { errorToast, successToast } from "../utils/toastUtils";
-import { clearAuth } from "../features/auth/authSlice";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();

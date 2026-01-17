@@ -58,7 +58,7 @@ const ProfileInfoSection = ({ user, isEditing, toggleEdit }) => {
     });
   };
 
-  // ⬆ Update Profile Info
+  // Update Profile Info
   const onSubmit = (data) => {
     updateProfileMutation.mutate(data, {
       onSuccess: () => {

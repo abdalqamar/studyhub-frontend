@@ -1,18 +1,22 @@
 const StatsCard = ({ value, label, color = "blue", icon: Icon, trend }) => {
   const colorClasses = {
     blue: "text-blue-400 bg-blue-400/10 border-blue-400/20",
+    emerald: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
     green: "text-green-400 bg-green-400/10 border-green-400/20",
     yellow: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20",
     red: "text-red-400 bg-red-400/10 border-red-400/20",
     purple: "text-purple-400 bg-purple-400/10 border-purple-400/20",
+    slate: "text-slate-400 bg-slate-400/10 border-slate-400/20",
   };
 
   const iconColorClasses = {
     blue: "bg-blue-500/20 text-blue-400",
+    emerald: "bg-emerald-500/20 text-emerald-400",
     green: "bg-green-500/20 text-green-400",
     yellow: "bg-yellow-500/20 text-yellow-400",
     red: "bg-red-500/20 text-red-400",
     purple: "bg-purple-500/20 text-purple-400",
+    slate: "bg-slate-500/20 text-slate-400",
   };
 
   return (
@@ -41,7 +45,7 @@ const StatsCard = ({ value, label, color = "blue", icon: Icon, trend }) => {
           colorClasses[color].split(" ")[0]
         }`}
       >
-        {value.toLocaleString()}
+        {typeof value === "number" ? value.toLocaleString() : value}
       </div>
       <div className="text-slate-400 text-sm font-medium">{label}</div>
     </div>
@@ -57,4 +61,5 @@ const StatsGrid = ({ stats }) => {
     </div>
   );
 };
+
 export default StatsGrid;

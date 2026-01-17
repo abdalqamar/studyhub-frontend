@@ -1,113 +1,165 @@
-import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import FormInput from "../../components/ui/FormInput";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Lock } from "lucide-react";
+import { useProfile } from "../../hooks/useProfile";
+import { errorToast, successToast } from "../../utils/toastUtils";
+import { clearAuth } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const PasswordSection = ({ isEditing, toggleEdit }) => {
-  const [loading, setLoading] = React.useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [formData, setFormData] = React.useState({
-    password: "",
-    confirmPassword: "",
-  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const dispatch = useDispatch();
+  const { clearProfile } = useProfile();
+
+  const { updatePasswordMutation } = useProfile();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset,
   } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const password = watch("newPassword");
 
   const onSubmit = (data) => {
-    console.log("Password data submitted:", data);
-    // Implement password update logic here
+    updatePasswordMutation.mutate(data, {
+      onSuccess: () => {
+        successToast("Password updated successfully please login again");
+        reset();
+        toggleEdit?.();
+        dispatch(clearAuth());
+        clearProfile();
+      },
+      onError: (error) => {
+        console.log(error);
+        errorToast(error?.response?.data?.message || "Update failed");
+      },
+    });
   };
-  return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="relative flex-1">
-            <label
-              htmlFor="password"
-              className="block text-sm font-semibold text-slate-300 mb-1"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3 bottom-3 w-5 h-5 text-slate-400" />
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full pl-12 pr-12 py-3 bg-slate-700/30 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-4 bottom-3 text-slate-400 hover:text-cyan-400 transition-colors"
-              >
-                {showPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
-              </button>
-            </div>
-          </div>
 
-          {/* Confirm Password */}
-          <div className="relative flex-1">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-semibold text-slate-300 mb-1"
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-slate-900 border border-slate-700 rounded-xl p-6"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Old Password */}
+        <div className="relative flex-1">
+          <label className="block text-sm font-semibold text-slate-300 mb-1">
+            Old Password
+          </label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type={showOldPassword ? "text" : "password"}
+              className="w-full pl-12 pr-12 py-3 bg-surface-bg border border-slate-700 rounded-xl disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-white"
+              placeholder="••••••••"
+              disabled={!isEditing}
+              {...register("oldPassword", {
+                required: "Old Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowOldPassword((v) => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
+              disabled={!isEditing}
             >
-              Confirm Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3 bottom-3 w-5 h-5 text-slate-400" />
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                id="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full pl-12 pr-12 py-3 bg-slate-700/30 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword((v) => !v)}
-                className="absolute right-4 bottom-3 text-slate-400 hover:text-cyan-400 transition-colors"
-              >
-                {showConfirmPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
-              </button>
-            </div>
+              {showOldPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
           </div>
+          {errors.oldPassword && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.oldPassword.message}
+            </p>
+          )}
         </div>
 
-        <button
-          type="submit"
-          disabled={!isEditing}
-          className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md disabled:opacity-60"
-        >
-          {loading ? "Updating..." : "Update Info"}
-        </button>
-      </form>
-    </div>
+        {/* New Password */}
+        <div className="relative flex-1">
+          <label className="block text-sm font-semibold text-slate-300 mb-1">
+            New Password
+          </label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type={showPassword ? "text" : "password"}
+              className="w-full pl-12 pr-12 py-3 bg-surface-bg border border-slate-700 rounded-xl disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-white"
+              placeholder="••••••••"
+              disabled={!isEditing}
+              {...register("newPassword", {
+                required: "New Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
+              disabled={!isEditing}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+          {errors.newPassword && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.newPassword.message}
+            </p>
+          )}
+        </div>
+
+        {/* Confirm Password */}
+        <div className="relative flex-1">
+          <label className="block text-sm font-semibold text-slate-300 mb-1">
+            Confirm Password
+          </label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              className="w-full pl-12 pr-12 py-3 bg-surface-bg border border-slate-700 rounded-xl disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-white"
+              placeholder="••••••••"
+              disabled={!isEditing}
+              {...register("confirmPassword", {
+                required: "Please confirm your password",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword((v) => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
+            >
+              {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+          {errors.confirmPassword && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        disabled={!isEditing || updatePasswordMutation.isPending}
+        className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md disabled:opacity-60 mt-4"
+      >
+        {updatePasswordMutation.isPending ? "Updating..." : "Update Password"}
+      </button>
+    </form>
   );
 };
 

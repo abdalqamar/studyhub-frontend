@@ -3,11 +3,15 @@ import { profileService } from "../services/profileServices";
 
 export const useProfile = () => {
   const queryClient = useQueryClient();
-  // Fetch Profile
+
   const profileQuery = useQuery({
     queryKey: ["profile"],
     queryFn: profileService.getProfile,
   });
+
+  const clearProfile = () => {
+    queryClient.removeQueries({ queryKey: ["profile"] });
+  };
 
   // Update Profile Info
   const updateProfileMutation = useMutation({
@@ -25,9 +29,15 @@ export const useProfile = () => {
     },
   });
 
+  const updatePasswordMutation = useMutation({
+    mutationFn: profileService.updatePassword,
+  });
+
   return {
     profileQuery,
+    clearProfile,
     updateProfileMutation,
     updatePhotoMutation,
+    updatePasswordMutation,
   };
 };

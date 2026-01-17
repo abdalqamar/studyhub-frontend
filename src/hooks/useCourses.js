@@ -3,39 +3,34 @@ import { courseService } from "../services/courseService";
 import toast from "react-hot-toast";
 import { successToast } from "../utils/toastUtils";
 
+export const fetchAllCourses = (params) => {
+  return useQuery({
+    queryKey: [
+      "Allcourses",
+      params.instructor,
+      params.search,
+      params.status,
+      params.category,
+      params.page,
+      params.limit,
+    ],
+    queryFn: () => courseService.getAllCourses(params),
+    keepPreviousData: true,
+  });
+};
+
 // Get all approved courses
-export const useCourses = () => {
+export const useCourses = (params) => {
   return useQuery({
-    queryKey: ["courses"],
-    queryFn: courseService.getAllCourses,
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to load courses");
-    },
-  });
-};
-
-// Get all courses for admin
-export const useAdminCourses = () => {
-  return useQuery({
-    queryKey: ["adminCourses"],
-    queryFn: courseService.getAllCoursesAdmin,
-    onError: (error) => {
-      toast.error(
-        error?.response?.data?.message || "Failed to fetch admin courses"
-      );
-    },
-  });
-};
-
-export const useInstructorCourses = () => {
-  return useQuery({
-    queryKey: ["instructorCourses"],
-    queryFn: courseService.getAllInstructorCourses,
-    onError: (error) => {
-      toast.error(
-        error?.response?.data?.message || "Failed to fetch admin courses"
-      );
-    },
+    queryKey: [
+      "courses",
+      params.search,
+      params.category,
+      params.page,
+      params.limit,
+    ],
+    queryFn: () => courseService.fetchAllApprovedCourses(params),
+    keepPreviousData: true,
   });
 };
 
@@ -94,6 +89,7 @@ export const useCoursePreview = (id) => {
     },
   });
 };
+
 export const useCourseDetails = (id) => {
   return useQuery({
     queryKey: ["courseDetails", id],

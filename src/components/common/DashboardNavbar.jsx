@@ -1,6 +1,7 @@
 import { Menu, Bell, Search } from "lucide-react";
 import Dropdown from "../common/Dropdown";
 import { Link } from "react-router-dom";
+import { use } from "react";
 
 const DashboardNavbar = ({ user, handleLogout, setIsSidebarOpen }) => {
   return (
@@ -22,7 +23,13 @@ const DashboardNavbar = ({ user, handleLogout, setIsSidebarOpen }) => {
               Welcome back, {user?.firstName}! 👋
             </h1>
             <p className="text-slate-400 text-sm mt-0.5">
-              Continue your learning journey
+              {user?.role === "student"
+                ? "Ready to learn something new today?"
+                : user?.role === "instructor"
+                ? "Let's inspire and educate!"
+                : user?.role === "admin"
+                ? "Manage your platform effectively."
+                : "Welcome to the platform!"}
             </p>
           </div>
         </div>

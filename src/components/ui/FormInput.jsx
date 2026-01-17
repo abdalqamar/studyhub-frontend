@@ -12,7 +12,7 @@ const FormInput = ({
   defaultValue = "",
   options = [],
 }) => {
-  const baseClass = `bg-surface-bg border border-slate-700 rounded-lg px-3 py-2 w-full disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-500 transition`;
+  const baseClass = `bg-surface-bg border border-slate-700 rounded-xl px-3 py-3 w-full disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-500 transition`;
 
   return (
     <div className="flex flex-col gap-1">

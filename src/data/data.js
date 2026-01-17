@@ -230,18 +230,19 @@ const dashboardLinks = [
   },
   {
     id: 12,
-    name: "Live Classes",
-    path: "/instructor/live-classes",
-    icon: Video,
-    type: "instructor",
-  },
-  {
-    id: 13,
     name: "Manage Students",
     path: "/instructor/manage-students",
     icon: Users,
     type: "instructor",
   },
+  {
+    id: 13,
+    name: "Live Classes",
+    path: "/instructor/live-classes",
+    icon: Video,
+    type: "instructor",
+  },
+
   {
     id: 14,
     name: "Earnings",
@@ -276,7 +277,7 @@ const dashboardLinks = [
   {
     id: 18,
     name: "Manage Users",
-    path: "/admin/manage-users",
+    path: "/admin/users",
     icon: Users,
     type: "admin",
   },

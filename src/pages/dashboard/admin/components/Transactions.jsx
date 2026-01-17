@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard/components/Transactions.jsx
 import { useState } from "react";
 
 const Transactions = () => {
@@ -163,20 +162,6 @@ const Transactions = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">
-          Transactions & Payments
-        </h2>
-        <div className="flex space-x-4">
-          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            Export Report
-          </button>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            Process Payouts
-          </button>
-        </div>
-      </div>
-
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">

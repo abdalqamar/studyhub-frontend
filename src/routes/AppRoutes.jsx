@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Home /> },
           { path: "about", element: <About /> },
-          { path: "courses", element: <CoursesPage /> },
+          { path: "student/courses", element: <CoursesPage /> },
           { path: "course/:courseId", element: <CourseDetails /> },
           { path: "contact", element: <Contact /> },
           { path: "aisuggestion", element: <CourseDetailsWithAI /> },
@@ -188,7 +188,7 @@ const router = createBrowserRouter([
         ),
         children: [
           { index: true, element: <AdminDashboard /> },
-          { path: "manage-users", element: <ManageUsers /> },
+          { path: "users", element: <ManageUsers /> },
           { path: "courses", element: <AdminManageCourses /> },
           { path: "course/:courseId", element: <CoursePreview /> },
           { path: "transactions", element: <TransactionsPage /> },
