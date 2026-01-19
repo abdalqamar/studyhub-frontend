@@ -1,12 +1,16 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { profileService } from "../services/profileServices";
+import { useSelector } from "react-redux";
 
 export const useProfile = () => {
   const queryClient = useQueryClient();
+  const accessToken = useSelector((s) => s.auth.accessToken);
 
   const profileQuery = useQuery({
     queryKey: ["profile"],
     queryFn: profileService.getProfile,
+    enabled: !!accessToken,
+    retry: false,
   });
 
   const clearProfile = () => {
