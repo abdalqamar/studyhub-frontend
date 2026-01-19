@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Users, UserCheck, Clock, UserX, Search } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Users, UserCheck, Clock, UserX } from "lucide-react";
 import StatsGrid from "../shared/StatsGrid";
 import Pagination from "../shared/Pagination";
 import StudentsTable from "./components/StudentsTable";
@@ -7,29 +7,53 @@ import { useInstructorStudents } from "../../../hooks/instructor/useInstructor";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import ErrorPage from "../../../components/ui/ErrorPage";
 import SearchBar from "../../../components/common/SearchBar";
+import { useSearchParams } from "react-router-dom";
 
 const StudentManagement = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [studentsPerPage] = useState(12);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Initialize state from URL params
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
+  const [statusFilter, setStatusFilter] = useState(
+    searchParams.get("status") || ""
+  );
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1
+  );
+  const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
+
+  const ITEMS_PER_PAGE = 12;
 
   const { data, isLoading, isError } = useInstructorStudents({
     search: debouncedSearch,
     status: statusFilter,
     page: currentPage,
-    limit: studentsPerPage,
+    limit: ITEMS_PER_PAGE,
   });
 
+  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
       setCurrentPage(1);
+
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
+        if (searchTerm) {
+          params.set("search", searchTerm);
+        } else {
+          params.delete("search");
+        }
+        params.set("page", "1");
+        return params;
+      });
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, setSearchParams]);
 
   const users = data?.users || [];
   const pagination = data?.pagination;
@@ -61,15 +85,47 @@ const StudentManagement = () => {
     },
   ];
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  // Update URL params helper
+  const updateSearchParams = useCallback(
+    (updates) => {
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
 
-  const handleStatusChange = (e) => {
-    const value = e.target.value;
-    setStatusFilter(value);
-    setCurrentPage(1);
-  };
+        Object.entries(updates).forEach(([key, value]) => {
+          if (value) {
+            params.set(key, value);
+          } else {
+            params.delete(key);
+          }
+        });
+
+        return params;
+      });
+    },
+    [setSearchParams]
+  );
+
+  // Handlers
+  const handleSearchChange = useCallback((e) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleStatusChange = useCallback(
+    (status) => {
+      setStatusFilter(status);
+      setCurrentPage(1);
+      updateSearchParams({ status, page: "1" });
+    },
+    [updateSearchParams]
+  );
+
+  const handlePageChange = useCallback(
+    (page) => {
+      setCurrentPage(page);
+      updateSearchParams({ page: String(page) });
+    },
+    [updateSearchParams]
+  );
 
   if (isError) {
     return (
@@ -105,7 +161,7 @@ const StudentManagement = () => {
 
         <select
           value={statusFilter}
-          onChange={handleStatusChange}
+          onChange={(e) => handleStatusChange(e.target.value)}
           className="lg:w-48 bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all cursor-pointer"
         >
           <option value="">All Status</option>
@@ -126,7 +182,7 @@ const StudentManagement = () => {
                 <Pagination
                   currentPage={currentPage}
                   totalPages={pagination.totalPages}
-                  onPageChange={setCurrentPage}
+                  onPageChange={handlePageChange}
                 />
               </div>
             )}

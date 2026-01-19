@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { UserCheck, GraduationCap, Search, Ban, User } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { UserCheck, GraduationCap, Ban, User } from "lucide-react";
 import StatsGrid from "../../shared/StatsGrid";
 import Pagination from "../../shared/Pagination";
 import { useAdminUsers } from "../../../../hooks/admin/useAdminUsers";
@@ -7,59 +7,120 @@ import LoadingSpinner from "../../../../components/common/LoadingSpinner";
 import UserTable from "./UserTable";
 import ErrorPage from "../../../../components/ui/ErrorPage";
 import SearchBar from "../../../../components/common/SearchBar";
+import { useSearchParams } from "react-router-dom";
 import {
   useDeleteUser,
   useUpdateUserStatus,
 } from "../../../../hooks/admin/useUpdateUserStatus";
 
 const UsersManagement = () => {
-  const [activeTab, setActiveTab] = useState("students");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(5);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("tab") || "students"
+  );
+
+  // Initialize state from URL params
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
+  const [statusFilter, setStatusFilter] = useState(
+    searchParams.get("status") || ""
+  );
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1
+  );
+  const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
+
+  const ITEMS_PER_PAGE = 12;
+
   const updateUserStatus = useUpdateUserStatus();
   const deleteUser = useDeleteUser();
 
   const role = activeTab === "students" ? "student" : "instructor";
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(searchTerm);
-      setCurrentPage(1);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm, statusFilter]);
 
   const { data, isLoading, isError } = useAdminUsers({
     role,
     search: debouncedSearch,
     status: statusFilter,
     page: currentPage,
-    limit: usersPerPage,
+    limit: ITEMS_PER_PAGE,
   });
+
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setCurrentPage(1);
+
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
+        if (searchTerm) {
+          params.set("search", searchTerm);
+        } else {
+          params.delete("search");
+        }
+        params.set("page", "1");
+        return params;
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, setSearchParams]);
 
   const users = data?.users || [];
   const pagination = data?.pagination;
 
-  const handleSearchChange = (e) => {
+  // Update URL params helper
+  const updateSearchParams = useCallback(
+    (updates) => {
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
+
+        Object.entries(updates).forEach(([key, value]) => {
+          if (value) {
+            params.set(key, value);
+          } else {
+            params.delete(key);
+          }
+        });
+
+        return params;
+      });
+    },
+    [setSearchParams]
+  );
+
+  // Handlers
+  const handleSearchChange = useCallback((e) => {
     setSearchTerm(e.target.value);
-  };
+  }, []);
 
-  const handleStatusChange = (e) => {
-    const value = e.target.value;
-    setStatusFilter(value);
-    setCurrentPage(1);
-  };
+  const handleStatusChange = useCallback(
+    (status) => {
+      setStatusFilter(status);
+      setCurrentPage(1);
+      updateSearchParams({ status, page: "1" });
+    },
+    [updateSearchParams]
+  );
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-    setSearchTerm("");
-    setStatusFilter("");
-  };
+  const handlePageChange = useCallback(
+    (page) => {
+      setCurrentPage(page);
+      updateSearchParams({ page: String(page) });
+    },
+    [updateSearchParams]
+  );
+
+  const handleTabChange = useCallback(
+    (tab) => {
+      setActiveTab(tab);
+      updateSearchParams({ page: "1", tab, search: "", status: "" });
+    },
+    [updateSearchParams]
+  );
 
   const handleToggleUserStatus = (user) => {
     const newStatus = user.status === "suspended" ? "active" : "suspended";
@@ -161,7 +222,7 @@ const UsersManagement = () => {
 
               <select
                 value={statusFilter}
-                onChange={handleStatusChange}
+                onChange={(e) => handleStatusChange(e.target.value)}
                 className="bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all cursor-pointer"
               >
                 <option value="">All Status</option>
@@ -190,7 +251,7 @@ const UsersManagement = () => {
             <Pagination
               currentPage={currentPage}
               totalPages={pagination.totalPages}
-              onPageChange={setCurrentPage}
+              onPageChange={handlePageChange}
             />
           </div>
         )}

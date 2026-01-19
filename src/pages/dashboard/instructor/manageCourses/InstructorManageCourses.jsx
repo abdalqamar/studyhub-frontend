@@ -76,9 +76,8 @@ const InstructorManageCourses = () => {
     }
   }, [isError, error]);
 
-  // Memoized values
-  const courses = useMemo(() => data?.courses || [], [data?.courses]);
-  const pagination = useMemo(() => data?.pagination, [data?.pagination]);
+  const courses = data?.courses || [];
+  const pagination = data?.pagination;
 
   // Update URL params helper
   const updateSearchParams = useCallback(
