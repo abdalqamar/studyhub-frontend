@@ -114,7 +114,7 @@ const CategrySection = () => {
                   </div>
 
                   {/* CTA */}
-                  <Link to={"/courses"}>
+                  <Link to={"/student/courses"}>
                     <button className="w-full flex items-center justify-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors group-hover:scale-105">
                       Explore Now
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

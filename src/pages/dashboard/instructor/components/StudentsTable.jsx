@@ -117,7 +117,9 @@ const StudentsTable = ({ users }) => {
                   <div className="flex items-center justify-end gap-2">
                     {/* 1. View Progress */}
                     <button
-                      onClick={() => ""} // API call + open drawer
+                      onClick={() =>
+                        warningToast("This feature is not implemented yet.")
+                      }
                       className="p-2 text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-colors"
                       title="View progress"
                     >
@@ -126,7 +128,9 @@ const StudentsTable = ({ users }) => {
 
                     {/* 2. Send Message */}
                     <button
-                      onClick={() => openMessageModal(user)}
+                      onClick={() =>
+                        warningToast("This feature is not implemented yet.")
+                      }
                       className="p-2 text-teal-400 hover:bg-teal-500/10 rounded-lg transition-colors"
                       title="Send message"
                     >
@@ -136,17 +140,7 @@ const StudentsTable = ({ users }) => {
                     {/* 3. Remove from Course */}
                     <button
                       onClick={() =>
-                        setModalData({
-                          type: "unenroll",
-                          title: "Remove Student?",
-                          message: `Remove ${fullName} from this course?`,
-                          details:
-                            "They will lose access but their account will remain.",
-                          confirmText: "Remove",
-                          cancelText: "Cancel",
-                          onConfirm: () => handleUnenroll(user._id, courseId),
-                          onClose: () => setModalData(null),
-                        })
+                        warningToast("This feature is not implemented yet.")
                       }
                       className="p-2 text-amber-500 hover:bg-amber-500/10 rounded-lg transition-colors"
                       title="Remove from course"
@@ -154,9 +148,11 @@ const StudentsTable = ({ users }) => {
                       <UserX size={16} />
                     </button>
 
-                    {/* 4. Export (optional icon) */}
+                    {/* 4. Export  */}
                     <button
-                      onClick={() => downloadStudentReport(user._id, courseId)}
+                      onClick={() =>
+                        warningToast("This feature is not implemented yet.")
+                      }
                       className="p-2 text-slate-400 hover:bg-slate-500/10 rounded-lg transition-colors"
                       title="Download report"
                     >

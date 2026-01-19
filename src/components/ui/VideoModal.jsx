@@ -1,4 +1,3 @@
-import React from "react";
 import { Play, X } from "lucide-react";
 const VideoModal = ({ modalData }) => {
   return (
