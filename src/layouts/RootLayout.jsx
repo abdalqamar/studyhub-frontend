@@ -8,6 +8,7 @@ import {
   setUser,
   setToken,
   clearAuth,
+  setAuthChecked,
 } from "../features/auth/authSlice";
 import axiosInstance from "../api/axiosInstance";
 
@@ -54,6 +55,9 @@ const RootLayout = () => {
       })
       .catch(() => {
         dispatch(clearAuth());
+      })
+      .finally(() => {
+        dispatch(setAuthChecked());
       });
   }, [dispatch]);
 

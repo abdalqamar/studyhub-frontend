@@ -20,14 +20,18 @@ import LoadingSpinner from "../components/common/LoadingSpinner";
 // export default RoleProtectedRoute;
 
 const RoleProtectedRoute = ({ children, allowedRoles }) => {
-  const { accessToken, user } = useSelector((state) => state.auth);
+  const { accessToken, user, authChecked } = useSelector((state) => state.auth);
 
-  // Not logged in
+  // ⏳ Jab tak refresh try nahi hui
+  if (!authChecked) {
+    return null; // ya layout placeholder
+  }
+
+  // ❌ Ab decision safe hai
   if (!accessToken) {
     return <Navigate to="/login" replace />;
   }
 
-  // Logged in but role not allowed
   if (allowedRoles && !allowedRoles.includes(user?.role)) {
     return <Navigate to="/unauthorized" replace />;
   }
