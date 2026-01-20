@@ -22,12 +22,10 @@ import LoadingSpinner from "../components/common/LoadingSpinner";
 const RoleProtectedRoute = ({ children, allowedRoles }) => {
   const { accessToken, user, authChecked } = useSelector((state) => state.auth);
 
-  // ⏳ Jab tak refresh try nahi hui
   if (!authChecked) {
-    return null; // ya layout placeholder
+    return null;
   }
 
-  // ❌ Ab decision safe hai
   if (!accessToken) {
     return <Navigate to="/login" replace />;
   }

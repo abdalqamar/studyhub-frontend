@@ -30,7 +30,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Courses</h4>
             {categories.map((category) => (
-              <Link key={category._id} to={"/courses"}>
+              <Link key={category._id} to={"/students/courses"}>
                 <p className="hover:text-white space-y-2 text-slate-400 transition-colors">
                   {category.name}
                 </p>

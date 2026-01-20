@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { API_ENDPOINTS } from "../api/endpoints";
 import {
-  finishLoading,
   setUser,
   setToken,
   clearAuth,
