@@ -6,10 +6,6 @@ import HighlightedText from "./ui/HighlightedText.jsx";
 const CategrySection = () => {
   const { data: categories = [], isLoading } = useCategories();
 
-  const handleCategoryClick = (id) => {
-    console.log("Category clicked:", id);
-  };
-
   if (isLoading) {
     return <div>Loading Categpries.. </div>;
   }
@@ -43,11 +39,7 @@ const CategrySection = () => {
         {/* Cards Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories?.map((category, index) => (
-            <div
-              key={index}
-              className="group cursor-pointer"
-              onClick={() => handleCategoryClick(category._id)}
-            >
+            <div key={index} className="group cursor-pointer">
               <div
                 className={`relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:border-slate-600 hover:shadow-2xl bg-gradient-to-br h-[450px] flex flex-col justify-between ${categories.gradient}`}
               >
@@ -114,7 +106,7 @@ const CategrySection = () => {
                   </div>
 
                   {/* CTA */}
-                  <Link to={"/student/courses"}>
+                  <Link to={`/student/courses?page=1&category=${category._id}`}>
                     <button className="w-full flex items-center justify-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors group-hover:scale-105">
                       Explore Now
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

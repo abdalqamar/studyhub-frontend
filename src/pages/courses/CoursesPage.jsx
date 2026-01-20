@@ -1,155 +1,5 @@
-// import { useState } from "react";
-// import { FiSearch, FiClock, FiBook } from "react-icons/fi";
-// import { Link } from "react-router-dom";
-// import { useCourses } from "../../hooks/useCourses";
-// import LoadingSpinner from "../../components/common/LoadingSpinner";
-// import { useCategories } from "../../hooks/useCategories";
-// import { formatDuration } from "../../utils/formatDuration";
-
-// const CoursesPage = () => {
-//   useCourses({
-//     search,
-//     category,
-//     page,
-//     limit,
-//   });
-
-//   const { data: courses = [], isLoading } = useCourses({});
-//   const { data: categories = [] } = useCategories();
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [category, setCategory] = useState("All");
-
-//   return (
-//     <div className="min-h-screen bg-slate-950 text-white pt-24 pb-16">
-//       {isLoading && <LoadingSpinner />}
-
-//       <section>
-//         <div className="text-center py-16  px-6 bg-slate-900  shadow-2xl border border-slate-800">
-//           <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-indigo-400 to-sky-500 bg-clip-text text-transparent tracking-tight">
-//             The Catalog of Excellence
-//           </h1>
-//           <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-400 font-light">
-//             Unlock your potential with expert-led courses across development,
-//             design, and data science.
-//           </p>
-//         </div>
-//       </section>
-
-//       {/* Filters */}
-//       <section className="max-w-7xl mx-auto py-8 px-6">
-//         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-//           <div className="relative w-full md:w-80">
-//             <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-//             <input
-//               type="text"
-//               placeholder="Search courses..."
-//               value={searchTerm}
-//               onChange={(e) => setSearch(e.target.value)}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-//             />
-//           </div>
-
-//           {/* Category */}
-//           <div className="flex flex-wrap gap-2 ">
-//             {/* All button */}
-//             <button
-//               key="all"
-//               onClick={() => setCategory("All")}
-//               className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-//                 category === "All"
-//                   ? "bg-blue-600 text-white"
-//                   : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-//               }`}
-//             >
-//               All
-//             </button>
-
-//             {categories.map((cat) => (
-//               <button
-//                 key={cat._id}
-//                 onClick={() => setCategory(cat.name)}
-//                 className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-//                   category === cat.name
-//                     ? "bg-blue-600 text-white"
-//                     : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-//                 }`}
-//               >
-//                 {cat.name}
-//               </button>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* Course Grid */}
-//       <section className="max-w-7xl mx-auto px-6">
-//         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-//           {filtered.map((c) => (
-//             <div
-//               key={c._id}
-//               className="bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden border border-gray-700 hover:border-blue-500/30"
-//             >
-//               <img
-//                 src={c.thumbnail}
-//                 alt={c.title}
-//                 className="w-full h-40 object-cover"
-//               />
-
-//               <div className="p-4">
-//                 <h3 className="text-lg font-semibold text-white line-clamp-2">
-//                   {c.title}
-//                 </h3>
-
-//                 <p className="text-sm text-gray-400 mt-1">{c.instructor}</p>
-
-//                 <div className="flex items-center gap-4 mt-3 text-sm text-gray-400">
-//                   <div className="flex items-center gap-1">
-//                     <FiClock className="text-gray-400" />
-//                     <span>{formatDuration(c.totalDuration)}</span>
-//                   </div>
-
-//                   {/* Lessons */}
-//                   <div className="flex items-center gap-1">
-//                     <FiBook className="text-gray-400" />
-//                     <span>{c.totalLectures} lessons</span>
-//                   </div>
-//                 </div>
-
-//                 {/* Price + Button */}
-//                 <div className="flex items-center justify-between mt-4">
-//                   <span className="text-xl font-bold text-white">
-//                     ₹{c.price}
-//                   </span>
-
-//                   <Link
-//                     to={`/course/${c._id}`}
-//                     className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition"
-//                   >
-//                     View Course
-//                   </Link>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         {filtered.length === 0 && (
-//           <div className="text-center text-gray-400 mt-16">
-//             <p className="text-lg">No courses found.</p>
-//             <p className="text-sm mt-2">
-//               Try adjusting your search or filter criteria.
-//             </p>
-//           </div>
-//         )}
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default CoursesPage;
-
 import { useState, useCallback, useMemo, useEffect } from "react";
-import { Search, Clock, Book, X } from "lucide-react";
+import { Search, Clock, Book, X, BookOpen } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCourses } from "../../hooks/useCourses";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
@@ -277,19 +127,41 @@ const CoursesPage = () => {
   const isLoading = coursesLoading || categoriesLoading;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
       {isLoading && <LoadingSpinner />}
 
-      {/* Hero Section */}
-      <section>
-        <div className="text-center py-16 px-6 bg-slate-900 shadow-2xl border border-slate-800">
-          <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-indigo-400 to-sky-500 bg-clip-text text-transparent tracking-tight">
-            The Catalog of Excellence
-          </h1>
-          <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-400 font-light">
-            Unlock your potential with expert-led courses across development,
-            design, and data science.
-          </p>
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#3b82f620,_transparent_60%)]" />
+
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
+
+        <div className="max-w-5xl mx-auto px-6 mt-5 relative z-10">
+          <div className="text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6 backdrop-blur-sm">
+              <BookOpen className="w-4 h-4 text-blue-400" />
+              <span className="text-sm text-blue-300 font-medium">
+                Course Catalog
+              </span>
+            </div>
+
+            {/* Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                Explore Our Courses
+              </span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+              Unlock your potential with expert-led courses across development,
+              design, and data science.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -337,7 +209,7 @@ const CoursesPage = () => {
       </section>
 
       {/* Course Grid */}
-      <section className="max-w-7xl mx-auto px-6">
+      <section className="max-w-7xl mx-auto py-8 px-6">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {courses.map((course) => (
             <div
