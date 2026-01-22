@@ -296,29 +296,23 @@ const dashboardLinks = [
     icon: CreditCard,
     type: "admin",
   },
+
   {
     id: 22,
-    name: "Reports",
-    path: "/admin/reports",
-    icon: FileText,
-    type: "admin",
-  },
-  {
-    id: 23,
     name: "Settings",
     path: "/admin/settings",
     icon: Settings,
     type: "admin",
   },
   {
-    id: 24,
+    id: 23,
     name: "Notifications",
     path: "/admin/notifications",
     icon: Bell,
     type: "admin",
   },
   {
-    id: 25,
+    id: 24,
     name: "My Profile",
     path: "/admin/profile",
     icon: Users,

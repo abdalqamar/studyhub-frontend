@@ -23,4 +23,20 @@ export const adminService = {
     );
     return data;
   },
+
+  fetchAdminDashboardStats: async () => {
+    const { data } = await axiosInstance.get(
+      API_ENDPOINTS.ADMIN_DASHBOARD_STATS
+    );
+
+    return data.data;
+  },
+
+  fetchAdminTransactions: async (params) => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_TRANSACTIONS, {
+      params,
+    });
+
+    return data.data;
+  },
 };

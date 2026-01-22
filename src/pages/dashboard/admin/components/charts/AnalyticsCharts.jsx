@@ -4,7 +4,14 @@ import CourseCategoriesChart from "./CourseCategoriesChart";
 import EnrollmentsChart from "./EnrollmentsChart";
 import TopInstructorsChart from "./TopInstructorsChart";
 
-const AnalyticsCharts = () => {
+const AnalyticsCharts = ({
+  monthlyRevenue,
+  monthlyStudents,
+  monthlyInstructors,
+  topInstructors,
+  courseCategories,
+  newEnrollments,
+}) => {
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-6">
@@ -12,14 +19,17 @@ const AnalyticsCharts = () => {
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <RevenueChart />
-        <UserGrowthChart />
+        <RevenueChart data={monthlyRevenue} />
+        <UserGrowthChart
+          monthlyStudents={monthlyStudents}
+          monthlyInstructors={monthlyInstructors}
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <CourseCategoriesChart />
-        <EnrollmentsChart />
-        <TopInstructorsChart />
+        <CourseCategoriesChart courseCategories={courseCategories} />
+        <EnrollmentsChart newEnrollments={newEnrollments} />
+        <TopInstructorsChart data={topInstructors} />
       </div>
     </div>
   );

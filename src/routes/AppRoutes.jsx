@@ -45,7 +45,6 @@ import ManageUsers from "../pages/dashboard/admin/ManageUsers";
 import AdminManageCourses from "../pages/dashboard/admin/AdminManageCourses";
 import TransactionsPage from "../pages/dashboard/admin/TransactionsPage";
 import AdminNotifications from "../pages/dashboard/admin/AdminNotifications";
-import Reports from "../pages/dashboard/admin/Repots";
 import SystemSettings from "../pages/dashboard/admin/SystemSettings";
 import CoursePreview from "../pages/dashboard/shared/CoursePreview";
 import ForgotPassword from "../pages/auth/ForgotPassword";
@@ -192,7 +191,6 @@ const router = createBrowserRouter([
           { path: "courses", element: <AdminManageCourses /> },
           { path: "course/:courseId", element: <CoursePreview /> },
           { path: "transactions", element: <TransactionsPage /> },
-          { path: "reports", element: <Reports /> },
           { path: "notifications", element: <AdminNotifications /> },
           { path: "settings", element: <SystemSettings /> },
           { path: "profile", element: <ProfileSettings /> },
