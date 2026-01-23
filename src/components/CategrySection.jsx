@@ -7,7 +7,7 @@ const CategrySection = () => {
   const { data: categories = [], isLoading } = useCategories();
 
   if (isLoading) {
-    return <div>Loading Categpries.. </div>;
+    return <div>Loading Categories.. </div>;
   }
 
   return (

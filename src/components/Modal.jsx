@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import {
   AlertTriangle,
   Trash2,
@@ -10,7 +11,6 @@ import {
 const Modal = ({ modalData }) => {
   if (!modalData) return null;
 
-  // Determine icon and colors based on type
   const getIconConfig = () => {
     switch (modalData?.type) {
       case "delete":
@@ -54,62 +54,57 @@ const Modal = ({ modalData }) => {
 
   const { icon, bgColor, buttonColor } = getIconConfig();
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-slate-900 rounded-2xl shadow-2xl p-8 w-full max-w-md mx-4 flex flex-col items-center text-center animate-in zoom-in-95 duration-200 border border-slate-700">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="relative bg-slate-900 rounded-2xl shadow-2xl p-8 w-full max-w-md mx-4 flex flex-col items-center text-center border border-slate-700">
         {/* Close button */}
         <button
           onClick={modalData?.onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-200 transition-colors"
-          aria-label="Close modal"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-200"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Icon */}
         <div
-          className={`flex items-center justify-center ${bgColor} rounded-full w-16 h-16 mb-4 shadow-lg`}
+          className={`flex items-center justify-center ${bgColor} rounded-full w-16 h-16 mb-4`}
         >
           {icon}
         </div>
 
-        {/* Title */}
         <h2 className="text-2xl font-bold mb-2 text-white">
           {modalData?.title}
         </h2>
 
-        {/* Message */}
-        <p className="text-gray-400 mb-6 leading-relaxed">
-          {modalData?.message}
-        </p>
+        <p className="text-gray-400 mb-6">{modalData?.message}</p>
 
-        {/* Additional Info (Optional) */}
         {modalData?.details && (
           <div className="w-full bg-slate-800 rounded-lg p-4 mb-6 border border-slate-700">
             <p className="text-sm text-slate-300">{modalData.details}</p>
           </div>
         )}
 
-        {/* Buttons */}
         <div className="flex gap-3 w-full">
           <button
             onClick={modalData?.onClose}
-            className="flex-1 px-6 py-3 bg-slate-700 text-slate-200 rounded-lg font-medium hover:bg-slate-600 transition-all duration-200 border border-slate-600"
+            className="flex-1 px-6 py-3 bg-slate-700 text-slate-200 rounded-lg hover:bg-slate-600"
           >
             {modalData?.cancelText || "Cancel"}
           </button>
+
           <button
             onClick={() => {
               modalData?.onConfirm?.();
               modalData?.onClose?.();
             }}
-            className={`flex-1 px-6 py-3 ${buttonColor} text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl`}
+            className={`flex-1 px-6 py-3 ${buttonColor} text-white rounded-lg`}
           >
             {modalData?.confirmText || "Confirm"}
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

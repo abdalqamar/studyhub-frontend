@@ -62,7 +62,7 @@ const UserTable = ({
         </thead>
 
         <tbody className="divide-y divide-slate-700/50">
-          {users.map((user) => {
+          {users?.map((user) => {
             const fullName = `${user?.firstName} ${user?.lastName}`;
             return (
               <tr
