@@ -6,7 +6,7 @@ export const courseService = {
     const { data } = await axiosInstance.get(API_ENDPOINTS.COURSES_MANAGE, {
       params,
     });
-    console.log(data);
+
     return data;
   },
 
@@ -15,7 +15,7 @@ export const courseService = {
     const { data } = await axiosInstance.get(API_ENDPOINTS.COURSES_PUBLIC, {
       params,
     });
-    console.log(data);
+
     return data;
   },
 
