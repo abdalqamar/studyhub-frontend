@@ -22,7 +22,7 @@ const CourseDetails = () => {
         <div className="max-w-7xl mx-auto p-6 md:px-0">
           {/* Back Button */}
           <Link
-            to={"/courses"}
+            to={"/student/courses"}
             className="inline-flex items-center text-slate-300 hover:text-white mb-4 md:mb-6 transition-colors duration-200 text-sm md:text-base"
           >
             <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
@@ -88,47 +88,10 @@ const CourseDetails = () => {
 
           {/* Purchase Card - Sidebar */}
           <div className="lg:w-1/3">
-            <CoursePurchaseCard
-              course={course}
-              user={user}
-              showVideo={showVideo}
-              setShowVideo={setShowVideo}
-            />
+            <CoursePurchaseCard course={course} user={user} />
           </div>
         </div>
       </div>
-
-      {/* Video Modal */}
-      {showVideo && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-hidden border border-slate-700/50 shadow-2xl">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-white">
-                {course?.title} - Preview
-              </h3>
-              <button
-                onClick={() => setShowVideo(false)}
-                className="w-10 h-10 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center transition-colors duration-200 text-slate-300 hover:text-white"
-              >
-                <X size={20} />
-              </button>
-            </div>
-            <div className="aspect-video bg-black rounded-lg flex items-center justify-center border border-slate-700/50">
-              <div className="text-center p-8">
-                <div className="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
-                  <Play className="w-8 h-8 text-blue-400 ml-1" />
-                </div>
-                <p className="text-slate-300 text-lg mb-2">
-                  Course preview video would play here
-                </p>
-                <p className="text-slate-500">
-                  Interactive lessons, hands-on projects, and expert guidance
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

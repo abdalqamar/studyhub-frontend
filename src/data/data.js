@@ -102,27 +102,27 @@ const features = [
 const instructors = [
   {
     name: "Abdal Qamar",
-    title: "Founder - StudyHub, Ex-Amazon, Ex-Microsoft",
+    title: "Founder – StudyHub | Full Stack Developer",
     image:
       "https://res.cloudinary.com/du7xquzsm/image/upload/v1764320764/Abdal_Instructor_lkrvjh.png",
     description:
-      "Abdal Qamar is a Software Engineer , primarily known for his Coding and Software Engineering skills. He is quite a popular figure among students as well as working professionals on various social media platforms, his  LinkedIn profiles amassing almost",
-    students: "500k+ students",
+      "Abdal Qamar is a self-driven Full Stack Developer and the founder of StudyHub, a modern learning platform focused on practical and structured education. He has hands-on experience building real-world web applications, including a Learning Management System (LMS) with authentication, role-based access, payments, and dashboards.",
+    students: "Project-Based Learning",
     education:
-      "He's also mentored students so far. He has done his B.Tech (IT) from the Netaji Subhash Institute of Technology (NSIT), Delhi, and worked in",
-    companies: ["Amazon", "Microsoft"],
+      "Currently pursuing a Bachelor of Arts (B.A.) while continuously improving skills in modern frontend and backend technologies through real-world projects.",
+    companies: ["StudyHub", "Open Source"],
   },
   {
     name: "Ishtiyaque Ahmad",
-    title: "Co-Founder - StudyHub, Senior Software Engineer, Ex-Google",
+    title: "Co-Founder – StudyHub | Aspiring Software Engineer",
     image:
       "https://res.cloudinary.com/du7xquzsm/image/upload/v1764321095/ishtiyague_ac92ui.png",
     description:
-      "Ishtiyage Ahmad is an experienced software engineer specializing in System Design and competitive programming. With years of experience at top tech companies, he brings real-world insights to teaching.",
-    students: "300k+ students",
+      "Ishtiyaque Ahmad is a Co-Founder of StudyHub and an aspiring Software Engineer with a strong interest in system design, problem-solving, and backend development. He actively contributes to building StudyHub and supports learners through hands-on project-based mentoring.",
+    students: "Hands-on Mentorship",
     education:
-      "He has mentored thousands of students and helped them crack interviews at FAANG companies. IIT Delhi graduate with expertise in",
-    companies: ["Google", "Meta"],
+      "Currently pursuing a Bachelor of Technology (B.Tech) and focused on strengthening core computer science fundamentals through practical application development.",
+    companies: ["StudyHub"],
   },
 ];
 

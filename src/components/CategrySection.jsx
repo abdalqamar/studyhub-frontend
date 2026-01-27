@@ -71,7 +71,6 @@ const CategrySection = () => {
                   <p className="text-slate-400 text-xs mb-4 leading-relaxed line-clamp-2">
                     {category.description}
                   </p>
-
                   {/* Stats Grid */}
                   <div className="grid grid-cols-3 gap-2 mb-3">
                     <div className="bg-slate-700/40 rounded-lg p-2 text-center">
@@ -92,16 +91,6 @@ const CategrySection = () => {
                         <span className="text-xs">{category.avgRating}</span>
                       </div>
                       <div className="text-slate-400 text-[10px]">Rating</div>
-                    </div>
-                  </div>
-
-                  {/* Salary */}
-                  <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-2 mb-3 text-center">
-                    <div className="text-emerald-400 font-bold text-sm">
-                      ₹6-15 LPA
-                    </div>
-                    <div className="text-slate-400 text-[10px]">
-                      Avg. Salary
                     </div>
                   </div>
 
