@@ -1,5 +1,3 @@
-// components/tabs/OverviewTab.jsx
-import React from "react";
 import { Check } from "lucide-react";
 
 const OverviewTab = ({ courseData }) => {
@@ -36,7 +34,7 @@ const OverviewTab = ({ courseData }) => {
             Requirements
           </h2>
           <div className="space-y-3">
-            {courseData.requirements[0].split(",").map((req, index) => (
+            {courseData.requirements.map((req, index) => (
               <div
                 key={index}
                 className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-700/30 transition-all duration-200"

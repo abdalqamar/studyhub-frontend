@@ -3,7 +3,7 @@ import { Edit, Video, FileText } from "lucide-react";
 import { useUpdateCourse } from "../../../../hooks/useCourses";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
 
-const CoursePreview = ({ course, courseId, onBack, onEditStep }) => {
+const CoursePreviewAndSubmit = ({ course, courseId, onBack, onEditStep }) => {
   const updateCourse = useUpdateCourse(courseId);
 
   const navigate = useNavigate();
@@ -24,11 +24,14 @@ const CoursePreview = ({ course, courseId, onBack, onEditStep }) => {
   const totalDuration =
     course?.courseContent?.reduce((sum, sec) => {
       const sectionDur = sec.lesson?.reduce(
-        (acc, lesson) => acc + (parseInt(lesson.duration) || 0),
+        (acc, lesson) => acc + (Number(lesson.duration) || 0),
         0
       );
+      console.log(sec);
       return sum + sectionDur;
     }, 0) || 0;
+
+  const totalMinutes = Math.round(totalDuration);
 
   const handlePublish = async () => {
     const formData = new FormData();
@@ -83,7 +86,7 @@ const CoursePreview = ({ course, courseId, onBack, onEditStep }) => {
 
                 <div className="flex flex-wrap items-center gap-3 text-slate-400 text-xs mt-3">
                   <span>Category: {course.category?.name}</span>
-                  <span>• Price: ${course.price}</span>
+                  <span>• Price: ₹{course.price}</span>
                   <span>• {course.courseContent?.length || 0} sections</span>
                   <span>• {totalLectures} lectures</span>
                 </div>
@@ -155,7 +158,7 @@ const CoursePreview = ({ course, courseId, onBack, onEditStep }) => {
 
             <div className="flex justify-between text-sm text-slate-300">
               <span>Total Duration:</span>
-              <span>{totalDuration} mins</span>
+              <span>{totalMinutes} mins</span>
             </div>
           </div>
 
@@ -197,4 +200,4 @@ const CoursePreview = ({ course, courseId, onBack, onEditStep }) => {
   );
 };
 
-export default CoursePreview;
+export default CoursePreviewAndSubmit;

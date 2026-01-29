@@ -146,20 +146,12 @@ const InstructorManageCourses = () => {
     [navigate, user?.role]
   );
 
-  const handleFeedback = useCallback(
-    (course) => {
-      navigate(`/instructor/course/${course._id}/feedback`);
-    },
-    [navigate]
-  );
-
   const handleCourseAction = useCallback(
     async (action, course) => {
       const actions = {
         edit: () => handleEditCourse(course),
         delete: () => handleDeleteCourse(course),
         preview: () => handlePreviewCourse(course),
-        feedback: () => handleFeedback(course),
       };
 
       const actionHandler = actions[action];
@@ -169,7 +161,8 @@ const InstructorManageCourses = () => {
         console.warn("Unknown action:", action);
       }
     },
-    [handleEditCourse, handleDeleteCourse, handlePreviewCourse, handleFeedback]
+
+    [handleEditCourse, handleDeleteCourse, handlePreviewCourse]
   );
 
   const handleAddCourse = useCallback(() => {

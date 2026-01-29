@@ -34,7 +34,7 @@ const CourseModals = ({
       )}
 
       {/* Feedback Modal for Instructor View */}
-      {showFeedbackModal && selectedCourse?.feedback && (
+      {showFeedbackModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
           <div className="bg-slate-900 border border-slate-700 shadow-2xl rounded-2xl p-6 w-full max-w-md animate-in zoom-in-95 duration-200">
             {/* Header */}
@@ -42,18 +42,12 @@ const CourseModals = ({
               <h3 className="text-xl font-semibold text-white">
                 Rejection Feedback
               </h3>
-              <button
-                onClick={() => onClose("feedback")}
-                className="text-slate-400 hover:text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
             </div>
 
             {/* Feedback Content */}
             <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4 mb-4">
               <p className="text-orange-400 font-semibold mb-1">
-                Course: {selectedCourse?.courseName || selectedCourse?.title}
+                Course: {selectedCourse?.title}
               </p>
 
               <p className="text-slate-400 text-xs mb-3">

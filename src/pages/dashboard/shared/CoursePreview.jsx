@@ -9,7 +9,7 @@ const CoursePreview = () => {
   const { user } = useSelector((state) => state.auth);
   const { courseId } = useParams();
   const { data: courseData, isLoading } = useCoursePreview(courseId);
-  console.log(courseData);
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -41,8 +41,8 @@ const CoursePreview = () => {
                   courseData?.status === "approved"
                     ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
                     : courseData?.status === "pending"
-                    ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                    : "bg-rose-500/20 text-rose-300 border-rose-500/40"
+                      ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                      : "bg-rose-500/20 text-rose-300 border-rose-500/40"
                 }`}
               >
                 <span
@@ -50,8 +50,8 @@ const CoursePreview = () => {
                     courseData?.status === "approved"
                       ? "bg-emerald-400"
                       : courseData?.status === "pending"
-                      ? "bg-amber-400"
-                      : "bg-rose-400"
+                        ? "bg-amber-400"
+                        : "bg-rose-400"
                   }`}
                 />
                 <span className="capitalize">{courseData?.status}</span>
