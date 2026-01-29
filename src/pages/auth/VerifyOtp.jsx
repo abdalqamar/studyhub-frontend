@@ -22,7 +22,6 @@ const VerifyOtp = () => {
   });
 
   const handleVerify = () => {
-    console.log("button click");
     if (!signupState) {
       toast.error("Session expired. Please register again.");
       return navigate("/register");
