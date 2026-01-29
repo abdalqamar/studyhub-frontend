@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { ArrowLeft, X, Clock, Users, Star, BookOpen, Play } from "lucide-react";
+import { ArrowLeft, Clock, Users, Star, BookOpen } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useCourseDetails } from "../../hooks/useCourses";
@@ -11,7 +10,6 @@ const CourseDetails = () => {
   const { courseId } = useParams();
   const { data: course, isLoading } = useCourseDetails(courseId);
   const { user } = useSelector((state) => state.auth);
-  const [showVideo, setShowVideo] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden pt-32 ">
@@ -23,9 +21,9 @@ const CourseDetails = () => {
           {/* Back Button */}
           <Link
             to={"/student/courses"}
-            className="inline-flex items-center text-slate-300 hover:text-white mb-4 md:mb-6 transition-colors duration-200 text-sm md:text-base"
+            className="inline-flex items-center bg-slate-700 px-3 py-2 rounded-lg text-white hover:bg-slate-600 mb-4 md:mb-6 transition-all duration-200 text-sm md:text-base"
           >
-            <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
+            <ArrowLeft className="w-4 h-4 mr-2" />
             Back to courses
           </Link>
 
@@ -49,29 +47,43 @@ const CourseDetails = () => {
             {/* Rating */}
             <div className="flex items-center bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
               <Star className="w-4 h-4 text-yellow-400 mr-2 flex-shrink-0 fill-current" />
-              <span className="text-yellow-400 font-semibold mr-1 whitespace-nowrap">
-                {course?.averageRating}
-              </span>
-              Avg Ratings
+              {course?.averageRating > 0 ? (
+                <>
+                  <span className="text-yellow-400 font-semibold mr-1 whitespace-nowrap">
+                    {course.averageRating}
+                  </span>
+                  <span className="text-slate-400">Avg Ratings</span>
+                </>
+              ) : (
+                <span className="text-slate-400">No ratings yet</span>
+              )}
             </div>
 
             {/* Students */}
             <div className="flex items-center text-slate-400 bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
               <Users className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="truncate">{course?.totalStudents} students</span>
+              <span className="truncate">
+                {course?.totalStudents > 0
+                  ? `${course.totalStudents} student${course.totalStudents !== 1 ? "s" : ""}`
+                  : "Be the first student!"}
+              </span>
             </div>
 
             {/* Duration */}
             <div className="flex items-center text-slate-400 bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
               <Clock className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="truncate">{course?.totalDuration}</span>
+              <span className="truncate">
+                {course?.totalDuration || "Duration not set"}
+              </span>
             </div>
 
             {/* Lectures */}
             <div className="flex items-center text-slate-400 bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
               <BookOpen className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">
-                {course?.totalLectures || 28} lectures
+                {course?.totalLectures > 0
+                  ? `${course.totalLectures} lecture${course.totalLectures !== 1 ? "s" : ""}`
+                  : "No lectures yet"}
               </span>
             </div>
           </div>

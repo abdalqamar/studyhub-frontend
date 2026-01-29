@@ -57,7 +57,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="fixed top-0 w-full z-50 bg-slate-900/40 backdrop-blur-lg border-b border-slate-700 px-6 transition-all duration-300"
+        className="fixed top-0 w-full z-50 bg-slate-900/40 backdrop-blur-lg border-b border-slate-700 px-6 py-1 transition-all duration-300"
         role="navigation"
         aria-label="Main navigation"
       >

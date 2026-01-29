@@ -7,6 +7,7 @@ import { useCategories } from "../../hooks/useCategories";
 import { formatDuration } from "../../utils/formatDuration";
 import { errorToast } from "../../utils/toastUtils";
 import SearchBar from "../../components/common/SearchBar";
+import Pagination from "../dashboard/shared/Pagination";
 
 const CoursesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +24,7 @@ const CoursesPage = () => {
   );
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
 
-  const ITEMS_PER_PAGE = 12;
+  const ITEMS_PER_PAGE = 1;
 
   // Fetch data
   const {
@@ -45,22 +46,10 @@ const CoursesPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-      setCurrentPage(1);
-
-      setSearchParams((prev) => {
-        const params = new URLSearchParams(prev);
-        if (searchTerm) {
-          params.set("search", searchTerm);
-        } else {
-          params.delete("search");
-        }
-        params.set("page", "1");
-        return params;
-      });
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, setSearchParams]);
+  }, [searchTerm]);
 
   // Error handling
   useEffect(() => {
@@ -75,10 +64,8 @@ const CoursesPage = () => {
     [coursesData?.courses]
   );
   const categories = useMemo(() => categoriesData || [], [categoriesData]);
-  const pagination = useMemo(
-    () => coursesData?.pagination,
-    [coursesData?.pagination]
-  );
+
+  const pagination = coursesData?.pagination;
 
   // Update URL params helper
   const updateSearchParams = useCallback(
@@ -101,9 +88,15 @@ const CoursesPage = () => {
   );
 
   // Handlers
-  const handleSearchChange = useCallback((e) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+      setCurrentPage(1);
+      updateSearchParams({ search: value, page: "1" });
+    },
+    [updateSearchParams]
+  );
 
   const handleCategoryChange = useCallback(
     (categoryName) => {
@@ -118,7 +111,6 @@ const CoursesPage = () => {
     (page) => {
       setCurrentPage(page);
       updateSearchParams({ page: String(page) });
-      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     [updateSearchParams]
   );
@@ -221,9 +213,6 @@ const CoursesPage = () => {
                   src={course.thumbnail || "/placeholder-course.jpg"}
                   alt={course.title}
                   className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                  onError={(e) => {
-                    e.target.src = "/placeholder-course.jpg";
-                  }}
                 />
                 {course.category && (
                   <span className="absolute top-2 right-2 px-2 py-1 bg-blue-600/90 text-white text-xs rounded-full">
@@ -243,25 +232,34 @@ const CoursesPage = () => {
 
                 <div className="flex items-center gap-4 mt-3 text-sm text-gray-400">
                   {/* Duration */}
-                  <div className="flex items-center gap-1">
-                    <Clock className="text-gray-400" />
-                    <span>{formatDuration(course.totalDuration)}</span>
-                  </div>
+                  {course.totalDuration > 0 && (
+                    <div className="flex items-center gap-1">
+                      <Clock className="text-gray-400" />
+                      <span>{formatDuration(course.totalDuration)}</span>
+                    </div>
+                  )}
 
                   {/* Lessons */}
-                  <div className="flex items-center gap-1">
-                    <Book className="text-gray-400" />
-                    <span>{course.totalLectures || 0} lessons</span>
-                  </div>
+                  {course.totalLectures > 0 && (
+                    <div className="flex items-center gap-1">
+                      <Book className="text-gray-400" />
+                      <span>{course.totalLectures} lessons</span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Rating */}
-
                 <div className="flex items-center gap-1 mt-2">
-                  <span className="text-yellow-500">★</span>
-                  <span className="text-sm text-gray-300">
-                    {course.averageRating}
-                  </span>
+                  {/* Rating */}
+                  {course.averageRating > 0 && (
+                    <>
+                      <span className="text-yellow-500">★</span>
+                      <span className="text-sm text-gray-300">
+                        {course.averageRating.toFixed(1)}
+                      </span>
+                    </>
+                  )}
+
+                  {/* Enrolled count */}
                   {course.enrolledCount > 0 && (
                     <span className="text-xs text-gray-500">
                       ({course.enrolledCount} students)
@@ -301,42 +299,13 @@ const CoursesPage = () => {
         )}
 
         {/* Pagination */}
-        {pagination && pagination.totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-12">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-4 py-2 rounded-lg bg-gray-800 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition"
-            >
-              Previous
-            </button>
-
-            <div className="flex gap-2">
-              {Array.from(
-                { length: pagination.totalPages },
-                (_, i) => i + 1
-              ).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 rounded-lg transition ${
-                    currentPage === page
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-            </div>
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === pagination.totalPages}
-              className="px-4 py-2 rounded-lg bg-gray-800 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition"
-            >
-              Next
-            </button>
+        {pagination?.totalPages > 1 && (
+          <div className="pb-6">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={pagination.totalPages}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
       </section>

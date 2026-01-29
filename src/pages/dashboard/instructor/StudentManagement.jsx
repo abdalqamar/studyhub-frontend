@@ -38,22 +38,10 @@ const StudentManagement = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-      setCurrentPage(1);
-
-      setSearchParams((prev) => {
-        const params = new URLSearchParams(prev);
-        if (searchTerm) {
-          params.set("search", searchTerm);
-        } else {
-          params.delete("search");
-        }
-        params.set("page", "1");
-        return params;
-      });
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, setSearchParams]);
+  }, [searchTerm]);
 
   const users = data?.users || [];
   const pagination = data?.pagination;
@@ -90,15 +78,10 @@ const StudentManagement = () => {
     (updates) => {
       setSearchParams((prev) => {
         const params = new URLSearchParams(prev);
-
         Object.entries(updates).forEach(([key, value]) => {
-          if (value) {
-            params.set(key, value);
-          } else {
-            params.delete(key);
-          }
+          if (value) params.set(key, value);
+          else params.delete(key);
         });
-
         return params;
       });
     },
@@ -106,9 +89,15 @@ const StudentManagement = () => {
   );
 
   // Handlers
-  const handleSearchChange = useCallback((e) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+      setCurrentPage(1);
+      updateSearchParams({ search: value, page: "1" });
+    },
+    [updateSearchParams]
+  );
 
   const handleStatusChange = useCallback(
     (status) => {

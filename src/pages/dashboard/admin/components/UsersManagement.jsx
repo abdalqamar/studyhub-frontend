@@ -52,22 +52,10 @@ const UsersManagement = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-      setCurrentPage(1);
-
-      setSearchParams((prev) => {
-        const params = new URLSearchParams(prev);
-        if (searchTerm) {
-          params.set("search", searchTerm);
-        } else {
-          params.delete("search");
-        }
-        params.set("page", "1");
-        return params;
-      });
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, setSearchParams]);
+  }, [searchTerm]);
 
   const users = data?.users || [];
   const pagination = data?.pagination;
@@ -93,10 +81,17 @@ const UsersManagement = () => {
   );
 
   // Handlers
-  const handleSearchChange = useCallback((e) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+      setCurrentPage(1);
+      updateSearchParams({ search: value, page: "1" });
+    },
+    [updateSearchParams]
+  );
 
+  // Status filter change
   const handleStatusChange = useCallback(
     (status) => {
       setStatusFilter(status);
@@ -106,6 +101,7 @@ const UsersManagement = () => {
     [updateSearchParams]
   );
 
+  // Page change
   const handlePageChange = useCallback(
     (page) => {
       setCurrentPage(page);
@@ -114,10 +110,14 @@ const UsersManagement = () => {
     [updateSearchParams]
   );
 
+  // Tab change (students/instructors)
   const handleTabChange = useCallback(
     (tab) => {
       setActiveTab(tab);
-      updateSearchParams({ page: "1", tab, search: "", status: "" });
+      setSearchTerm("");
+      setStatusFilter("");
+      setCurrentPage(1);
+      updateSearchParams({ tab, page: "1" });
     },
     [updateSearchParams]
   );
