@@ -27,7 +27,7 @@ const CoursePreviewAndSubmit = ({ course, courseId, onBack, onEditStep }) => {
         (acc, lesson) => acc + (Number(lesson.duration) || 0),
         0
       );
-      console.log(sec);
+
       return sum + sectionDur;
     }, 0) || 0;
 

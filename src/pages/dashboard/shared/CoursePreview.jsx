@@ -22,9 +22,12 @@ const CoursePreview = () => {
               ? "/admin/courses"
               : "/instructor/manage-courses"
           }
-          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 rounded-lg transition-all duration-200 border border-slate-600/50 hover:border-slate-500/50"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-200 hover:text-white rounded-lg transition-all duration-200 border border-slate-600/50 hover:border-slate-500/50 hover:shadow-lg group"
         >
-          <ArrowLeft size={18} />
+          <ArrowLeft
+            size={18}
+            className="group-hover:-translate-x-1 transition-transform duration-200"
+          />
           <span className="hidden sm:inline">Back to courses</span>
         </Link>
       </div>
