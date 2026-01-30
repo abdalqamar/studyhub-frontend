@@ -132,9 +132,7 @@ const AdminManageCourses = () => {
   const handleApproveCourse = useCallback(
     async (course) => {
       if (
-        !window.confirm(
-          `Are you sure you want to approve "${course.courseName}"?`
-        )
+        !window.confirm(`Are you sure you want to approve "${course.title}"?`)
       ) {
         return;
       }
