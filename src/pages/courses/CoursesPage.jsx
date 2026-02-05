@@ -252,9 +252,11 @@ const CoursesPage = () => {
                   {/* Rating */}
                   {course.averageRating > 0 && (
                     <>
-                      <span className="text-yellow-500">★</span>
-                      <span className="text-sm text-gray-300">
-                        {course.averageRating.toFixed(1)}
+                      <span className="text-lg font-bold text-white">
+                        {course?.averageRating || 0}
+                      </span>
+                      <span className="text-sm text-slate-400 whitespace-nowrap">
+                        out of 5
                       </span>
                     </>
                   )}

@@ -25,24 +25,26 @@ const CourseTabs = ({ courseData, defaultTab = "overview" }) => {
 
   return (
     <div className="w-full">
-      {/* Tabs Navigation */}
-      <div className="bg-slate-800/30 backdrop-blur-sm border-slate-700/ rounded-lg ">
-        <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:overflow-x-auto sm:scrollbar-hide gap-2 sm:gap-1 p-2 sm:p-0">
+      <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:overflow-x-auto sm:scrollbar-hide gap-2 sm:gap-0 p-2 sm:p-0">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative px-4 py-3 sm:px-6 sm:py-4 text-sm sm:text-base capitalize font-medium transition-all duration-200 whitespace-nowrap rounded-lg sm:rounded-none ${
+              className={`relative px-4 py-3 sm:px-6 sm:py-4 text-sm sm:text-base capitalize font-medium transition-all duration-300 whitespace-nowrap rounded-lg sm:rounded-none
+              ${
                 activeTab === tab.id
-                  ? "text-white bg-slate-800/50 sm:bg-transparent"
-                  : "text-slate-400 hover:text-slate-300 bg-slate-800/30 sm:bg-transparent"
+                  ? "text-white bg-gradient-to-br from-blue-500/20 to-purple-500/20 sm:bg-none shadow-lg sm:shadow-none border-2 border-blue-400/50 sm:border-0"
+                  : "text-slate-400 hover:text-slate-200 bg-slate-800/20 sm:bg-transparent hover:bg-slate-700/30 border-2 border-transparent sm:border-0"
               }`}
             >
-              {tab.label}
+              <span className="relative z-10">{tab.label}</span>
+
+              {/* Active indicator for desktop */}
               {activeTab === tab.id && (
                 <>
-                  <div className="hidden sm:block absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-t-full"></div>
-                  <div className="hidden sm:block absolute inset-0 bg-white/5 rounded-t-lg"></div>
+                  <div className="hidden sm:block absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 animate-pulse"></div>
+                  <div className="hidden sm:block absolute inset-0 bg-gradient-to-b from-transparent to-white/5"></div>
                 </>
               )}
             </button>
@@ -54,12 +56,10 @@ const CourseTabs = ({ courseData, defaultTab = "overview" }) => {
       <div className="max-w-7xl mx-auto py-8">
         <div className="grid grid-cols-1 gap-8">
           <div className="space-y-8">
-            {/* Overview Tab */}
             {activeTab === "overview" && (
               <OverviewTab courseData={courseData} />
             )}
 
-            {/* Curriculum Tab */}
             {activeTab === "curriculum" && (
               <CurriculumTab
                 courseData={courseData}
@@ -68,10 +68,8 @@ const CourseTabs = ({ courseData, defaultTab = "overview" }) => {
               />
             )}
 
-            {/* Reviews Tab */}
             {activeTab === "reviews" && <ReviewsTab courseData={courseData} />}
 
-            {/* Instructor Tab */}
             {activeTab === "instructor" && (
               <InstructorTab courseData={courseData} />
             )}

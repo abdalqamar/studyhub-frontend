@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle, AlertCircle, Lock } from "lucide-react";
+import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import LoaderButton from "../../components/ui/LoaderButton";
 import InputField from "../../components/ui/InputField";
@@ -39,140 +39,126 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center py-28 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-32 left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-32 right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" />
+        <div
+          className="absolute bottom-1/4 -right-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center px-6 pt-24 sm:pt-32 pb-16 sm:pb-20">
-        <div className="max-w-md w-full">
-          {/* Header */}
-          <div className="text-center mb-12 space-y-4">
-            <div className="flex justify-center mb-6">
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 shadow-lg">
-                <Lock className="w-8 h-8 text-white" />
+      <div className="relative z-10 w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-3">Reset Password</h1>
+          <p className="text-slate-400 text-base">
+            Enter your email and we'll send you a reset link
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <div className="bg-slate-800/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-slate-700">
+          {/* Success Message */}
+          {message && (
+            <div className="mb-6 p-4 rounded-xl border border-green-800/50 bg-green-900/30 flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-green-200">{message}</p>
+                <p className="text-xs text-green-300/70 mt-1">
+                  Check your spam folder if you don't see it
+                </p>
               </div>
             </div>
+          )}
 
-            <h1 className="text-5xl font-bold text-cyan-400">Reset Password</h1>
-            <p className="text-slate-400 text-lg">
-              Enter your email and we'll send you a reset link
-            </p>
-          </div>
-
-          {/* Form Card */}
-          <div className="bg-slate-900/40 backdrop-blur border border-slate-800/50 rounded-3xl p-8 space-y-6 shadow-xl">
-            {/* Success Message */}
-            {message && (
-              <div className="p-4 rounded-xl border border-green-500/30 bg-green-500/10 flex items-start gap-3 animate-in fade-in">
-                <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-green-300">
-                    {message}
-                  </p>
-                  <p className="text-xs text-green-400/70 mt-1">
-                    Check your spam folder if you don't see it
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Error Message */}
-
-            {/* Form Fields */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <InputField
-                  label="Email Address"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  error={error}
-                />
-              </div>
-
-              {/* Send Button */}
-
-              <LoaderButton
-                text="Send Reset Link"
-                loadingText="Sending..."
-                loading={forgotPasswordMutation.isPending}
-                type="submit"
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email Input */}
+            <div>
+              <InputField
+                label="Email Address"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                error={error}
               />
-
-              {/* Back Button */}
-              <button
-                type="button"
-                onClick={handleNavigate}
-                disabled={forgotPasswordMutation.isPending}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-slate-800/50 text-slate-300 hover:text-slate-100 hover:border-slate-700 hover:bg-slate-900/50 transition disabled:opacity-30 font-medium"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Back to Login
-              </button>
-            </form>
-
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-800/50"></div>
-              </div>
-              <div className="relative flex justify-center">
-                <span className="px-3 bg-slate-900/40 text-xs font-medium text-slate-400 uppercase tracking-wider">
-                  Important
-                </span>
-              </div>
             </div>
 
-            {/* Information List */}
-            <div className="space-y-3 text-sm text-slate-400">
-              <div className="flex items-start gap-3">
-                <span className="text-blue-400 font-bold text-lg leading-none mt-0.5">
-                  •
-                </span>
-                <span>
-                  Reset link expires in{" "}
-                  <span className="text-slate-200 font-medium">5 minutes</span>
-                </span>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-cyan-400 font-bold text-lg leading-none mt-0.5">
-                  •
-                </span>
-                <span>
-                  Check{" "}
-                  <span className="text-slate-200 font-medium">
-                    spam folder
-                  </span>{" "}
-                  if not received
-                </span>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-purple-400 font-bold text-lg leading-none mt-0.5">
-                  •
-                </span>
-                <span>
-                  You'll be{" "}
-                  <span className="text-slate-200 font-medium">logged out</span>{" "}
-                  on all devices
-                </span>
-              </div>
+            {/* Send Button */}
+            <LoaderButton
+              text="Send Reset Link"
+              loadingText="Sending..."
+              loading={forgotPasswordMutation.isPending}
+              type="submit"
+            />
+
+            {/* Back Button */}
+            <button
+              type="button"
+              onClick={handleNavigate}
+              disabled={forgotPasswordMutation.isPending}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-slate-700 bg-slate-700/30 text-slate-300 hover:text-white hover:border-slate-600 hover:bg-slate-700/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              Back to Login
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-700"></div>
+            </div>
+            <div className="relative flex justify-center">
+              <span className="px-3 bg-slate-800/80 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Important Information
+              </span>
             </div>
           </div>
 
-          {/* Support Link */}
-          <div className="mt-8 text-center">
-            <p className="text-slate-400 text-sm">
-              Still having issues?{" "}
-              <button className="text-cyan-400 hover:text-blue-400 font-semibold transition">
-                Contact support
-              </button>
-            </p>
+          {/* Information List */}
+          <div className="space-y-2.5 text-sm text-slate-400">
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+              <p>
+                Reset link expires in{" "}
+                <span className="text-white font-semibold">5 minutes</span>
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-2 flex-shrink-0" />
+              <p>
+                Check{" "}
+                <span className="text-white font-semibold">spam folder</span> if
+                not received
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
+              <p>
+                You'll be{" "}
+                <span className="text-white font-semibold">logged out</span> on
+                all devices after reset
+              </p>
+            </div>
           </div>
+        </div>
+
+        {/* Support Link */}
+        <div className="mt-6 text-center">
+          <p className="text-slate-400 text-sm">
+            Still having issues?{" "}
+            <button
+              type="button"
+              className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
+            >
+              Contact Support
+            </button>
+          </p>
         </div>
       </div>
     </div>

@@ -160,4 +160,13 @@ export const courseService = {
     );
     return data.lessonId;
   },
+
+  createCourseReview: async (courseId, reviewData) => {
+    const { data } = await axiosInstance.post(
+      API_ENDPOINTS.CREATE_REVIEW(courseId),
+      reviewData
+    );
+    console.log(data);
+    return data;
+  },
 };

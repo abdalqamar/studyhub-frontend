@@ -2,9 +2,12 @@ import { Star, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import LoaderButton from "./ui/LoaderButton";
-import { errorToast, successToast } from "../utils/toastUtils";
+import { errorToast } from "../utils/toastUtils";
+import { useCreateCourseReview } from "../hooks/useCourses";
 
 const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
+  const { mutate: createReview, isPending } = useCreateCourseReview(courseId);
+
   const {
     register,
     handleSubmit,
@@ -24,30 +27,29 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
 
   // Reset form when opened
   useEffect(() => {
+    register("rating", { required: true });
     reset({ rating: 0, review: "" });
-  }, []);
+  }, [register, reset]);
 
   // Submit Handler
-  const onSubmit = async (data) => {
-    console.log(data);
-    console.log(courseId);
-    try {
-      //   await createRating({
-      //     courseId,
-      //     rating: data.rating,
-      //     review: data.review,
-      //   });
-
-      // Close modal
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-      setShowReviewModal(false);
-      setIsSidebarOpen(false);
-      successToast("Review submited");
-      // Reset modal
-      reset();
-    } catch (err) {
-      errorToast("Review submit failed", err);
-    }
+  const onSubmit = (data) => {
+    createReview(
+      {
+        rating: data.rating,
+        review: data.review,
+      },
+      {
+        onSuccess: () => {
+          setShowReviewModal(false);
+          setIsSidebarOpen(false);
+          reset();
+        },
+        onError: (err) => {
+          errorToast(err?.response?.data?.message);
+          setShowReviewModal(false);
+        },
+      }
+    );
   };
 
   return (
@@ -118,6 +120,7 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
           <div className="flex gap-3 pt-4">
             <button
               type="button"
+              disabled={isPending}
               onClick={() => setShowReviewModal(false)}
               className="flex-1 py-3 px-4 text-blue-400 hover:text-blue-300 border border-blue-500/30  hover:border-blue-400/40 bg-slate-800 hover:bg-slate-800/80 font-semibold rounded-lg transition-all duration-300"
             >
@@ -126,8 +129,8 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
             <LoaderButton
               text="Submit Review"
               loadingText="Submitting..."
-              loading={""}
-              disabled={rating === 0 || !reviewText.trim()}
+              loading={isPending}
+              disabled={rating === 0 || !reviewText.trim() || isPending}
               type="submit"
               className={`flex-1 py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed `}
             />

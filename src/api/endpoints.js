@@ -38,7 +38,7 @@ export const API_ENDPOINTS = {
   ADMIN_DELETE_USER: (id) => `/admin/users/${id}`,
 
   // Ratings
-  COURSE_REVIEWS: (id) => `/courses/${id}/reviews`,
+  CREATE_REVIEW: (id) => `/courses/${id}/reviews`,
 
   // Sections
   CREATE_SECTION: (courseId) => `/courses/${courseId}/sections`,

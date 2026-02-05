@@ -42,48 +42,56 @@ const CourseDetails = () => {
             {course?.description}
           </p>
 
-          {/* Stats - Flex wrap version */}
-          <div className="flex flex-wrap gap-3 md:gap-4 lg:gap-6">
+          {/* Stats   */}
+          <div className="flex flex-wrap gap-3 md:gap-4">
             {/* Rating */}
-            <div className="flex items-center bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
-              <Star className="w-4 h-4 text-yellow-400 mr-2 flex-shrink-0 fill-current" />
+            <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2.5 rounded-lg flex-1 min-w-[140px] sm:flex-initial">
               {course?.averageRating > 0 ? (
                 <>
-                  <span className="text-yellow-400 font-semibold mr-1 whitespace-nowrap">
-                    {course.averageRating}
+                  <Star
+                    className="text-yellow-400 fill-yellow-400 flex-shrink-0"
+                    size={18}
+                  />
+                  <span className="text-lg font-bold text-white">
+                    {course?.averageRating || 0}
                   </span>
-                  <span className="text-slate-400">Avg Ratings</span>
+                  <span className="text-sm text-slate-400 whitespace-nowrap">
+                    out of 5
+                  </span>
                 </>
               ) : (
-                <span className="text-slate-400">No ratings yet</span>
+                <>
+                  <Star className="text-slate-500 flex-shrink-0" size={18} />
+                  <span className="text-sm text-slate-400">No ratings yet</span>
+                </>
               )}
             </div>
 
             {/* Students */}
-            <div className="flex items-center text-slate-400 bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
-              <Users className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="truncate">
+            <div className="flex items-center gap-2 text-slate-400 bg-slate-800/50 px-4 py-2.5 rounded-lg flex-1 min-w-[140px] sm:flex-initial">
+              <Users className="w-4 h-4 flex-shrink-0" />
+              <span className="text-sm truncate">
                 {course?.totalStudents > 0
                   ? `${course.totalStudents} student${course.totalStudents !== 1 ? "s" : ""}`
-                  : "Be the first student!"}
+                  : "Be the first!"}
               </span>
             </div>
 
             {/* Duration */}
-            <div className="flex items-center text-slate-400 bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
-              <Clock className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="truncate">
-                {course?.totalDuration || "Duration not set"}
+            <div className="flex items-center gap-2 text-slate-400 bg-slate-800/50 px-4 py-2.5 rounded-lg flex-1 min-w-[140px] sm:flex-initial">
+              <Clock className="w-4 h-4 flex-shrink-0" />
+              <span className="text-sm truncate">
+                {course?.totalDuration || "Not set"}
               </span>
             </div>
 
             {/* Lectures */}
-            <div className="flex items-center text-slate-400 bg-slate-800/50 px-3 py-2 rounded-lg text-sm flex-1 min-w-[150px] sm:min-w-0 sm:flex-initial">
-              <BookOpen className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="truncate">
+            <div className="flex items-center gap-2 text-slate-400 bg-slate-800/50 px-4 py-2.5 rounded-lg flex-1 min-w-[140px] sm:flex-initial">
+              <BookOpen className="w-4 h-4 flex-shrink-0" />
+              <span className="text-sm truncate">
                 {course?.totalLectures > 0
                   ? `${course.totalLectures} lecture${course.totalLectures !== 1 ? "s" : ""}`
-                  : "No lectures yet"}
+                  : "No lectures"}
               </span>
             </div>
           </div>

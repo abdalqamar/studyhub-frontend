@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { courseService } from "../services/courseService";
 import toast from "react-hot-toast";
-import { successToast } from "../utils/toastUtils";
+import { errorToast, successToast } from "../utils/toastUtils";
 
+// for admin & istructors to get all courses with filters and pagination
 export const fetchAllCourses = (params) => {
   return useQuery({
     queryKey: [
@@ -45,8 +46,7 @@ export const useApproveCourse = () => {
       queryClient.invalidateQueries(["adminCourses"]);
     },
     onError: (error) => {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Failed to approve course");
+      errorToast(error?.response?.data?.message || "Failed to approve course");
     },
   });
 };
@@ -96,7 +96,7 @@ export const useCourseDetails = (id) => {
     queryFn: () => courseService.getCourseDetails(id),
     enabled: !!id,
     onError: (error) => {
-      toast.error(
+      errorToast(
         error.response?.data?.message || "Failed to fetch course details"
       );
     },
@@ -112,15 +112,12 @@ export const useCreateCourse = () => {
 
     onSuccess: (createdCourse) => {
       queryClient.setQueryData(["course", createdCourse._id], createdCourse);
-
-      toast.success("Course created successfully!");
-
-      // Instructor courses invalidate
+      successToast("Course created successfully!");
       queryClient.invalidateQueries(["InstructorCourses"]);
     },
 
     onError: (err) => {
-      toast.error(err?.response?.data?.message || "Failed to create course");
+      errorToast("Failed to create course", err?.response?.data?.message);
     },
   });
 };
@@ -131,7 +128,7 @@ export const useCourseById = (courseId) => {
     queryFn: () => courseService.getCourseById(courseId),
     enabled: !!courseId,
     onError: (error) => {
-      console.log(error);
+      errorToast(error.message);
     },
   });
 };
@@ -203,38 +200,6 @@ export const useCourseContent = (courseId) => {
     },
   });
 };
-// Update lesson progress
-export const useUpdateProgress = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ courseId, lessonId, progress }) =>
-      courseService.updateLessonProgress(courseId, lessonId, progress),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ["courses", variables.courseId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["enrolledCourses"],
-      });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to update progress");
-    },
-  });
-};
-
-// Search courses
-export const useSearchCourses = (query) => {
-  return useQuery({
-    queryKey: ["courses", "search", query],
-    queryFn: () => courseService.searchCourses(query),
-    enabled: !!query && query.length > 2, // Only search if query > 2 chars
-    onError: (error) => {
-      toast.error("Search failed");
-    },
-  });
-};
 
 export const useCreateSection = (courseId) => {
   const queryClient = useQueryClient();
@@ -253,7 +218,7 @@ export const useCreateSection = (courseId) => {
         courseContent: [
           ...(old?.courseContent || []),
           {
-            _id: "temp-section-id", // temporary
+            _id: "temp-section-id", // temporary id
             sectionName,
             lesson: [],
           },
@@ -361,7 +326,6 @@ export const useCreateLesson = (courseId) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    // Correct API call
     mutationFn: ({ sectionId, formData }) =>
       courseService.createLesson(courseId, sectionId, formData),
 
@@ -535,6 +499,22 @@ export const useDeleteLesson = (courseId) => {
 
     onSettled: () => {
       queryClient.invalidateQueries(["course", courseId]);
+    },
+  });
+};
+
+export const useCreateCourseReview = (courseId) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ rating, review }) =>
+      courseService.createCourseReview(courseId, { rating, review }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["enrolledCourses"] });
+      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      successToast("Review submitted successfully");
+    },
+    onError: (error) => {
+      errorToast(error.response?.data?.message);
     },
   });
 };

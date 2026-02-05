@@ -1,8 +1,15 @@
-// components/tabs/ReviewsTab.jsx
-import React from "react";
 import { Star } from "lucide-react";
 
 const ReviewsTab = ({ courseData }) => {
+  const getTimeAgo = (date) => {
+    const diff = Date.now() - new Date(date).getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (days === 0) return "today";
+    if (days === 1) return "yesterday";
+    return `${days} days ago`;
+  };
+
   return (
     <div className="space-y-6">
       <div className="bg-slate-800/30 rounded-2xl p-6 border border-slate-700/30 backdrop-blur-sm">
@@ -34,9 +41,15 @@ const ReviewsTab = ({ courseData }) => {
                     className="w-10 h-10 rounded-full border border-slate-600 object-cover"
                   />
                   <div>
-                    <h4 className="text-white font-semibold">
-                      {review.user?.name || "Anonymous"}
-                    </h4>
+                    <div className="flex items-center justify-between gap-4">
+                      <h4 className="text-white font-semibold text-base truncate">
+                        {review.user?.name || "Anonymous"}
+                      </h4>
+                      <span className="text-xs text-slate-500 whitespace-nowrap flex-shrink-0">
+                        {getTimeAgo(review.createdAt)}
+                      </span>
+                    </div>
+
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
                         <Star
