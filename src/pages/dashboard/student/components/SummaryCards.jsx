@@ -1,58 +1,79 @@
+import { BookOpen, Clock, Award, Trophy } from "lucide-react";
+
 const SummaryCards = () => {
   const stats = [
     {
-      icon: "📚",
+      icon: BookOpen,
       label: "Active Courses",
       value: "7",
-      color: "bg-blue-500",
+      color: "bg-blue-500/10",
+      iconColor: "text-blue-400",
+      ringColor: "ring-blue-500/20",
       change: "+2 this month",
+      changeColor: "text-blue-400",
     },
     {
-      icon: "🕒",
+      icon: Clock,
       label: "Total Hours Watched",
       value: "142",
-      color: "bg-green-500",
+      color: "bg-green-500/10",
+      iconColor: "text-green-400",
+      ringColor: "ring-green-500/20",
       change: "+12h this week",
+      changeColor: "text-green-400",
     },
     {
-      icon: "📜",
+      icon: Award,
       label: "Certificates Earned",
       value: "5",
-      color: "bg-purple-500",
+      color: "bg-purple-500/10",
+      iconColor: "text-purple-400",
+      ringColor: "ring-purple-500/20",
       change: "2 pending",
+      changeColor: "text-purple-400",
     },
     {
-      icon: "🏆",
+      icon: Trophy,
       label: "Leaderboard Rank",
       value: "#12",
-      color: "bg-yellow-500",
+      color: "bg-yellow-500/10",
+      iconColor: "text-yellow-400",
+      ringColor: "ring-yellow-500/20",
       change: "↑ 3 spots this week",
+      changeColor: "text-yellow-400",
     },
   ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((stat, index) => (
-        <div
-          key={index}
-          className="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-slate-600 transition-colors"
-        >
-          <div className="flex items-center justify-between">
-            <div>
+      {stats.map((stat, index) => {
+        const Icon = stat.icon;
+        return (
+          <div
+            key={index}
+            className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 transition-all duration-200 group"
+          >
+            <div className="flex items-start justify-between mb-4">
               <div
-                className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center text-white text-xl`}
+                className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center ring-2 ${stat.ringColor} group-hover:scale-110 transition-transform duration-200`}
               >
-                {stat.icon}
+                <Icon className={`w-6 h-6 ${stat.iconColor}`} />
+              </div>
+              <div className="text-right">
+                <p className="text-3xl font-bold text-white">{stat.value}</p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold text-white">{stat.value}</p>
-              <p className="text-slate-400 text-sm mt-1">{stat.change}</p>
+            <div>
+              <p className="text-slate-300 font-medium text-sm mb-2">
+                {stat.label}
+              </p>
+              <p className={`text-xs font-medium ${stat.changeColor}`}>
+                {stat.change}
+              </p>
             </div>
           </div>
-          <p className="text-slate-300 font-medium mt-4">{stat.label}</p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

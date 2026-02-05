@@ -1,6 +1,6 @@
 import { dashboardLinks } from "../../data/data.js";
 import { NavLink } from "react-router-dom";
-import { LogOut, X, User } from "lucide-react";
+import { LogOut, X } from "lucide-react";
 import Modal from "../Modal.jsx";
 import { useState } from "react";
 const Sidebar = ({ user, isSidebarOpen, setIsSidebarOpen, handleLogout }) => {
@@ -22,19 +22,20 @@ const Sidebar = ({ user, isSidebarOpen, setIsSidebarOpen, handleLogout }) => {
             <h2 className="text-2xl font-bold text-blue-400">
               Study<span className="text-white">Hub</span>
             </h2>
-            <p className="text-xs text-gray-400 mt-1 capitalize">
+            <p className="text-sm text-slate-400 mt-0.5 capitalize">
               {user?.role} Portal
             </p>
           </div>
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="lg:hidden text-gray-400 hover:text-white transition"
+            className="lg:hidden text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg p-1.5 transition-colors"
           >
             <X size={24} />
           </button>
         </div>
 
-        <nav className="space-y-2 flex-1 overflow-y-auto">
+        {/*  Sidebar Links */}
+        <nav className="space-y-1 flex-1 overflow-y-auto">
           {dashboardLinks.map((link) => {
             if (link.type && user?.role !== link.type) return null;
             const Icon = link.icon;
@@ -45,10 +46,10 @@ const Sidebar = ({ user, isSidebarOpen, setIsSidebarOpen, handleLogout }) => {
                 end={link.name === "Dashboard"}
                 onClick={() => setIsSidebarOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group relative ${
                     isActive
-                      ? "bg-blue-600 text-white "
-                      : "text-gray-300 hover:bg-slate-700 hover:text-white"
+                      ? "bg-blue-500/10 text-blue-400 before:absolute before:left-0 before:top-1 before:bottom-1 before:w-1 before:bg-blue-500 before:rounded-r"
+                      : "text-slate-300 hover:bg-slate-800/50 hover:text-white"
                   }`
                 }
               >

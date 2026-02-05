@@ -1,4 +1,4 @@
-import { BarChart, Clock, Play } from "lucide-react";
+import { BarChart, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { formatDuration } from "../../utils/formatDuration";
 const CourseCard = ({ course, getCategoryColor }) => {
@@ -25,11 +25,6 @@ const CourseCard = ({ course, getCategoryColor }) => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
 
-        {/* Play Button */}
-        <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-slate-900 rounded-full p-4 opacity-0 group-hover:opacity-100 transition">
-          <Play className="w-6 h-6 fill-current" />
-        </button>
-
         {/* Category Tag */}
         <span
           className={`absolute top-4 left-4 ${getCategoryColor(
@@ -39,7 +34,6 @@ const CourseCard = ({ course, getCategoryColor }) => {
           {course.category}
         </span>
       </div>
-
       {/* Content */}
       <div className="p-6">
         <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition">
@@ -84,10 +78,7 @@ const CourseCard = ({ course, getCategoryColor }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-700">
-          <span className="text-xs text-slate-500">
-            Last accessed: {course.lastAccessed}
-          </span>
+        <div className="flex items-center justify-end pt-4 border-t border-slate-700">
           <button
             onClick={() => navigate(`/student/view-course/${course._id}`)}
             className={`px-4 py-2 ${

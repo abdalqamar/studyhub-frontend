@@ -2,6 +2,7 @@ import { Menu, Bell, Search } from "lucide-react";
 import Dropdown from "../common/Dropdown";
 import { Link } from "react-router-dom";
 import { use } from "react";
+import formatLastActive from "../../utils/formatLastActive";
 
 const DashboardNavbar = ({ user, handleLogout, setIsSidebarOpen }) => {
   return (
@@ -18,19 +19,23 @@ const DashboardNavbar = ({ user, handleLogout, setIsSidebarOpen }) => {
           </button>
 
           {/* Welcome Message  */}
-          <div className="hidden lg:flex flex-col items-center">
-            <h1 className="text-2xl font-bold text-white">
-              Welcome back, {user?.firstName}! 👋
-            </h1>
-            <p className="text-slate-400 text-sm mt-0.5">
-              {user?.role === "student"
-                ? "Ready to learn something new today?"
-                : user?.role === "instructor"
-                ? "Let's inspire and educate!"
-                : user?.role === "admin"
-                ? "Manage your platform effectively."
-                : "Welcome to the platform!"}
-            </p>
+          <div className="hidden lg:flex flex-col items-center gap-1">
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-white">
+                Welcome back, Zaara!
+              </h1>
+              <span className="text-2xl">👋</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-sm">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+
+              {user && (
+                <p className="text-slate-300">
+                  Last active {formatLastActive(user.lastActive)}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
@@ -47,8 +52,8 @@ const DashboardNavbar = ({ user, handleLogout, setIsSidebarOpen }) => {
                 user?.role === "student"
                   ? "bg-blue-500"
                   : user?.role === "instructor"
-                  ? "bg-green-500"
-                  : "bg-purple-500"
+                    ? "bg-green-500"
+                    : "bg-purple-500"
               }`}
             >
               3{}

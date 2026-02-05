@@ -4,7 +4,7 @@ import { useCategories } from "../../hooks/useCategories";
 const Footer = () => {
   const { data: categories = [] } = useCategories();
   return (
-    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800 py-20 px-6">
+    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800   py-12">
       <div className="max-w-7xl mx-auto text-white">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
           <div>
