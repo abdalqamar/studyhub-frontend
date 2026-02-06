@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authService } from "../services/authServices";
-import toast from "react-hot-toast";
+import { errorToast } from "../utils/toastUtils";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
@@ -16,13 +16,12 @@ export const useAuth = () => {
     mutationFn: authService.logout,
 
     onSuccess: () => {
-      // Only handle data-side effects here
       queryClient.removeQueries(["profile"]);
       queryClient.clear();
     },
 
     onError: (error) => {
-      console.log(error);
+      errorToast(error.response?.data?.message || "Logout Feiled");
     },
   });
 
@@ -34,10 +33,10 @@ export const useAuth = () => {
     mutationFn: ({ token, newPassword }) =>
       authService.resetPassword(token, newPassword),
     onSuccess: (res) => {
-      toast.success("Password reset successful! Please login.");
+      errorToast("Password reset successful! Please login.");
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Password reset failed");
+      errorToast(error.response?.data?.message || "Password reset failed");
     },
   });
 

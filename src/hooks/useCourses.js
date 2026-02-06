@@ -1,36 +1,37 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { courseService } from "../services/courseService";
-import toast from "react-hot-toast";
 import { errorToast, successToast } from "../utils/toastUtils";
 
 // for admin & istructors to get all courses with filters and pagination
-export const fetchAllCourses = (params) => {
+export const fetchAllCourses = ({
+  instructor,
+  search,
+  status,
+  category,
+  page,
+  limit,
+}) => {
   return useQuery({
-    queryKey: [
-      "Allcourses",
-      params.instructor,
-      params.search,
-      params.status,
-      params.category,
-      params.page,
-      params.limit,
-    ],
-    queryFn: () => courseService.getAllCourses(params),
+    queryKey: ["Allcourses", instructor, search, status, category, page, limit],
+    queryFn: () =>
+      courseService.getAllCourses({
+        instructor,
+        search,
+        status,
+        category,
+        page,
+        limit,
+      }),
     keepPreviousData: true,
   });
 };
 
 // Get all approved courses
-export const useCourses = (params) => {
+export const useCourses = ({ search, category, page, limit }) => {
   return useQuery({
-    queryKey: [
-      "courses",
-      params.search,
-      params.category,
-      params.page,
-      params.limit,
-    ],
-    queryFn: () => courseService.fetchAllApprovedCourses(params),
+    queryKey: ["courses", search, category, page, limit],
+    queryFn: () =>
+      courseService.fetchAllApprovedCourses({ search, category, page, limit }),
     keepPreviousData: true,
   });
 };
@@ -57,12 +58,12 @@ export const useRejectCourse = () => {
     mutationFn: ({ id, feedback }) => courseService.rejectCourse(id, feedback),
 
     onSuccess: () => {
-      toast.success("Course rejected!");
+      successToast("Course rejected!");
       queryClient.invalidateQueries(["adminCourses"]);
     },
 
     onError: (error) => {
-      toast.error(error?.response?.data?.message || "Failed to reject course");
+      errorToast(error?.response?.data?.message || "Failed to reject course");
     },
   });
 };
@@ -74,7 +75,7 @@ export const useCourse = (id) => {
     queryFn: () => courseService.getCourseById(id),
     enabled: !!id,
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to fetch course");
+      errorToast(error.response?.data?.message || "Failed to fetch course");
     },
   });
 };
@@ -85,7 +86,7 @@ export const useCoursePreview = (id) => {
     queryFn: () => courseService.getCoursePreview(id),
     enabled: !!id,
     onError: (error) => {
-      toast.error("Failed to load course preview");
+      errorToast("Failed to load course preview");
     },
   });
 };
@@ -143,7 +144,6 @@ export const useUpdateCourse = (courseId) => {
 
     onSuccess: (updatedCourse) => {
       queryClient.setQueryData(["course", courseId], updatedCourse);
-
       queryClient.invalidateQueries(["InstructorCourses"]);
     },
 
@@ -161,10 +161,10 @@ export const useDeleteCourse = () => {
       ["courses", "adminCourses", "instructorCourses"].forEach((key) =>
         queryClient.invalidateQueries([key])
       );
-      toast.success("Course deleted successfully!");
+      successToast("Course deleted successfully!");
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to delete course");
+      errorToast(error.response?.data?.message || "Failed to delete course");
     },
   });
 };
@@ -178,10 +178,10 @@ export const useEnrollCourse = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["enrolledCourses"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      toast.success("Successfully enrolled in course!");
+      successToast("Successfully enrolled in course!");
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Enrollment failed");
+      errorToast(error.response?.data?.message || "Enrollment failed");
     },
   });
 };
@@ -194,13 +194,14 @@ export const useCourseContent = (courseId) => {
     enabled: !!courseId,
 
     onError: (error) => {
-      toast.error(
+      errorToast(
         error?.response?.data?.message || "Failed to load course content"
       );
     },
   });
 };
 
+// Create lesson
 export const useCreateSection = (courseId) => {
   const queryClient = useQueryClient();
 
@@ -212,7 +213,7 @@ export const useCreateSection = (courseId) => {
 
       const prevCourse = queryClient.getQueryData(["course", courseId]);
 
-      // UI me new section instantly dikhega
+      // Optimistic update
       queryClient.setQueryData(["course", courseId], (old) => ({
         ...old,
         courseContent: [
@@ -247,6 +248,7 @@ export const useCreateSection = (courseId) => {
   });
 };
 
+// Delete Section
 export const useDeleteSection = (courseId) => {
   const queryClient = useQueryClient();
 
@@ -286,6 +288,7 @@ export const useDeleteSection = (courseId) => {
   });
 };
 
+// Update Section
 export const useUpdateSection = (courseId) => {
   const queryClient = useQueryClient();
 
@@ -322,6 +325,7 @@ export const useUpdateSection = (courseId) => {
   });
 };
 
+// Create Lesson
 export const useCreateLesson = (courseId) => {
   const queryClient = useQueryClient();
 
@@ -360,7 +364,7 @@ export const useCreateLesson = (courseId) => {
 
     // Rollback on error
     onError: (err, vars, ctx) => {
-      toast.error("Failed to create lesson");
+      errorToast("Failed to create lesson");
       if (ctx?.prevCourse) {
         queryClient.setQueryData(["course", courseId], ctx.prevCourse);
       }
@@ -381,16 +385,17 @@ export const useCreateLesson = (courseId) => {
         ),
       }));
 
-      toast.success("Lesson created");
+      successToast("Lesson created succesfull");
     },
 
-    // Always refetch
+    //  refetch
     onSettled: () => {
       queryClient.invalidateQueries(["course", courseId]);
     },
   });
 };
 
+// Update Lesson
 export const useUpdateLesson = (courseId) => {
   const queryClient = useQueryClient();
 
@@ -453,6 +458,7 @@ export const useUpdateLesson = (courseId) => {
   });
 };
 
+// Delete Lessson
 export const useDeleteLesson = (courseId) => {
   const queryClient = useQueryClient();
 
@@ -468,7 +474,7 @@ export const useDeleteLesson = (courseId) => {
       const prevCourse = queryClient.getQueryData(["course", courseId]);
       if (!prevCourse) return { prevCourse: null };
 
-      // Remove lesson from UI instantly
+      // Remove lesson from UI
       queryClient.setQueryData(["course", courseId], (old) => ({
         ...old,
         courseContent: old.courseContent.map((sec) =>
@@ -486,7 +492,7 @@ export const useDeleteLesson = (courseId) => {
 
     // Rollback on error
     onError: (err, vars, ctx) => {
-      toast.error("Failed to delete lesson");
+      errorToast("Failed to delete lesson");
       if (ctx?.prevCourse) {
         queryClient.setQueryData(["course", courseId], ctx.prevCourse);
       }
@@ -494,7 +500,7 @@ export const useDeleteLesson = (courseId) => {
 
     // Success
     onSuccess: () => {
-      toast.success("Lesson deleted");
+      successToast("Lesson deleted");
     },
 
     onSettled: () => {
@@ -503,6 +509,7 @@ export const useDeleteLesson = (courseId) => {
   });
 };
 
+// Course review and rating
 export const useCreateCourseReview = (courseId) => {
   const queryClient = useQueryClient();
   return useMutation({

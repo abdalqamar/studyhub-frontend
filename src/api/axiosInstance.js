@@ -65,7 +65,7 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    /* public routes – no refresh */
+    /* public routes  */
     if (PUBLIC_ROUTES.some((route) => url.includes(route))) {
       return Promise.reject(error);
     }

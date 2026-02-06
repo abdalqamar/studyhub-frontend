@@ -44,7 +44,6 @@ export const useDeleteUser = () => {
     },
 
     onError: (error) => {
-      console.log(error);
       errorToast(error?.response?.data?.message || "Failed to delete user");
     },
   });

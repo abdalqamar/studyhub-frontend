@@ -166,7 +166,6 @@ export const courseService = {
       API_ENDPOINTS.CREATE_REVIEW(courseId),
       reviewData
     );
-    console.log(data);
     return data;
   },
 };
