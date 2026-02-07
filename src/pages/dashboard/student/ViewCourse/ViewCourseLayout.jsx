@@ -1,16 +1,15 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ViewCourseSidebar from "./ViewCourseSidebar";
 import { useCourseContent } from "../../../../hooks/useCourses";
 import { ArrowLeft, Menu, BookOpen } from "lucide-react";
-import LoadingSpinner from "../../../../components/common/LoadingSpinner";
 
 const ViewCourseLayout = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  const { data: course, isLoading, error } = useCourseContent(courseId);
+  const { data: course, error } = useCourseContent(courseId);
 
   const handleBackToCourses = () => {
     navigate("/student/my-courses");
@@ -42,7 +41,6 @@ const ViewCourseLayout = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-900">
-      {isLoading && <LoadingSpinner />}
       {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div

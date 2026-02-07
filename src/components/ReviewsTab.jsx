@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import renderStars from "./ui/renderStars";
 
 const ReviewsTab = ({ courseData }) => {
   const getTimeAgo = (date) => {
@@ -40,7 +41,7 @@ const ReviewsTab = ({ courseData }) => {
                     alt={review.user?.name || "User"}
                     className="w-10 h-10 rounded-full border border-slate-600 object-cover"
                   />
-                  <div>
+                  <div className="flex-1">
                     <div className="flex items-center justify-between gap-4">
                       <h4 className="text-white font-semibold text-base truncate">
                         {review.user?.name || "Anonymous"}
@@ -50,19 +51,11 @@ const ReviewsTab = ({ courseData }) => {
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          className={
-                            i < Math.round(review.rating || 0)
-                              ? "text-yellow-400 fill-yellow-400"
-                              : "text-slate-600"
-                          }
-                        />
-                      ))}
-                      <span className="text-slate-400 text-xs ml-1">
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="flex items-center gap-0.5">
+                        {renderStars(review.rating || 0)}
+                      </div>
+                      <span className="text-slate-400 text-xs">
                         {review.rating?.toFixed(1)}
                       </span>
                     </div>

@@ -8,7 +8,11 @@ import router from "./routes/AppRoutes.jsx";
 import { Toaster } from "react-hot-toast";
 import store from "./app/store";
 import { injectStore } from "./api/axiosInstance.js";
-injectStore(store);
+
+// Inject store after initialization
+if (store) {
+  injectStore(store);
+}
 
 export const queryClient = new QueryClient({
   defaultOptions: {

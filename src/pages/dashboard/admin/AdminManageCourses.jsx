@@ -11,6 +11,7 @@ import {
 } from "../../../hooks/useCourses";
 import { useCategories } from "../../../hooks/useCategories";
 import { errorToast, successToast } from "../../../utils/toastUtils";
+import PageLoader from "../../../components/PageLoader";
 
 const AdminManageCourses = () => {
   const navigate = useNavigate();
@@ -212,11 +213,12 @@ const AdminManageCourses = () => {
 
   // Loading state
   const isLoading =
-    coursesLoading ||
     categoriesLoading ||
     approveCourse.isLoading ||
     rejectCourse.isLoading ||
     deleteCourse.isLoading;
+
+  if (coursesLoading) return <PageLoader />;
 
   return (
     <div className="relative min-h-screen">

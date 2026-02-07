@@ -1,4 +1,4 @@
-import LoadingSpinner from "../../../components/common/LoadingSpinner";
+import PageLoader from "../../../components/PageLoader";
 import { useAdminDashboardStats } from "../../../hooks/admin/useAdminDashboardStats";
 import AnalyticsCharts from "./components/charts/AnalyticsCharts";
 import OverviewStats from "./components/OverviewStats";
@@ -7,7 +7,7 @@ const AdminDashboard = () => {
   const { data, isLoading } = useAdminDashboardStats();
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <PageLoader />;
   }
 
   return (
@@ -16,6 +16,7 @@ const AdminDashboard = () => {
 
       {/* Stats Cards */}
       <OverviewStats stats={data.stats} />
+
       {/* Charts Grid */}
       <AnalyticsCharts
         monthlyRevenue={data.monthlyRevenue}

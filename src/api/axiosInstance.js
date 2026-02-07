@@ -1,6 +1,5 @@
 import axios from "axios";
 import { clearAuth, setToken, setUser } from "../features/auth/authSlice";
-import { errorToast } from "../utils/toastUtils";
 import { queryClient } from "../main.jsx";
 
 const axiosInstance = axios.create({
@@ -11,12 +10,12 @@ const axiosInstance = axios.create({
 export default axiosInstance;
 
 let store;
+
 export const injectStore = (_store) => {
   store = _store;
 };
 
 let refreshTokenPromise = null;
-let isLoggingOut = false;
 
 const PUBLIC_ROUTES = [
   "/auth/login",
@@ -51,15 +50,6 @@ axiosInstance.interceptors.response.use(
       (status === 401 || status === 403)
     ) {
       refreshTokenPromise = null;
-      const hasAccessToken = !!store.getState().auth.accessToken;
-      if (hasAccessToken && !isLoggingOut) {
-        isLoggingOut = true;
-
-        // show toast only if refresh cookie is missing
-        const hasRefreshCookie = document.cookie.includes("refreshToken=");
-        if (!hasRefreshCookie)
-          errorToast("Session expired. Please login again.");
-      }
       store.dispatch(clearAuth());
       queryClient.removeQueries({ queryKey: ["profile"] });
       return Promise.reject(error);
@@ -85,15 +75,6 @@ axiosInstance.interceptors.response.use(
             if (user) store.dispatch(setUser(user));
             return newToken;
           } catch (refreshError) {
-            const hasAccessToken = !!store.getState().auth.accessToken;
-            if (hasAccessToken && !isLoggingOut) {
-              isLoggingOut = true;
-
-              const hasRefreshCookie =
-                document.cookie.includes("refreshToken=");
-              if (!hasRefreshCookie)
-                errorToast("Session expired. Please login again.");
-            }
             store.dispatch(clearAuth());
             throw refreshError;
           } finally {

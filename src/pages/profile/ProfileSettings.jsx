@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Edit3, View } from "lucide-react";
 import ProfileInfoSection from "./ProfileInfoSection";
 import PersonalDetails from "./PersonalDetails";
-import LoadingSpinner from "../../components/common/LoadingSpinner.jsx";
 import PasswordSection from "./PasswordSection.jsx";
 import { useProfile } from "../../hooks/useProfile.js";
+import PageLoader from "../../components/PageLoader.jsx";
 
 const ProfileSettings = () => {
   const { profileQuery } = useProfile();
@@ -12,7 +12,7 @@ const ProfileSettings = () => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((prev) => !prev);
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <PageLoader />;
 
   return (
     <div className="min-h-screen text-gray-100 p-6 mx-auto max-w-5xl space-y-8">

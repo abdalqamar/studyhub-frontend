@@ -2,6 +2,7 @@ import { useState } from "react";
 import CourseActions from "./CourseActions";
 import StatusBadge from "../../shared/StatusBadge";
 import { formatDuration } from "../../../../utils/formatDuration.js";
+import renderStars from "../../../../components/ui/renderStars.jsx";
 
 const CourseTableRow = ({ course, userType, onAction }) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -64,7 +65,7 @@ const CourseTableRow = ({ course, userType, onAction }) => {
         </div>
       </td>
 
-      {/* Instructor - Only for Admin */}
+      {/*  Only for Admin */}
       {userType === "admin" && (
         <td className="px-6 py-4">
           <span className="text-slate-300 font-medium">
@@ -93,17 +94,19 @@ const CourseTableRow = ({ course, userType, onAction }) => {
         </div>
       </td>
 
-      {/* Rating */}
+      {/* Rating  */}
       <td className="px-6 py-4">
-        {course.rating > 0 ? (
-          <div className="flex items-center gap-1.5">
-            <span className="text-yellow-400 text-lg">⭐</span>
-            <span className="text-white font-semibold">{course.rating}</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-0.5">
+            {renderStars(course.averageRating || 0)}
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-white font-semibold text-sm">
+              {(course.averageRating || 0).toFixed(1)}
+            </span>
             <span className="text-slate-500 text-xs">/5.0</span>
           </div>
-        ) : (
-          <span className="text-slate-500 text-sm italic">No ratings yet</span>
-        )}
+        </div>
       </td>
 
       {/* Status */}

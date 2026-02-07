@@ -2,15 +2,15 @@ import { ArrowLeft, Clock, Users, Star, User, Calendar } from "lucide-react";
 import CourseTabs from "../../../components/CourseTabs";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import { useCoursePreview } from "../../../hooks/useCourses";
+import PageLoader from "../../../components/PageLoader";
 
 const CoursePreview = () => {
   const { user } = useSelector((state) => state.auth);
   const { courseId } = useParams();
   const { data: courseData, isLoading } = useCoursePreview(courseId);
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <PageLoader />;
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">

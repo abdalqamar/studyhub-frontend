@@ -5,7 +5,6 @@ import Footer from "../components/common/Footer";
 import Sidebar from "../components/common/Sidebar";
 import DashboardNavbar from "../components/common/DashboardNavbar";
 import Breadcrumb from "../components/Breadcrumb";
-import LoadingSpinner from "../components/common/LoadingSpinner";
 import { useProfile } from "../hooks/useProfile";
 import { useAuth } from "../hooks/useAuth";
 import { clearAuth } from "../features/auth/authSlice";
@@ -17,7 +16,7 @@ const DashboardLayout = () => {
 
   const { logoutMutation } = useAuth();
   const { profileQuery } = useProfile();
-  const { data: user, isLoading } = profileQuery;
+  const { data: user } = profileQuery;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = () => {
@@ -35,7 +34,6 @@ const DashboardLayout = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner />}
       <div className="flex h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
         {/* Mobile Overlay */}
         {isSidebarOpen && (

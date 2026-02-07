@@ -1,15 +1,7 @@
 import { useEnrolledCourses } from "../../../hooks/useEnrolledCourse";
-import LoadingSpinner from "../../../components/common/LoadingSpinner";
-
-import {
-  BookOpen,
-  Clock,
-  Award,
-  Play,
-  CheckCircle,
-  BarChart,
-} from "lucide-react";
+import { BookOpen, Clock, Award, CheckCircle } from "lucide-react";
 import CourseCard from "../../../components/ui/CourseCard";
+import PageLoader from "../../../components/PageLoader";
 
 const getCategoryColor = (category) => {
   const colors = {
@@ -49,11 +41,9 @@ const calculateStats = (courses) => {
 
 const MyCourses = () => {
   const { data: courses, isLoading } = useEnrolledCourses();
+  if (isLoading) return <PageLoader />;
   const stats = calculateStats(courses);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
   if (!courses || courses.length === 0) {
     return (
       <div className="min-h-screen bg-slate-900 text-white flex justify-center items-center">

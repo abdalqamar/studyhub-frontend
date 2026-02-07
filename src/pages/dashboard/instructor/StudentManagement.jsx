@@ -8,6 +8,7 @@ import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import ErrorPage from "../../../components/ui/ErrorPage";
 import SearchBar from "../../../components/common/SearchBar";
 import { useSearchParams } from "react-router-dom";
+import PageLoader from "../../../components/PageLoader";
 
 const StudentManagement = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -125,10 +126,10 @@ const StudentManagement = () => {
       />
     );
   }
+  if (isLoading) return <PageLoader />;
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">
-      {isLoading && <LoadingSpinner />}
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white">Student Management</h1>

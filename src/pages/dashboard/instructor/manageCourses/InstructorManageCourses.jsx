@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../../../../components/common/LoadingSpinner";
@@ -6,6 +6,7 @@ import CoursesManagement from "../../shared/CoursesManagement ";
 import { useCategories } from "../../../../hooks/useCategories";
 import { fetchAllCourses, useDeleteCourse } from "../../../../hooks/useCourses";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
+import PageLoader from "../../../../components/PageLoader";
 
 const InstructorManageCourses = () => {
   const navigate = useNavigate();
@@ -169,9 +170,10 @@ const InstructorManageCourses = () => {
     navigate("/instructor/add-course");
   }, [navigate]);
 
+  if (coursesLoading) return <PageLoader />;
+
   // Loading state
-  const isLoading =
-    coursesLoading || categoriesLoading || deleteCourseMutation.isLoading;
+  const isLoading = categoriesLoading || deleteCourseMutation.isLoading;
 
   return (
     <div className="relative">

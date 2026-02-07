@@ -2,19 +2,20 @@ import { ArrowLeft, Clock, Users, Star, BookOpen } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useCourseDetails } from "../../hooks/useCourses";
-import LoadingSpinner from "../../components/common/LoadingSpinner";
 import CourseTabs from "../../components/CourseTabs";
 import CoursePurchaseCard from "../../components/CoursePurchaseCard";
+import renderStars from "../../components/ui/renderStars";
+import PageLoader from "../../components/PageLoader";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
   const { data: course, isLoading } = useCourseDetails(courseId);
   const { user } = useSelector((state) => state.auth);
 
+  if (isLoading) return <PageLoader />;
+
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden pt-32 ">
-      {isLoading && <LoadingSpinner />}
-
       {/* Header */}
       <div className="bg-slate-900 border-b border-slate-700/50">
         <div className="max-w-7xl mx-auto p-6 md:px-0">
@@ -42,28 +43,18 @@ const CourseDetails = () => {
             {course?.description}
           </p>
 
-          {/* Stats   */}
           <div className="flex flex-wrap gap-3 md:gap-4">
             {/* Rating */}
             <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2.5 rounded-lg flex-1 min-w-[140px] sm:flex-initial">
-              {course?.averageRating > 0 ? (
-                <>
-                  <Star
-                    className="text-yellow-400 fill-yellow-400 flex-shrink-0"
-                    size={18}
-                  />
-                  <span className="text-lg font-bold text-white">
-                    {course?.averageRating || 0}
+              {course?.averageRating > 0 && (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-0.5">
+                    {renderStars(course?.averageRating || 0)}
+                  </div>
+                  <span className="text-white font-semibold text-sm">
+                    {(course?.averageRating || 0).toFixed(1)}
                   </span>
-                  <span className="text-sm text-slate-400 whitespace-nowrap">
-                    out of 5
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Star className="text-slate-500 flex-shrink-0" size={18} />
-                  <span className="text-sm text-slate-400">No ratings yet</span>
-                </>
+                </div>
               )}
             </div>
 

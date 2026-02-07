@@ -1,9 +1,3 @@
-/**
- * Generate and download Excel report
- * @param {Array} courses - Array of course objects
- * @param {Function} successToast - Success toast notification function
- * @param {Function} errorToast - Error toast notification function
- */
 export const generateExcelReport = (courses, successToast, errorToast) => {
   try {
     if (!courses || courses.length === 0) {

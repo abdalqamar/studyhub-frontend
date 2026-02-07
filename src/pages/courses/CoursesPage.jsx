@@ -2,12 +2,13 @@ import { useState, useCallback, useMemo, useEffect } from "react";
 import { Search, Clock, Book, X, BookOpen } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCourses } from "../../hooks/useCourses";
-import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { useCategories } from "../../hooks/useCategories";
 import { formatDuration } from "../../utils/formatDuration";
 import { errorToast } from "../../utils/toastUtils";
 import SearchBar from "../../components/common/SearchBar";
 import Pagination from "../dashboard/shared/Pagination";
+import renderStars from "../../components/ui/renderStars";
+import PageLoader from "../../components/PageLoader";
 
 const CoursesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +25,7 @@ const CoursesPage = () => {
   );
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
 
-  const ITEMS_PER_PAGE = 1;
+  const ITEMS_PER_PAGE = 12;
 
   // Fetch data
   const {
@@ -38,7 +39,6 @@ const CoursesPage = () => {
     page: currentPage,
     limit: ITEMS_PER_PAGE,
   });
-
   const { data: categoriesData = [], isLoading: categoriesLoading } =
     useCategories();
 
@@ -117,11 +117,12 @@ const CoursesPage = () => {
 
   // Loading state
   const isLoading = coursesLoading || categoriesLoading;
+  if (isLoading) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
-      {isLoading && <LoadingSpinner />}
-
       <section className="relative overflow-hidden py-16 sm:py-20">
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950" />
@@ -234,7 +235,7 @@ const CoursesPage = () => {
                   {/* Duration */}
                   {course.totalDuration > 0 && (
                     <div className="flex items-center gap-1">
-                      <Clock className="text-gray-400" />
+                      <Clock className="w-4 h-4 text-gray-400" />
                       <span>{formatDuration(course.totalDuration)}</span>
                     </div>
                   )}
@@ -242,34 +243,38 @@ const CoursesPage = () => {
                   {/* Lessons */}
                   {course.totalLectures > 0 && (
                     <div className="flex items-center gap-1">
-                      <Book className="text-gray-400" />
+                      <Book className="w-4 h-4 text-gray-400" />
                       <span>{course.totalLectures} lessons</span>
                     </div>
                   )}
                 </div>
 
-                <div className="flex items-center gap-1 mt-2">
-                  {/* Rating */}
-                  {course.averageRating > 0 && (
-                    <>
-                      <span className="text-lg font-bold text-white">
-                        {course?.averageRating || 0}
-                      </span>
-                      <span className="text-sm text-slate-400 whitespace-nowrap">
-                        out of 5
-                      </span>
-                    </>
-                  )}
+                {/* Rating Section  */}
 
-                  {/* Enrolled count */}
-                  {course.enrolledCount > 0 && (
-                    <span className="text-xs text-gray-500">
-                      ({course.enrolledCount} students)
-                    </span>
-                  )}
-                </div>
+                {(course.averageRating > 0 || course.enrolledCount > 0) && (
+                  <div className="mt-3 space-y-1">
+                    {course?.averageRating > 0 && (
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-0.5">
+                          {renderStars(course.averageRating || 0)}
+                        </div>
+                        <span className="text-white font-semibold text-sm">
+                          {(course.averageRating || 0).toFixed(1)}
+                        </span>
+                        <span className="text-slate-500 text-xs">/5.0</span>
+                      </div>
+                    )}
 
-                {/* Price  Button */}
+                    {/* Enrolled Students */}
+                    {course.enrolledStudents > 0 && (
+                      <div className="text-xs text-gray-400">
+                        <span>{course.enrolledStudents} students enrolled</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Price & Button */}
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-700">
                   <span className="text-xl font-bold text-white">
                     ₹{course.price || 0}

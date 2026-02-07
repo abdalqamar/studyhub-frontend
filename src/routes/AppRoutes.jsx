@@ -1,17 +1,18 @@
 import { ROLES } from "../constants/roles";
 import { createBrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import PageLoader from "../components/PageLoader";
 
-import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
-import Login from "../pages/auth/Login";
-import About from "../pages/About";
-import Contact from "../pages/Contact";
-import ResetPassword from "../pages/auth/ResetPassword";
-import VerifyOtp from "../pages/auth/VerifyOtp";
-import Register from "../pages/auth/Register";
-import CoursesPage from "../pages/courses/CoursesPage";
-import CourseDetails from "../pages/courses/CourseDetails";
-import NewDashboard from "../components/common/NewDashboard";
+const NotFound = lazy(() => import("../pages/NotFound"));
+const Home = lazy(() => import("../pages/Home"));
+const Login = lazy(() => import("../pages/auth/Login"));
+const About = lazy(() => import("../pages/About"));
+const Contact = lazy(() => import("../pages/Contact"));
+const ResetPassword = lazy(() => import("../pages/auth/ResetPassword"));
+const VerifyOtp = lazy(() => import("../pages/auth/VerifyOtp"));
+const Register = lazy(() => import("../pages/auth/Register"));
+const CoursesPage = lazy(() => import("../pages/courses/CoursesPage"));
+const CourseDetails = lazy(() => import("../pages/courses/CourseDetails"));
 
 //Layouts
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -21,40 +22,83 @@ import PublicLayout from "../layouts/PublicLayout";
 import PublicRoute from "./PublicRoute";
 
 //Student
-import StudentDashboard from "../pages/dashboard/student/StudentDashboard";
-import Assignments from "../pages/dashboard/student/Assignments";
-import LiveClasses from "../pages/dashboard/student/LiveClasses";
-import Wishlist from "../pages/dashboard/student/Wishlist";
-import Community from "../pages/dashboard/student/Community";
-import MyCourses from "../pages/dashboard/student/MyCourses";
-import NotificationsPage from "../pages/dashboard/student/NotificationsPage";
-import ProfileSettings from "../pages/profile/ProfileSettings";
+const StudentDashboard = lazy(
+  () => import("../pages/dashboard/student/StudentDashboard")
+);
+const Assignments = lazy(
+  () => import("../pages/dashboard/student/Assignments")
+);
+const LiveClasses = lazy(
+  () => import("../pages/dashboard/student/LiveClasses")
+);
+const Wishlist = lazy(() => import("../pages/dashboard/student/Wishlist"));
+const Community = lazy(() => import("../pages/dashboard/student/Community"));
+const MyCourses = lazy(() => import("../pages/dashboard/student/MyCourses"));
+const NotificationsPage = lazy(
+  () => import("../pages/dashboard/student/NotificationsPage")
+);
+const ProfileSettings = lazy(() => import("../pages/profile/ProfileSettings"));
 
 //Instructor
-import InstructorDashboard from "../pages/dashboard/instructor/InstructorDashboard";
-import InstructorManageCourses from "../pages/dashboard/instructor/manageCourses/InstructorManageCourses";
-import InstructorNotifications from "../pages/dashboard/instructor/InstructorNotifications";
-import InstructorEarnings from "../pages/dashboard/instructor/InstructorEarnings";
-import InstructorLiveClasses from "../pages/dashboard/instructor/components/InstructorLiveClasses";
-import InstructorManageUsers from "../pages/dashboard/instructor/InstructorManageUsers";
-import CourseBuilder from "../pages/dashboard/instructor/CourseBuilder/CourseBuilder";
+const InstructorDashboard = lazy(
+  () => import("../pages/dashboard/instructor/InstructorDashboard")
+);
+const InstructorManageCourses = lazy(
+  () =>
+    import("../pages/dashboard/instructor/manageCourses/InstructorManageCourses")
+);
+const InstructorNotifications = lazy(
+  () => import("../pages/dashboard/instructor/InstructorNotifications")
+);
+const InstructorEarnings = lazy(
+  () => import("../pages/dashboard/instructor/InstructorEarnings")
+);
+const InstructorLiveClasses = lazy(
+  () => import("../pages/dashboard/instructor/components/InstructorLiveClasses")
+);
+const InstructorManageUsers = lazy(
+  () => import("../pages/dashboard/instructor/InstructorManageUsers")
+);
+const CourseBuilder = lazy(
+  () => import("../pages/dashboard/instructor/CourseBuilder/CourseBuilder")
+);
 
 //Admin
-import AdminDashboard from "../pages/dashboard/admin/AdminDashboard";
-import ManageUsers from "../pages/dashboard/admin/ManageUsers";
-import AdminManageCourses from "../pages/dashboard/admin/AdminManageCourses";
-import TransactionsPage from "../pages/dashboard/admin/TransactionsPage";
-import AdminNotifications from "../pages/dashboard/admin/AdminNotifications";
-import SystemSettings from "../pages/dashboard/admin/SystemSettings";
-import CoursePreview from "../pages/dashboard/shared/CoursePreview";
-import ForgotPassword from "../pages/auth/ForgotPassword";
-import ViewCourseLayout from "../pages/dashboard/student/ViewCourse/ViewCourseLayout";
-import ViewCoursePage from "../pages/dashboard/student/ViewCourse/ViewCoursePage";
-import CourseDetailsWithAI from "../pages/dashboard/instructor/CourseBuilder/CourseWithAi";
-import CategoryManager from "../pages/dashboard/admin/CategoryManager";
-import HelpCenter from "../pages/HelpCenter";
-import PrivacyPolicy from "../pages/PrivacyPolicy";
-import TermsOfService from "../pages/TermsOfService";
+const AdminDashboard = lazy(
+  () => import("../pages/dashboard/admin/AdminDashboard")
+);
+const ManageUsers = lazy(() => import("../pages/dashboard/admin/ManageUsers"));
+const AdminManageCourses = lazy(
+  () => import("../pages/dashboard/admin/AdminManageCourses")
+);
+const TransactionsPage = lazy(
+  () => import("../pages/dashboard/admin/TransactionsPage")
+);
+const AdminNotifications = lazy(
+  () => import("../pages/dashboard/admin/AdminNotifications")
+);
+const SystemSettings = lazy(
+  () => import("../pages/dashboard/admin/SystemSettings")
+);
+const CoursePreview = lazy(
+  () => import("../pages/dashboard/shared/CoursePreview")
+);
+const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword"));
+const ViewCourseLayout = lazy(
+  () => import("../pages/dashboard/student/ViewCourse/ViewCourseLayout")
+);
+const ViewCoursePage = lazy(
+  () => import("../pages/dashboard/student/ViewCourse/ViewCoursePage")
+);
+const CourseDetailsWithAI = lazy(
+  () => import("../pages/dashboard/instructor/CourseBuilder/CourseWithAi")
+);
+const CategoryManager = lazy(
+  () => import("../pages/dashboard/admin/CategoryManager")
+);
+const HelpCenter = lazy(() => import("../pages/HelpCenter"));
+const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("../pages/TermsOfService"));
 
 const router = createBrowserRouter([
   {
@@ -63,21 +107,85 @@ const router = createBrowserRouter([
       {
         element: <PublicLayout />,
         children: [
-          { index: true, element: <Home /> },
-          { path: "about", element: <About /> },
-          { path: "student/courses", element: <CoursesPage /> },
-          { path: "course/:courseId", element: <CourseDetails /> },
-          { path: "contact", element: <Contact /> },
-          { path: "aisuggestion", element: <CourseDetailsWithAI /> },
-          { path: "newdashboard", element: <NewDashboard /> },
-          { path: "help", element: <HelpCenter /> },
-          { path: "privacy-policy", element: <PrivacyPolicy /> },
-          { path: "terms", element: <TermsOfService /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Home />
+              </Suspense>
+            ),
+          },
+          {
+            path: "about",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <About />
+              </Suspense>
+            ),
+          },
+          {
+            path: "courses",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CoursesPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "course/:courseId",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CourseDetails />
+              </Suspense>
+            ),
+          },
+          {
+            path: "contact",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Contact />
+              </Suspense>
+            ),
+          },
+          {
+            path: "ai-suggestion",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CourseDetailsWithAI />
+              </Suspense>
+            ),
+          },
+          {
+            path: "help",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <HelpCenter />
+              </Suspense>
+            ),
+          },
+          {
+            path: "privacy-policy",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <PrivacyPolicy />
+              </Suspense>
+            ),
+          },
+          {
+            path: "terms",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <TermsOfService />
+              </Suspense>
+            ),
+          },
           {
             path: "login",
             element: (
               <PublicRoute>
-                <Login />
+                <Suspense fallback={<PageLoader />}>
+                  <Login />
+                </Suspense>
               </PublicRoute>
             ),
           },
@@ -85,7 +193,9 @@ const router = createBrowserRouter([
             path: "register",
             element: (
               <PublicRoute>
-                <Register />
+                <Suspense fallback={<PageLoader />}>
+                  <Register />
+                </Suspense>
               </PublicRoute>
             ),
           },
@@ -93,7 +203,9 @@ const router = createBrowserRouter([
             path: "verify-otp",
             element: (
               <PublicRoute>
-                <VerifyOtp />
+                <Suspense fallback={<PageLoader />}>
+                  <VerifyOtp />
+                </Suspense>
               </PublicRoute>
             ),
           },
@@ -101,7 +213,9 @@ const router = createBrowserRouter([
             path: "forgot-password",
             element: (
               <PublicRoute>
-                <ForgotPassword />
+                <Suspense fallback={<PageLoader />}>
+                  <ForgotPassword />
+                </Suspense>
               </PublicRoute>
             ),
           },
@@ -109,11 +223,12 @@ const router = createBrowserRouter([
             path: "reset-password/:token",
             element: (
               <PublicRoute>
-                <ResetPassword />
+                <Suspense fallback={<PageLoader />}>
+                  <ResetPassword />
+                </Suspense>
               </PublicRoute>
             ),
           },
-          { path: "*", element: <NotFound /> },
         ],
       },
 
@@ -125,15 +240,78 @@ const router = createBrowserRouter([
           </RoleProtectedRoute>
         ),
         children: [
-          { index: true, element: <StudentDashboard /> },
-          { path: "my-courses", element: <MyCourses /> },
-          { path: "assignments", element: <Assignments /> },
-          { path: "live-classes", element: <LiveClasses /> },
-          { path: "wishlist", element: <Wishlist /> },
-          { path: "community", element: <Community /> },
-          { path: "notifications", element: <NotificationsPage /> },
-          { path: "profile", element: <ProfileSettings /> },
-          { path: "course/:courseId", element: <CoursePreview /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <StudentDashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: "my-courses",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <MyCourses />
+              </Suspense>
+            ),
+          },
+          {
+            path: "assignments",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Assignments />
+              </Suspense>
+            ),
+          },
+          {
+            path: "live-classes",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <LiveClasses />
+              </Suspense>
+            ),
+          },
+          {
+            path: "wishlist",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Wishlist />
+              </Suspense>
+            ),
+          },
+          {
+            path: "community",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Community />
+              </Suspense>
+            ),
+          },
+          {
+            path: "notifications",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <NotificationsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "profile",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ProfileSettings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "course/:courseId",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CoursePreview />
+              </Suspense>
+            ),
+          },
         ],
       },
 
@@ -141,18 +319,28 @@ const router = createBrowserRouter([
         path: "/student/view-course/:courseId",
         element: (
           <RoleProtectedRoute allowedRoles={[ROLES.STUDENT]}>
-            <ViewCourseLayout />
+            <Suspense fallback={<PageLoader />}>
+              <ViewCourseLayout />
+            </Suspense>
           </RoleProtectedRoute>
         ),
         children: [
           {
             path: "",
-            element: <ViewCoursePage />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ViewCoursePage />
+              </Suspense>
+            ),
           },
 
           {
             path: "sections/:sectionId/lessons/:lessonId",
-            element: <ViewCoursePage />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ViewCoursePage />
+              </Suspense>
+            ),
           },
         ],
       },
@@ -165,16 +353,86 @@ const router = createBrowserRouter([
           </RoleProtectedRoute>
         ),
         children: [
-          { index: true, element: <InstructorDashboard /> },
-          { path: "add-course", element: <CourseBuilder /> },
-          { path: "edit-course/:courseId", element: <CourseBuilder /> },
-          { path: "manage-courses", element: <InstructorManageCourses /> },
-          { path: "course/:courseId", element: <CoursePreview /> },
-          { path: "live-classes", element: <InstructorLiveClasses /> },
-          { path: "manage-students", element: <InstructorManageUsers /> },
-          { path: "notifications", element: <InstructorNotifications /> },
-          { path: "earnings", element: <InstructorEarnings /> },
-          { path: "profile", element: <ProfileSettings /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorDashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: "add-course",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CourseBuilder />
+              </Suspense>
+            ),
+          },
+          {
+            path: "edit-course/:courseId",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CourseBuilder />
+              </Suspense>
+            ),
+          },
+          {
+            path: "manage-courses",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorManageCourses />
+              </Suspense>
+            ),
+          },
+          {
+            path: "course/:courseId",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CoursePreview />
+              </Suspense>
+            ),
+          },
+          {
+            path: "live-classes",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorLiveClasses />
+              </Suspense>
+            ),
+          },
+          {
+            path: "manage-students",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorManageUsers />
+              </Suspense>
+            ),
+          },
+          {
+            path: "notifications",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorNotifications />
+              </Suspense>
+            ),
+          },
+          {
+            path: "earnings",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorEarnings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "profile",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ProfileSettings />
+              </Suspense>
+            ),
+          },
         ],
       },
 
@@ -186,16 +444,87 @@ const router = createBrowserRouter([
           </RoleProtectedRoute>
         ),
         children: [
-          { index: true, element: <AdminDashboard /> },
-          { path: "users", element: <ManageUsers /> },
-          { path: "courses", element: <AdminManageCourses /> },
-          { path: "course/:courseId", element: <CoursePreview /> },
-          { path: "transactions", element: <TransactionsPage /> },
-          { path: "notifications", element: <AdminNotifications /> },
-          { path: "settings", element: <SystemSettings /> },
-          { path: "profile", element: <ProfileSettings /> },
-          { path: "category", element: <CategoryManager /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <AdminDashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: "users",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ManageUsers />
+              </Suspense>
+            ),
+          },
+          {
+            path: "courses",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <AdminManageCourses />
+              </Suspense>
+            ),
+          },
+          {
+            path: "course/:courseId",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CoursePreview />
+              </Suspense>
+            ),
+          },
+          {
+            path: "transactions",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <TransactionsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "notifications",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <AdminNotifications />
+              </Suspense>
+            ),
+          },
+          {
+            path: "settings",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <SystemSettings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "profile",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ProfileSettings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "category",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <CategoryManager />
+              </Suspense>
+            ),
+          },
         ],
+      },
+      {
+        path: "*",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <NotFound />
+          </Suspense>
+        ),
       },
     ],
   },
