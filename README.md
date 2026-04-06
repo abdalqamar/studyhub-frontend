@@ -58,6 +58,13 @@ CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
 
 ## Screenshots
+![student dashobard](https://github.com/user-attachments/assets/bd447c2e-f21f-4e2b-b015-bbd1fe1680e1)
+![Admin studyhub](https://github.com/user-attachments/assets/e842939f-5583-4504-90d7-9ed69a940c17)
+![admin manage courses](https://github.com/user-attachments/assets/d410d884-7af4-40eb-a292-3f1f5223cc82)
+![admin manage students](https://github.com/user-attachments/assets/3a95c09a-b6c2-4bbf-bb8a-92aacd1e85d4)
+
+
+
 
 
 ## Contact
