@@ -5,6 +5,8 @@ import HighlightedText from "./ui/HighlightedText";
 import { testimonials } from "../data/data.js";
 
 const SuccessStory = () => {
+  if (!testimonials || testimonials.length === 0) return null;
+
   const column1 = testimonials.slice(0, 3);
   const column2 = testimonials.slice(3, 6);
   const column3 = testimonials.slice(6, 9);
@@ -25,13 +27,15 @@ const SuccessStory = () => {
       </p>
     </div>
   );
+
   return (
-    <section className="min-h-screen py-20 px-4 bg-slate-900 overflow-hidden relative flex items-center">
+    <section className="py-20 px-4 bg-slate-900 overflow-hidden relative">
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
+
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            What our Student Says
+            What Our <HighlightedText text="Students Say" theme="blue" />
           </h2>
           <p className="text-slate-400 max-w-3xl mx-auto text-lg">
             Get inspired by real stories from our students — their growth
@@ -39,24 +43,24 @@ const SuccessStory = () => {
           </p>
         </div>
 
-        {/* Swiper Sliders - 3 Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+        {/* Swiper Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative h-[600px]">
           {/* Gradient overlays */}
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-900 via-slate-900/80 to-transparent pointer-events-none z-10" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent pointer-events-none z-10" />
 
-          {/* Column 1 - Auto scroll up */}
-          <div className="h-[600px] overflow-hidden">
+          {/* Column 1 scroll up */}
+          <div className="h-full overflow-hidden">
             <Swiper
               direction="vertical"
               slidesPerView="auto"
               spaceBetween={24}
               loop={true}
               autoplay={{
-                delay: 1000,
+                delay: 0,
                 disableOnInteraction: false,
               }}
-              speed={800}
+              speed={3000}
               modules={[Autoplay]}
               className="h-full"
             >
@@ -70,19 +74,19 @@ const SuccessStory = () => {
             </Swiper>
           </div>
 
-          {/* Column 2 - Auto scroll down (reverse) */}
-          <div className="h-[600px] overflow-hidden hidden md:block">
+          {/* Column 2 — scroll down hidden on mobile */}
+          <div className="h-full overflow-hidden hidden md:block">
             <Swiper
               direction="vertical"
               slidesPerView="auto"
               spaceBetween={24}
               loop={true}
               autoplay={{
-                delay: 1000,
+                delay: 0,
                 disableOnInteraction: false,
                 reverseDirection: true,
               }}
-              speed={800}
+              speed={3500}
               modules={[Autoplay]}
               className="h-full"
             >
@@ -96,18 +100,17 @@ const SuccessStory = () => {
             </Swiper>
           </div>
 
-          {/* Column 3 - Auto scroll up */}
-          <div className="h-[600px] overflow-hidden hidden md:block">
+          <div className="h-full overflow-hidden hidden md:block">
             <Swiper
               direction="vertical"
               slidesPerView="auto"
               spaceBetween={24}
               loop={true}
               autoplay={{
-                delay: 1000,
+                delay: 0,
                 disableOnInteraction: false,
               }}
-              speed={800}
+              speed={2800}
               modules={[Autoplay]}
               className="h-full"
             >
