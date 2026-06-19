@@ -18,6 +18,7 @@ import {
   Heart,
   UsersRound,
   HelpCircle,
+  ClipboardList,
 } from "lucide-react";
 
 const partners = [
@@ -127,192 +128,156 @@ const instructors = [
 ];
 
 const dashboardLinks = [
-  //  Student Links
-
+  // Student Links
   {
-    id: 1,
     name: "Dashboard",
     path: "/student",
     icon: BarChart3,
     type: "student",
   },
-
-  //  My Courses
   {
-    id: 2,
     name: "My Courses",
     path: "/student/my-courses",
     icon: BookOpen,
     type: "student",
   },
-
-  // Assignments
   {
-    id: 3,
     name: "Assignments",
     path: "/student/assignments",
-    icon: NotebookPen,
+    icon: ClipboardList,
     type: "student",
   },
-
-  //  Live Classes
   {
-    id: 4,
     name: "Live Classes",
     path: "/student/live-classes",
     icon: Video,
     type: "student",
   },
-
   {
-    id: 5,
     name: "Wishlist",
     path: "/student/wishlist",
     icon: Heart,
     type: "student",
   },
-
   {
-    id: 6,
     name: "Community",
     path: "/student/community",
     icon: UsersRound,
     type: "student",
   },
-
   {
-    id: 7,
     name: "Help & Support",
     path: "/student/support",
     icon: HelpCircle,
     type: "student",
   },
-
   {
-    id: 8,
     name: "Notifications",
     path: "/student/notifications",
     icon: Bell,
     type: "student",
   },
-
-  //  My Profile
   {
-    id: 9,
     name: "My Profile",
     path: "/student/profile",
     icon: Users,
     type: "student",
   },
 
-  //  Instructor Links
-
+  // Instructor Links
   {
-    id: 9,
     name: "Dashboard",
     path: "/instructor",
     icon: BarChart3,
     type: "instructor",
   },
   {
-    id: 10,
     name: "Add Course",
     path: "/instructor/add-course",
     icon: CirclePlus,
     type: "instructor",
   },
   {
-    id: 11,
     name: "Manage Courses",
     path: "/instructor/manage-courses",
     icon: BookOpen,
     type: "instructor",
   },
   {
-    id: 12,
+    name: "Assignments",
+    path: "/instructor/assignments",
+    icon: ClipboardList,
+    type: "instructor",
+  },
+  {
     name: "Manage Students",
     path: "/instructor/manage-students",
     icon: Users,
     type: "instructor",
   },
   {
-    id: 13,
     name: "Live Classes",
     path: "/instructor/live-classes",
     icon: Video,
     type: "instructor",
   },
-
   {
-    id: 14,
     name: "Earnings",
     path: "/instructor/earnings",
     icon: CreditCard,
     type: "instructor",
   },
   {
-    id: 15,
     name: "Notifications",
     path: "/instructor/notifications",
     icon: Bell,
     type: "instructor",
   },
   {
-    id: 16,
     name: "My Profile",
     path: "/instructor/profile",
     icon: Users,
     type: "instructor",
   },
 
-  //  Admin Links
-
+  // Admin Links
   {
-    id: 17,
     name: "Dashboard",
     path: "/admin",
     icon: BarChart3,
     type: "admin",
   },
   {
-    id: 18,
     name: "Manage Users",
     path: "/admin/users",
     icon: Users,
     type: "admin",
   },
   {
-    id: 19,
     name: "Courses",
     path: "/admin/courses",
     icon: BookOpen,
     type: "admin",
   },
-
   {
-    id: 21,
     name: "Payments",
     path: "/admin/transactions",
     icon: CreditCard,
     type: "admin",
   },
-
   {
-    id: 22,
     name: "Settings",
     path: "/admin/settings",
     icon: Settings,
     type: "admin",
   },
   {
-    id: 23,
     name: "Notifications",
     path: "/admin/notifications",
     icon: Bell,
     type: "admin",
   },
   {
-    id: 24,
     name: "My Profile",
     path: "/admin/profile",
     icon: Users,

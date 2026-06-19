@@ -24,7 +24,6 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {

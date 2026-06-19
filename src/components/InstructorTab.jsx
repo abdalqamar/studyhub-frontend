@@ -1,4 +1,3 @@
-// components/tabs/InstructorTab.jsx
 import React from "react";
 
 const InstructorTab = ({ courseData }) => {

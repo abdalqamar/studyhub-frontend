@@ -28,6 +28,7 @@ const CourseDetails = () => {
 
   if (isLoading) return <PageLoader />;
 
+  // Error Handling
   if (isError) {
     return (
       <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-6">

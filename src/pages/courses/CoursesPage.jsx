@@ -13,7 +13,6 @@ import PageLoader from "../../components/PageLoader";
 const CoursesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // URL se initial state lete hain taaki refresh pe bhi filter/search bana rahe
   const [searchTerm, setSearchTerm] = useState(
     searchParams.get("search") || ""
   );
@@ -161,7 +160,7 @@ const CoursesPage = () => {
             className="w-full md:w-80"
           />
 
-          {/* categories horizontal scroll — flex-wrap se multiple rows banti thi mobile pe */}
+          {/* categories horizontal scroll */}
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide w-full md:w-auto">
             <button
               onClick={() => handleCategoryChange("All")}

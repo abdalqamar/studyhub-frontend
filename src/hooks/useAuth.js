@@ -32,7 +32,7 @@ export const useAuth = () => {
   const resetPasswordMutation = useMutation({
     mutationFn: ({ token, newPassword }) =>
       authService.resetPassword(token, newPassword),
-    onSuccess: (res) => {
+    onSuccess: () => {
       errorToast("Password reset successful! Please login.");
     },
     onError: (error) => {

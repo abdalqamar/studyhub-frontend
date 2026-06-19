@@ -20,6 +20,7 @@ import RoleProtectedRoute from "./RoleProtectedRoute";
 import RootLayout from "../layouts/RootLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import PublicRoute from "./PublicRoute";
+import InstructorAssignments from "../pages/dashboard/instructor/InstructorAssignments";
 
 //Student
 const StudentDashboard = lazy(
@@ -390,6 +391,14 @@ const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <CoursePreview />
+              </Suspense>
+            ),
+          },
+          {
+            path: "assignments",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <InstructorAssignments />
               </Suspense>
             ),
           },

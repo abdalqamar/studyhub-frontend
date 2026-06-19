@@ -77,7 +77,7 @@ const InstructorSection = () => {
                 {/* Gradient Background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/40 via-purple-600/40 to-cyan-600/40" />
 
-                {/* ✅ FIX 3: mix-blend-overlay hata diya — instructor ki face clear dikhegi */}
+                {/* Instructor Image */}
                 <img
                   src={currentData?.image}
                   alt={currentData?.name}
@@ -89,7 +89,7 @@ const InstructorSection = () => {
               </div>
             </div>
 
-            {/* Right Side - Content */}
+            {/* Right Content */}
             <div className="flex flex-col justify-center">
               <h3 className="text-4xl md:text-5xl font-bold text-white mb-3">
                 {currentData?.name}

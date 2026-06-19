@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Plus } from "lucide-react";
+import { Plus, ArrowLeft, ArrowRight } from "lucide-react";
 import SectionForm from "./SectionForm";
 import SectionItem from "./SectionItem";
 import {
@@ -227,19 +227,21 @@ const CourseCurriculum = ({ course, courseId, onNext, onBack }) => {
           <div className="flex flex-col sm:flex-row justify-between gap-4 mt-8 pt-6 border-t border-slate-700">
             <button
               onClick={onBack}
-              className="border border-slate-600 hover:border-slate-500 text-slate-200 px-4 py-2 rounded-lg text-sm font-medium"
+              className="flex items-center justify-center gap-2 border border-slate-600 hover:border-slate-500 text-slate-200 px-4 py-2 rounded-lg text-sm font-medium"
             >
-              ← Previous: Details
+              <ArrowLeft size={18} />
+              Previous: Details
             </button>
 
             <button
               onClick={onNext}
               disabled={
-                !course?.courseContent?.some((sec) => sec.lesson?.length > 0)
+                !course?.courseContent?.some((sec) => sec?.lesson?.length > 0)
               }
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white disabled:opacity-50"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Next: Preview →
+              Next: Preview
+              <ArrowRight size={18} />
             </button>
           </div>
         </div>

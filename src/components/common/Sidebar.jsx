@@ -36,12 +36,12 @@ const Sidebar = ({ user, isSidebarOpen, setIsSidebarOpen, handleLogout }) => {
 
         {/*  Sidebar Links */}
         <nav className="space-y-1 flex-1 overflow-y-auto">
-          {dashboardLinks.map((link) => {
+          {dashboardLinks.map((link, i) => {
             if (link.type && user?.role !== link.type) return null;
             const Icon = link.icon;
             return (
               <NavLink
-                key={link.id}
+                key={i}
                 to={link.path}
                 end={link.name === "Dashboard"}
                 onClick={() => setIsSidebarOpen(false)}

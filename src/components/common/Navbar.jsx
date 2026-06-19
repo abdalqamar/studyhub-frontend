@@ -99,7 +99,7 @@ const Navbar = () => {
             {/* Right Actions */}
             <div className="hidden md:flex items-center space-x-6">
               {/* Cart - only for logged in students */}
-              {showCart && (
+              {/* {showCart && (
                 <Link
                   to="/cart"
                   className="relative text-white hover:text-primary-text transition-all duration-200 transform hover:scale-110"
@@ -115,7 +115,7 @@ const Navbar = () => {
                     </span>
                   )}
                 </Link>
-              )}
+              )} */}
 
               {isLoading ? (
                 <UserPlaceholder />
@@ -146,7 +146,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu  */}
       {menuOpen && (
         <>
           {/* Dark Backdrop */}
