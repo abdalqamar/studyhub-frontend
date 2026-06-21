@@ -8,10 +8,10 @@ import InputField from "../../components/ui/InputField";
 import { useMutation } from "@tanstack/react-query";
 import { errorToast, successToast } from "../../utils/toastUtils";
 import { authService } from "../../services/authServices";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../../schemas/registerSchema";
+import SocialLoginButtons from "../../components/ui/SocialLoginButtons";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(registerSchema),
@@ -50,16 +51,20 @@ const Register = () => {
           navigate("/verify-otp");
         },
         onError: (error) => {
-          console.log(error);
-          const msg = error?.response?.data?.message || "Failed to send OTP";
+          const message =
+            error?.response?.data?.message || "Failed to send OTP";
+          const backendErrors = error?.response?.data?.errors;
 
-          if (error?.response?.data?.errors) {
-            Object.keys(error.response.data.errors).forEach((field) => {
-              errors[field] = {
-                message: error.response.data.errors[field],
-              };
+          if (backendErrors) {
+            Object.keys(backendErrors).forEach((field) => {
+              setError(field, {
+                type: "server",
+                message: backendErrors[field],
+              });
             });
-          } else errorToast(msg);
+          } else {
+            errorToast(message);
+          }
         },
       }
     );
@@ -73,13 +78,15 @@ const Register = () => {
     >
       {/* Header */}
       <div className="text-center mb-6 sm:mb-8">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-1 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-1 text-cyan-400 font-['JetBrains_Mono']">
           Create Account
         </h2>
         <p className="text-slate-400 text-sm sm:text-base">
           Start your learning journey today
         </p>
       </div>
+
+      <SocialLoginButtons />
 
       <div className="flex items-center gap-4 my-6 sm:my-8">
         <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>

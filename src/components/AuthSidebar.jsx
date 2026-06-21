@@ -1,73 +1,101 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const AuthLayout = ({ image, title, subtitle, children }) => {
+const AuthSidebar = ({ image, title, subtitle, children }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6  bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden py-28">
-      {/* Background Elements */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+    <div
+      className="min-h-screen flex items-center justify-center px-6 py-16 sm:py-20 bg-slate-950 relative overflow-hidden"
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(0deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px)",
+      }}
+    >
+      <div className="relative flex flex-col lg:flex-row rounded-2xl overflow-hidden border border-slate-700/50 max-w-6xl w-full bg-slate-900/30 mx-auto">
+        <span className="absolute w-4 h-4 -top-2 -left-2 pointer-events-none">
+          <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+          <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+        </span>
+        <span className="absolute w-4 h-4 -top-2 -right-2 pointer-events-none">
+          <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+          <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+        </span>
+        <span className="absolute w-4 h-4 -bottom-2 -left-2 pointer-events-none">
+          <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+          <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+        </span>
+        <span className="absolute w-4 h-4 -bottom-2 -right-2 pointer-events-none">
+          <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+          <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+        </span>
 
-      <div className="flex flex-col lg:flex-row rounded-3xl overflow-hidden shadow-2xl border border-slate-800/50 backdrop-blur-md max-w-6xl w-full relative z-10 mx-auto ">
-        <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center bg-slate-900/50 ">
-          {/* Background Image */}
-          <img
-            src={image}
-            loading="lazy"
-            alt="Auth background"
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-          />
+        {/* Left form */}
+        <div className="hidden lg:flex lg:w-1/2 flex-col p-10 border-r border-slate-700/50 bg-slate-900/40">
+          <span className="font-['JetBrains_Mono'] text-xs tracking-[0.14em] uppercase text-cyan-400 mb-4">
+            Welcome
+          </span>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-blue-950/40 to-slate-950/60"></div>
+          <h1 className=" text-stone-50 font-['Space_Grotesk'] font-bold text-4xl leading-tight mb-3">
+            {title}
+          </h1>
+          <p className="text-slate-400 text-[15px] leading-relaxed mb-7 max-w-sm">
+            {subtitle}
+          </p>
 
-          {/* Content */}
-          <div className="relative z-10 p-12 text-left space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent leading-tight">
-                {title}
-              </h1>
-              <p className="text-lg text-slate-300 max-w-md leading-relaxed">
-                {subtitle}
-              </p>
-            </div>
+          <div className="space-y-3 mb-7">
+            {[
+              { c: "#22d3ee", t: "Progress syncs across every device" },
+              {
+                c: "#818cf8",
+                t: "Every course ends in a real, reviewable project",
+              },
+              { c: "#fbbf24", t: "Mentors and peers review your work" },
+            ].map((f) => (
+              <div
+                key={f.t}
+                className="flex items-start gap-2.5 text-sm text-slate-400"
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-sm mt-1.5 flex-shrink-0"
+                  style={{ background: f.c }}
+                />
+                {f.t}
+              </div>
+            ))}
+          </div>
 
-            {/* Features */}
-            <div className="space-y-4 pt-8">
-              {[
-                { icon: "✓", text: "Secure and encrypted" },
-                { icon: "✓", text: "Fast and seamless" },
-                { icon: "✓", text: "24/7 support" },
-              ].map((feature, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <span className="text-blue-400 font-bold text-lg">
-                    {feature.icon}
-                  </span>
-                  <span className="text-slate-300">{feature.text}</span>
-                </div>
-              ))}
-            </div>
+          <div className="rounded-xl overflow-hidden border border-slate-700/50 mb-2">
+            <img
+              src={image}
+              loading="lazy"
+              alt="Preview of the StudyHub learning experience"
+              className="w-full h-44 object-cover"
+            />
+          </div>
+          <span className="font-['JetBrains_Mono'] text-[10px] text-slate-500 tracking-wide">
+            FIG. 01 — PLATFORM PREVIEW
+          </span>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-slate-800/50">
-              {[
-                { value: "150k+", label: "Users" },
-                { value: "480+", label: "Companies" },
-                { value: "99.9%", label: "Uptime" },
-              ].map((stat, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-2xl font-bold text-blue-400">
-                    {stat.value}
-                  </p>
-                  <p className="text-xs text-slate-400 mt-1">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-y-4 gap-x-4 pt-6 mt-auto border-t border-slate-700/50">
+            {[
+              { v: "50K+", l: "Learners", c: "text-cyan-400" },
+              { v: "500+", l: "Courses", c: "text-indigo-400" },
+              { v: "100+", l: "Instructors", c: "text-amber-400" },
+              { v: "4.8", l: "Rating", c: "text-emerald-400" },
+            ].map((s) => (
+              <div key={s.l}>
+                <p
+                  className={`font-['Space_Grotesk'] font-bold text-lg ${s.c}`}
+                >
+                  {s.v}
+                </p>
+                <p className="text-[11px] text-slate-500 mt-0.5">{s.l}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* RIGHT SIDE - FORM */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 sm:p-10 lg:p-14 bg-slate-950/80 backdrop-blur-sm ">
-          {/* Form Content */}
+        {/* Right form */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 sm:p-10 lg:p-14 bg-slate-950/60">
           <div className="space-y-6">{children}</div>
         </div>
       </div>
@@ -75,4 +103,4 @@ const AuthLayout = ({ image, title, subtitle, children }) => {
   );
 };
 
-export default AuthLayout;
+export default AuthSidebar;

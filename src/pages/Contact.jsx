@@ -1,4 +1,5 @@
 import HighlightedText from "../components/ui/HighlightedText";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import {
   Mail,
@@ -16,6 +17,92 @@ import {
   Headphones,
   Users,
 } from "lucide-react";
+
+const colorMap = {
+  blue: {
+    text: "text-blue-400",
+    bg: "bg-blue-500/10",
+    grad: "from-blue-500 to-cyan-500",
+  },
+  cyan: {
+    text: "text-cyan-400",
+    bg: "bg-cyan-500/10",
+    grad: "from-cyan-500 to-blue-500",
+  },
+  indigo: {
+    text: "text-indigo-400",
+    bg: "bg-indigo-500/10",
+    grad: "from-indigo-500 to-purple-500",
+  },
+};
+
+const SUPPORT_EMAIL = "studyhubinfo@gmail.com";
+const SUPPORT_PHONE = "+91 7091315565";
+
+const contactMethods = [
+  {
+    icon: Mail,
+    title: "Email Us",
+    value: SUPPORT_EMAIL,
+    desc: "We respond within 24 hours",
+    color: "blue",
+  },
+  {
+    icon: Phone,
+    title: "Call Us",
+    value: SUPPORT_PHONE,
+    desc: "Mon–Sat, 9 AM – 6 PM IST",
+    color: "cyan",
+  },
+  {
+    icon: MapPin,
+    title: "Based In",
+    value: "Jharkhand, India",
+    desc: "Serving learners online, everywhere",
+    color: "indigo",
+  },
+];
+
+const faqs = [
+  {
+    q: "Are courses free or paid?",
+    a: "Most courses are free. A few advanced paths have a small one-time fee — pricing is always shown before you enroll, no surprises.",
+  },
+  {
+    q: "Do I get a certificate?",
+    a: "Yes — every course you complete gives you a certificate you can add to your resume or LinkedIn.",
+  },
+  {
+    q: "How long do I have access to a course?",
+    a: "Lifetime access. Once you enroll, the course is yours — including any future updates to the content.",
+  },
+  {
+    q: "Can I get help if I'm stuck on a problem?",
+    a: "Yes — use the AI Doubt Solver inside any course for instant help, or post in the course discussion for human answers.",
+  },
+  {
+    q: "What if a course isn't what I expected?",
+    a: "Reach out within 7 days of enrolling and we'll sort it out — refund or course swap, your call.",
+  },
+  {
+    q: "Do you offer instructor accounts?",
+    a: "Yes — apply through the instructor application page and our team will review your submission.",
+  },
+];
+
+function RegMark({ className }) {
+  return (
+    <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
+      <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+      <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+    </span>
+  );
+}
+
+const pageStyle = {
+  backgroundImage:
+    "repeating-linear-gradient(0deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px)",
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -51,434 +138,283 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 overflow-hidden">
-      {/* Hero Section  */}
-      <section className="relative overflow-hidden pt-20 sm:pt-28 pb-16 sm:pb-20">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#3b82f620,_transparent_50%)]" />
-
-        {/* Floating orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "700ms" }}
-        />
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          {/* Badge */}
-          <div className="text-center mb-8 sm:mb-10">
-            <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full backdrop-blur-sm">
-              <MessageCircle className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-blue-300 font-medium">
+    <div className="min-h-screen bg-slate-950 text-slate-50" style={pageStyle}>
+      {/* Hero Section */}
+      <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6">
+              <MessageCircle className="w-4 h-4 text-cyan-400" />
+              <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
                 Let's Connect
               </span>
             </div>
-          </div>
 
-          {/* Hero Text */}
-          <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-4 sm:mb-6">
+            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
               <span className="text-white">Ready to</span>
               <br />
               <HighlightedText text="Get Started?" />
             </h1>
 
-            <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed px-4">
-              Our team is here to help you succeed. Reach out and let's build
-              something amazing together.
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              Have a question about a course, your account, or anything else?
+              We're here to help.
             </p>
           </div>
 
-          {/* Contact Cards - IMPROVED */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              {
-                icon: Mail,
-                title: "Email Us",
-                value: "studyhubinfo@gmail.com",
-                desc: "We respond within 24 hours",
-                gradient: "from-blue-500 to-cyan-500",
-                bgColor: "bg-blue-500/10",
-              },
-              {
-                icon: Phone,
-                title: "Call Us",
-                value: "+91 7091315565",
-                desc: "Available 24/7 for support",
-                gradient: "from-cyan-500 to-blue-500",
-                bgColor: "bg-cyan-500/10",
-              },
-              {
-                icon: MapPin,
-                title: "Visit Us",
-                value: "India, Jharkhand",
-                desc: "Serving teams worldwide",
-                gradient: "from-purple-500 to-cyan-500",
-                bgColor: "bg-purple-500/10",
-              },
-            ].map((contact, i) => (
-              <div
-                key={i}
-                className="group relative p-6 rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-slate-700 hover:bg-slate-900/50 transition-all duration-300"
-              >
-                {/* Gradient overlay on hover */}
+          <div className="grid sm:grid-cols-3 gap-4">
+            {contactMethods.map((c, i) => {
+              const colors = colorMap[c.color];
+              const Icon = c.icon;
+              return (
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${contact.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity`}
-                />
-
-                <div className="relative space-y-3">
-                  {/* Icon */}
+                  key={i}
+                  className="relative p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-slate-600 transition-all"
+                >
                   <div
-                    className={`inline-flex p-3 rounded-xl ${contact.bgColor} group-hover:scale-105 transition-transform`}
+                    className={`inline-flex p-2.5 rounded-xl ${colors.bg} mb-3`}
                   >
-                    <contact.icon className="w-6 h-6 text-blue-400" />
+                    <Icon className={`w-5 h-5 ${colors.text}`} />
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg font-bold text-white">
-                    {contact.title}
+                  <h3 className="text-base font-bold text-white mb-1">
+                    {c.title}
                   </h3>
-
-                  {/* Value */}
                   <p
-                    className={`text-sm font-semibold bg-gradient-to-r ${contact.gradient} bg-clip-text text-transparent break-words`}
+                    className={`text-sm font-semibold ${colors.text} break-words mb-1`}
                   >
-                    {contact.value}
+                    {c.value}
                   </p>
-
-                  {/* Description */}
-                  <p className="text-xs text-slate-400">{contact.desc}</p>
-
-                  {/* Accent line */}
-                  <div
-                    className={`h-1 w-12 bg-gradient-to-r ${contact.gradient} rounded-full opacity-50`}
-                  />
+                  <p className="text-xs text-slate-400">{c.desc}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Main Contact Section  */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-6 sm:px-6">
+      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
-            {/* Form - Takes 3 columns */}
+            {/* Form */}
             <div className="lg:col-span-3 space-y-6">
-              {/* Header */}
               <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-4">
-                  <Send className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm text-blue-300 font-medium">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-4">
+                  <Send className="w-4 h-4 text-cyan-400" />
+                  <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
                     Send Message
                   </span>
                 </div>
-
-                <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+                <h2 className="font-['Space_Grotesk'] font-bold text-3xl text-white mb-2">
                   Drop us a line
                 </h2>
-                <p className="text-slate-400">
-                  Fill out the form and our team will get back to you within 24
-                  hours.
+                <p className="text-slate-400 text-sm">
+                  Fill out the form and we'll get back to you within 24 hours.
                 </p>
               </div>
 
-              {/* Form Fields */}
-              <div className="space-y-5">
-                {/* Name & Email Row */}
-                <div className="grid sm:grid-cols-2 gap-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-300 mb-2">
+                    <label className="block font-['JetBrains_Mono'] text-[10.5px] uppercase tracking-wide text-slate-400 mb-2">
                       Full Name *
                     </label>
                     <input
                       type="text"
                       name="name"
+                      required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-800/50 bg-slate-900/50 text-slate-50 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition backdrop-blur-sm"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-700/50 bg-slate-900/40 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 transition-all"
                       placeholder="John Doe"
                     />
                   </div>
-
                   <div>
-                    <label className="block text-sm font-semibold text-slate-300 mb-2">
+                    <label className="block font-['JetBrains_Mono'] text-[10.5px] uppercase tracking-wide text-slate-400 mb-2">
                       Email Address *
                     </label>
                     <input
                       type="email"
                       name="email"
+                      required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-800/50 bg-slate-900/50 text-slate-50 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition backdrop-blur-sm"
-                      placeholder="john@company.com"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-700/50 bg-slate-900/40 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 transition-all"
+                      placeholder="john@example.com"
                     />
                   </div>
                 </div>
 
-                {/* Company */}
                 <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-800/50 bg-slate-900/50 text-slate-50 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition backdrop-blur-sm"
-                    placeholder="Your Company (Optional)"
-                  />
-                </div>
-
-                {/* Subject */}
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">
+                  <label className="block font-['JetBrains_Mono'] text-[10.5px] uppercase tracking-wide text-slate-400 mb-2">
                     Subject *
                   </label>
                   <div className="relative">
                     <select
                       name="subject"
+                      required
                       value={formData.subject}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 pr-10 rounded-xl border border-slate-800/50 bg-slate-900/50 text-slate-100 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer backdrop-blur-sm"
+                      className="w-full px-3.5 py-2.5 pr-10 text-sm rounded-lg border border-slate-700/50 bg-slate-900/40 text-white focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 appearance-none cursor-pointer transition-all"
                     >
-                      <option value="" disabled className="bg-slate-900">
-                        Select a subject
+                      <option value="" disabled>
+                        Select a topic
                       </option>
-                      <option value="sales" className="bg-slate-900">
-                        Sales Inquiry
-                      </option>
-                      <option value="support" className="bg-slate-900">
-                        Technical Support
-                      </option>
-                      <option value="partnership" className="bg-slate-900">
-                        Partnership
-                      </option>
-                      <option value="feedback" className="bg-slate-900">
-                        Feedback
-                      </option>
-                      <option value="other" className="bg-slate-900">
-                        Other
-                      </option>
+                      <option value="course">Course Question</option>
+                      <option value="account">Account / Billing</option>
+                      <option value="technical">Technical Issue</option>
+                      <option value="instructor">Become an Instructor</option>
+                      <option value="other">Other</option>
                     </select>
                     <ChevronDown
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                      size={20}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
+                      size={16}
                     />
                   </div>
                 </div>
 
-                {/* Message */}
                 <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">
+                  <label className="block font-['JetBrains_Mono'] text-[10.5px] uppercase tracking-wide text-slate-400 mb-2">
                     Message *
                   </label>
                   <textarea
                     name="message"
+                    required
                     value={formData.message}
                     onChange={handleChange}
                     rows="5"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-800/50 bg-slate-900/50 text-slate-50 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition resize-none backdrop-blur-sm"
-                    placeholder="Tell us more about your inquiry..."
+                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-700/50 bg-slate-900/40 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 resize-none transition-all"
+                    placeholder="Tell us more..."
                   />
                 </div>
 
-                {/* Submit Button */}
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={loading}
-                  className="group relative w-full px-6 py-4 font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02]"
+                  className="w-full px-5 py-2.5 text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 opacity-100 group-hover:opacity-90 transition" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 blur-xl transition" />
-                  <span className="relative flex items-center justify-center gap-2 text-white">
-                    {loading ? (
-                      <>
-                        <Loader className="w-5 h-5 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Send Message
-                      </>
-                    )}
-                  </span>
+                  {loading ? (
+                    <>
+                      <Loader className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Send Message
+                    </>
+                  )}
                 </button>
 
-                {/* Success Message */}
                 {submitted && (
-                  <div className="p-4 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 flex items-center gap-3 animate-in fade-in">
-                    <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                  <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 text-emerald-300 flex items-center gap-3">
+                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
                     <span className="text-sm font-medium">
-                      Message sent successfully! We'll be in touch soon.
+                      Message sent! We'll be in touch soon.
                     </span>
                   </div>
                 )}
-              </div>
+              </form>
             </div>
 
-            {/* Right Sidebar Info  */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Quick Response */}
-              <div className="group p-6 rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-blue-500/30 transition-all">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-blue-500/10 rounded-xl group-hover:bg-blue-500/20 transition-colors">
-                    <Zap className="w-6 h-6 text-blue-400" />
+            {/* Sidebar */}
+            <div className="lg:col-span-2 space-y-5">
+              <div className="p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-cyan-500/30 transition-all">
+                <div className="flex items-start gap-3.5">
+                  <div className="p-2.5 bg-cyan-500/10 rounded-xl">
+                    <Zap className="w-5 h-5 text-cyan-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white mb-2">
+                    <h3 className="font-bold text-white mb-1.5">
                       Quick Response
                     </h3>
                     <p className="text-sm text-slate-400 leading-relaxed">
-                      Our support team typically responds within 24 hours during
-                      business days.
+                      We typically reply within 24 hours on business days.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Office Hours */}
-              <div className="group p-6 rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-cyan-500/30 transition-all">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 bg-cyan-500/10 rounded-xl group-hover:bg-cyan-500/20 transition-colors">
-                    <Clock className="w-6 h-6 text-cyan-400" />
+              <div className="p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-blue-500/30 transition-all">
+                <div className="flex items-start gap-3.5 mb-4">
+                  <div className="p-2.5 bg-blue-500/10 rounded-xl">
+                    <Clock className="w-5 h-5 text-blue-400" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">
-                      Office Hours
-                    </h3>
-                  </div>
+                  <h3 className="font-bold text-white">Office Hours</h3>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Monday - Friday</span>
-                    <span className="text-slate-300 font-medium">
-                      9 AM - 6 PM IST
-                    </span>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Mon – Fri</span>
+                    <span className="text-slate-300">9 AM – 6 PM IST</span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between">
                     <span className="text-slate-400">Saturday</span>
-                    <span className="text-slate-300 font-medium">
-                      10 AM - 4 PM IST
-                    </span>
+                    <span className="text-slate-300">10 AM – 4 PM IST</span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between">
                     <span className="text-slate-400">Sunday</span>
-                    <span className="text-slate-300 font-medium">Closed</span>
+                    <span className="text-slate-300">Closed</span>
                   </div>
                 </div>
               </div>
 
-              {/* Support Channels */}
-              <div className="group p-6 rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-purple-500/30 transition-all">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 bg-purple-500/10 rounded-xl group-hover:bg-purple-500/20 transition-colors">
-                    <Headphones className="w-6 h-6 text-purple-400" />
+              <div className="p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-indigo-500/30 transition-all">
+                <div className="flex items-start gap-3.5 mb-4">
+                  <div className="p-2.5 bg-indigo-500/10 rounded-xl">
+                    <Headphones className="w-5 h-5 text-indigo-400" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">
-                      Support Channels
-                    </h3>
-                  </div>
+                  <h3 className="font-bold text-white">Support Channels</h3>
                 </div>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <Mail className="w-4 h-4 text-blue-400" />
-                    <div>
-                      <p className="text-slate-300 font-medium">
-                        Email Support
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        support@studyhubedu.com
-                      </p>
-                    </div>
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-800/40 border border-slate-700/50">
+                    <Mail className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                    <p className="text-slate-300 text-xs truncate">
+                      {SUPPORT_EMAIL}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <Phone className="w-4 h-4 text-cyan-400" />
-                    <div>
-                      <p className="text-slate-300 font-medium">
-                        Phone Support
-                      </p>
-                      <p className="text-xs text-slate-500">+91 7091315565</p>
-                    </div>
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-800/40 border border-slate-700/50">
+                    <Phone className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                    <p className="text-slate-300 text-xs">{SUPPORT_PHONE}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Fun Stat */}
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-                <div className="text-center">
-                  <Users className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-                  <p className="text-3xl font-black text-white mb-1">50K+</p>
-                  <p className="text-sm text-slate-400">
-                    Happy customers worldwide
-                  </p>
-                </div>
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 text-center">
+                <Users className="w-7 h-7 text-cyan-400 mx-auto mb-2.5" />
+                <p className="text-2xl font-bold text-white mb-1">50K+</p>
+                <p className="text-sm text-slate-400">
+                  Learners we get to help
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section  */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-24 bg-slate-950/50">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1e40af08,_transparent_70%)]" />
-
-        <div className="max-w-5xl mx-auto px-6  relative z-10">
-          {/* Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-blue-300 font-medium">FAQ</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Common Questions
+      {/* FAQ Section */}
+      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-5">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
+                FAQ
               </span>
+            </div>
+            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-3">
+              Common questions
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
-              Find quick answers to frequently asked questions
+            <p className="text-slate-400">
+              Quick answers — for anything else, just reach out.
             </p>
           </div>
 
-          {/* FAQ Grid */}
-          <div className="grid md:grid-cols-2 gap-5">
-            {[
-              {
-                q: "What's your pricing?",
-                a: "We offer flexible pricing plans for teams of all sizes. Contact our sales team for a custom quote.",
-              },
-              {
-                q: "Do you offer free trials?",
-                a: "Yes! We provide a 14-day free trial with full access. No credit card required.",
-              },
-              {
-                q: "Minimum contract length?",
-                a: "We offer both month-to-month and annual plans. Choose what works best for you.",
-              },
-              {
-                q: "What support is included?",
-                a: "All plans include email support. Premium plans get priority support and account managers.",
-              },
-              {
-                q: "Can I import existing data?",
-                a: "Absolutely! Our team can help you migrate data from your current LMS seamlessly.",
-              },
-              {
-                q: "On-premise deployment?",
-                a: "Yes, we offer both cloud and on-premise solutions. Contact sales for details.",
-              },
-            ].map((faq, i) => (
+          <div className="grid md:grid-cols-2 gap-4">
+            {faqs.map((faq, i) => (
               <div
                 key={i}
-                className="group p-6 rounded-2xl border border-slate-800/50 bg-slate-900/30 hover:border-blue-500/30 hover:bg-slate-900/50 transition-all"
+                className="group p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-cyan-500/30 transition-all"
               >
-                <h3 className="font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                <h3 className="font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
                   {faq.q}
                 </h3>
                 <p className="text-sm text-slate-400 leading-relaxed">
@@ -490,19 +426,17 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* CTA Section  */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5" />
-
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-full mb-8">
-            <Globe className="w-4 h-4 text-blue-400" />
-            <span className="text-sm text-blue-300 font-medium">
+      {/* Cta Section */}
+      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6">
+            <Globe className="w-4 h-4 text-cyan-400" />
+            <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
               Need More Help?
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 leading-tight">
+          <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl mb-4 leading-tight">
             <span className="text-white">Can't find what</span>
             <br />
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
@@ -510,23 +444,17 @@ const Contact = () => {
             </span>
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-            Check out our comprehensive help center and documentation for
-            detailed guides.
+          <p className="text-slate-300 mb-8 max-w-xl mx-auto">
+            Check out the Help Center for detailed guides and answers.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="group relative px-8 py-4 font-semibold rounded-xl overflow-hidden transition-all hover:scale-105">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 opacity-100 group-hover:opacity-90 transition" />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 blur-xl transition" />
-              <span className="relative text-white flex items-center justify-center gap-2">
-                Visit Help Center
-              </span>
-            </button>
-
-            <button className="px-8 py-4 font-semibold rounded-xl border border-slate-700/50 bg-slate-900/30 text-slate-100 hover:border-cyan-500/50 hover:bg-slate-900/50 transition-all">
-              View Documentation
-            </button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              to="/help"
+              className="px-7 py-2.5 text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-md shadow-blue-500/20 transition-all"
+            >
+              Visit Help Center
+            </Link>
           </div>
         </div>
       </section>

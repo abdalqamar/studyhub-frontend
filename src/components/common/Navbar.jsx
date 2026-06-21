@@ -78,7 +78,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-8 font-['JetBrains_Mono']">
               {NAVLINK.map((link, index) => (
                 <NavLink
                   key={index}

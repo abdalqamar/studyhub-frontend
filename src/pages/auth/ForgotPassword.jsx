@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import LoaderButton from "../../components/ui/LoaderButton";
 import InputField from "../../components/ui/InputField";
+
+function RegMark({ className }) {
+  return (
+    <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
+      <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+      <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+    </span>
+  );
+}
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -29,8 +38,8 @@ const ForgotPassword = () => {
       const res = await forgotPasswordMutation.mutateAsync(email);
       setMessage(res?.message || "Reset link sent!");
       setEmail("");
-    } catch (error) {
-      setError(error?.response?.data?.message || "Failed to send reset link");
+    } catch (err) {
+      setError(err?.response?.data?.message || "Failed to send reset link");
     }
   };
 
@@ -39,56 +48,66 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center py-28 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 -right-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-      </div>
-
-      {/* Main Content */}
+    <div
+      className="min-h-screen bg-slate-950 flex items-center justify-center py-20 px-4"
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(0deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px)",
+      }}
+    >
       <div className="relative z-10 w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-3">Reset Password</h1>
-          <p className="text-slate-400 text-base">
-            Enter your email and we'll send you a reset link
-          </p>
-        </div>
-
         {/* Form Card */}
-        <div className="bg-slate-800/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-slate-700">
+        <div className="relative border border-slate-700/50 rounded-2xl bg-slate-900/30 p-8">
+          <RegMark className="-top-2 -left-2" />
+          <RegMark className="-top-2 -right-2" />
+          <RegMark className="-bottom-2 -left-2" />
+          <RegMark className="-bottom-2 -right-2" />
+
+          {/* Header */}
+          <div className="text-center mb-7">
+            <span className="font-['JetBrains_Mono'] text-xs tracking-[0.14em] uppercase text-cyan-400">
+              Account recovery
+            </span>
+            <h1 className="font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl text-white mt-2 mb-1.5">
+              Reset password
+            </h1>
+            <p className="text-slate-400 text-sm">
+              Enter your email and we'll send you a reset link
+            </p>
+          </div>
+
           {/* Success Message */}
           {message && (
-            <div className="mb-6 p-4 rounded-xl border border-green-800/50 bg-green-900/30 flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+            <div className="mb-5 p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 flex items-start gap-3">
+              <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-green-200">{message}</p>
-                <p className="text-xs text-green-300/70 mt-1">
+                <p className="text-sm font-medium text-emerald-300">
+                  {message}
+                </p>
+                <p className="text-xs text-emerald-400/70 mt-1">
                   Check your spam folder if you don't see it
                 </p>
               </div>
             </div>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Input */}
-            <div>
-              <InputField
-                label="Email Address"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                error={error}
-              />
+          {error && (
+            <div className="mb-5 p-4 rounded-xl border border-red-500/30 bg-red-500/5 flex items-start gap-3">
+              <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-300">{error}</p>
             </div>
+          )}
 
-            {/* Send Button */}
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <InputField
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+            />
+
             <LoaderButton
               text="Send Reset Link"
               loadingText="Sending..."
@@ -96,14 +115,13 @@ const ForgotPassword = () => {
               type="submit"
             />
 
-            {/* Back Button */}
             <button
               type="button"
               onClick={handleNavigate}
               disabled={forgotPasswordMutation.isPending}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-slate-700 bg-slate-700/30 text-slate-300 hover:text-white hover:border-slate-600 hover:bg-slate-700/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-slate-700/50 bg-slate-900/30 text-slate-300 hover:text-white hover:border-cyan-400/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
               Back to Login
             </button>
           </form>
@@ -111,37 +129,36 @@ const ForgotPassword = () => {
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-700"></div>
+              <div className="w-full border-t border-slate-700/50" />
             </div>
             <div className="relative flex justify-center">
-              <span className="px-3 bg-slate-800/80 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="px-3 bg-slate-900/30 font-['JetBrains_Mono'] text-[10px] text-slate-500 uppercase tracking-[0.1em]">
                 Important Information
               </span>
             </div>
           </div>
 
-          {/* Information List */}
           <div className="space-y-2.5 text-sm text-slate-400">
             <div className="flex items-start gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+              <div className="w-1.5 h-1.5 rounded-sm bg-cyan-400 mt-2 flex-shrink-0" />
               <p>
-                Reset link expires in{" "}
-                <span className="text-white font-semibold">5 minutes</span>
+                Reset link expires in
+                <span className="text-white font-medium">5 minutes</span>
               </p>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-2 flex-shrink-0" />
+              <div className="w-1.5 h-1.5 rounded-sm bg-indigo-400 mt-2 flex-shrink-0" />
               <p>
                 Check{" "}
-                <span className="text-white font-semibold">spam folder</span> if
+                <span className="text-white font-medium">spam folder</span> if
                 not received
               </p>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
+              <div className="w-1.5 h-1.5 rounded-sm bg-amber-400 mt-2 flex-shrink-0" />
               <p>
-                You'll be{" "}
-                <span className="text-white font-semibold">logged out</span> on
+                You'll be
+                <span className="text-white font-medium">logged out</span> on
                 all devices after reset
               </p>
             </div>
@@ -151,13 +168,13 @@ const ForgotPassword = () => {
         {/* Support Link */}
         <div className="mt-6 text-center">
           <p className="text-slate-400 text-sm">
-            Still having issues?{" "}
-            <button
-              type="button"
-              className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
+            Still having issues?
+            <Link
+              to="/contact"
+              className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
             >
               Contact Support
-            </button>
+            </Link>
           </p>
         </div>
       </div>

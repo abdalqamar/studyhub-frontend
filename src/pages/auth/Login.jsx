@@ -2,18 +2,16 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SocialLoginButtons from "../../components/ui/SocialLoginButtons";
 import { useDispatch } from "react-redux";
-import AuthLayout from "../../components/AuthSidebar";
+import AuthSidebar from "../../components/AuthSidebar";
 import LoaderButton from "../../components/ui/LoaderButton";
 import { useAuth } from "../../hooks/useAuth";
 import { setToken, setUser } from "../../features/auth/authSlice";
 import InputField from "../../components/ui/InputField";
 import { errorToast, successToast } from "../../utils/toastUtils";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-// Zod schema
 const loginSchema = z.object({
   email: z
     .string()
@@ -32,6 +30,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -53,12 +52,14 @@ const Login = () => {
 
       onError: (error) => {
         const message = error?.response?.data?.message || "Login failed";
+        const backendErrors = error?.response?.data?.errors;
 
-        if (error?.response?.data?.errors) {
-          const backendErrors = error.response.data.errors;
-
+        if (backendErrors) {
           Object.keys(backendErrors).forEach((field) => {
-            errors[field] = { message: backendErrors[field] };
+            setError(field, {
+              type: "server",
+              message: backendErrors[field],
+            });
           });
         } else {
           errorToast(message);
@@ -68,15 +69,17 @@ const Login = () => {
   };
 
   return (
-    <AuthLayout
+    <AuthSidebar
       image={
         "https://res.cloudinary.com/du7xquzsm/image/upload/v1763812843/Login_image_gi1c7b.avif"
       }
       title="Let the Journey Begin!"
       subtitle="Unlock your learning potential — sign in to access your LMS dashboard."
     >
-      <div className="text-center mb-6 sm:mb-8">
-        <h2 className="text-3xl font-bold text-cyan-200 mb-1">Sign In</h2>
+      <div className="text-center mb-5 sm:mb-7">
+        <h2 className="text-3xl font-bold text-cyan-400 font-['JetBrains_Mono'] mb-1">
+          Sign In
+        </h2>
         <p className="text-slate-400 text-sm sm:text-base">
           Enter your credentials to access your account
         </p>
@@ -84,16 +87,13 @@ const Login = () => {
 
       <SocialLoginButtons />
 
-      <div className="flex items-center gap-3 my-6 sm:my-8">
+      <div className="flex items-center gap-3 my-5 sm:my-6">
         <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
         <span className="text-slate-500 text-xs sm:text-sm">OR</span>
         <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
       </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-4 sm:space-y-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
         {/* Email */}
         <InputField
           label="Email Address"
@@ -131,7 +131,7 @@ const Login = () => {
           type="submit"
         />
 
-        <p className="text-center mt-6 text-slate-400 text-xs sm:text-sm">
+        <p className="text-center mt-5 text-slate-400 text-xs sm:text-sm">
           Don't have an account?{" "}
           <Link to={"/register"}>
             <span className="text-cyan-400 hover:underline font-semibold transition">
@@ -140,8 +140,7 @@ const Login = () => {
           </Link>
         </p>
       </form>
-    </AuthLayout>
+    </AuthSidebar>
   );
 };
-
 export default Login;

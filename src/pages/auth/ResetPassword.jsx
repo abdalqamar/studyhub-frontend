@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
-import { Eye, EyeOff, Lock, AlertCircle, CheckCircle, Key } from "lucide-react";
+import { Eye, EyeOff, Lock, AlertCircle, CheckCircle } from "lucide-react";
 import { z } from "zod";
+import LoaderButton from "../../components/ui/LoaderButton";
 
 // Zod validation schema
 const passwordSchema = z
@@ -24,6 +25,27 @@ const passwordSchema = z
     path: ["confirmNewPassword"],
   });
 
+const strengthMeta = [
+  { label: "Weak", color: "bg-red-400", text: "text-red-400" },
+  { label: "Fair", color: "bg-amber-400", text: "text-amber-400" },
+  { label: "Good", color: "bg-indigo-400", text: "text-indigo-400" },
+  { label: "Strong", color: "bg-emerald-400", text: "text-emerald-400" },
+];
+
+function RegMark({ className }) {
+  return (
+    <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
+      <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
+      <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+    </span>
+  );
+}
+
+const pageStyle = {
+  backgroundImage:
+    "repeating-linear-gradient(0deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px)",
+};
+
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -40,6 +62,8 @@ const ResetPassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+
+  const redirectTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (!token) {
@@ -59,10 +83,7 @@ const ResetPassword = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === "newPassword") {
       checkPasswordStrength(value);
@@ -74,6 +95,7 @@ const ResetPassword = () => {
     if (error) setError("");
   };
 
+  // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -87,14 +109,13 @@ const ResetPassword = () => {
       return;
     }
 
-    // Zod validation
     try {
       passwordSchema.parse(formData);
     } catch (err) {
       if (err instanceof z.ZodError) {
         const errors = {};
-        err.errors.forEach((error) => {
-          errors[error.path[0]] = error.message;
+        err.issues.forEach((issue) => {
+          errors[issue.path[0]] = issue.message;
         });
         setFieldErrors(errors);
         setLoading(false);
@@ -113,7 +134,7 @@ const ResetPassword = () => {
 
       if (data.success) {
         setMessage("Password reset successfully! Redirecting to login...");
-        setTimeout(() => {
+        redirectTimeoutRef.current = setTimeout(() => {
           navigate("/login");
         }, 3000);
       } else {
@@ -126,54 +147,80 @@ const ResetPassword = () => {
         }
       }
     } catch (err) {
-      setError("Network error. Please check your connection and try again.");
+      const backendMessage = err?.response?.data?.message;
+      setError(
+        backendMessage ||
+          "Network error. Please check your connection and try again."
+      );
+      if (
+        backendMessage?.includes("expired") ||
+        backendMessage?.includes("Invalid")
+      ) {
+        setTokenValid(false);
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const getStrengthText = () => {
-    if (passwordStrength <= 1) return "Weak";
-    if (passwordStrength === 2) return "Fair";
-    if (passwordStrength === 3) return "Good";
-    return "Strong";
-  };
+  const strength = strengthMeta[Math.min(passwordStrength, 3)];
 
   if (!tokenValid) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          {/* Error Icon */}
-          <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-br from-red-600 to-red-700 p-4 rounded-2xl shadow-2xl">
-              <AlertCircle className="w-10 h-10 text-white" />
-            </div>
-          </div>
+      <div
+        className="min-h-screen bg-slate-950 flex items-center justify-center p-4"
+        style={pageStyle}
+      >
+        <div className="w-full max-w-md relative">
+          <div className="relative border border-slate-700/50 rounded-2xl bg-slate-900/30 p-8">
+            <RegMark className="-top-2 -left-2" />
+            <RegMark className="-top-2 -right-2" />
+            <RegMark className="-bottom-2 -left-2" />
+            <RegMark className="-bottom-2 -right-2" />
 
-          {/* Card */}
-          <div className="bg-slate-800/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-slate-700">
-            <h2 className="text-3xl font-bold text-white text-center mb-2">
-              Invalid Reset Link
-            </h2>
-            <p className="text-slate-400 text-center mb-6">
-              This link has expired or is invalid
-            </p>
+            <Link
+              to="/"
+              className="flex items-center justify-center gap-2.5 mb-6"
+            >
+              <span className="w-7 h-7 rounded-md bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5">
+                  <path
+                    d="M4 5h16M4 12h16M4 19h10"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              <span className="font-['Space_Grotesk'] font-bold text-base text-white">
+                StudyHub
+              </span>
+            </Link>
 
-            {/* Error Message */}
-            <div className="bg-red-900/30 border border-red-800/50 rounded-xl p-4 mb-6">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-red-200">
-                  {error ||
-                    "This reset link is invalid or has expired. Please request a new password reset."}
-                </p>
+            <div className="flex justify-center mb-5">
+              <div className="w-14 h-14 rounded-full border border-red-500/40 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-red-400" />
               </div>
             </div>
 
-            {/* Action Buttons */}
+            <h2 className="font-['Space_Grotesk'] font-bold text-2xl text-white text-center mb-1.5">
+              Invalid Reset Link
+            </h2>
+            <p className="text-slate-400 text-sm text-center mb-6">
+              This link has expired or is invalid
+            </p>
+
+            <div className="border border-red-500/30 bg-red-500/5 rounded-xl p-4 mb-6 flex items-start gap-3">
+              <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-300">
+                {error ||
+                  "This reset link is invalid or has expired. Please request a new password reset."}
+              </p>
+            </div>
+
             <Link
               to="/forgot-password"
-              className="w-full block text-center py-3 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 transform hover:scale-[1.02] transition-all shadow-lg mb-4"
+              className="w-full block text-center py-3 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-lg shadow-blue-500/25 transition-all mb-4"
             >
               Request New Reset Link
             </Link>
@@ -181,7 +228,7 @@ const ResetPassword = () => {
             <div className="text-center">
               <Link
                 to="/login"
-                className="text-indigo-400 hover:text-indigo-300 font-medium text-sm transition-colors"
+                className="text-cyan-400 hover:text-cyan-300 font-medium text-sm transition-colors"
               >
                 ← Back to Login
               </Link>
@@ -193,25 +240,55 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center py-28">
-      <div className="w-full max-w-md">
-        {/* Card */}
-        <div className="bg-slate-800/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-slate-700">
+    <div
+      className="min-h-screen bg-slate-950 flex items-center justify-center py-20 px-4"
+      style={pageStyle}
+    >
+      <div className="w-full max-w-md relative">
+        <div className="relative border border-slate-700/50 rounded-2xl bg-slate-900/30 p-8">
+          <RegMark className="-top-2 -left-2" />
+          <RegMark className="-top-2 -right-2" />
+          <RegMark className="-bottom-2 -left-2" />
+          <RegMark className="-bottom-2 -right-2" />
+
+          <Link
+            to="/"
+            className="flex items-center justify-center gap-2.5 mb-6"
+          >
+            <span className="w-7 h-7 rounded-md bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center flex-shrink-0">
+              <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5">
+                <path
+                  d="M4 5h16M4 12h16M4 19h10"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+            <span className="font-['Space_Grotesk'] font-bold text-base text-white">
+              StudyHub
+            </span>
+          </Link>
+
           {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">
-              Set New Password
+          <div className="text-center mb-7">
+            <span className="font-['JetBrains_Mono'] text-xs tracking-[0.14em] uppercase text-cyan-400">
+              Security
+            </span>
+            <h2 className="font-['Space_Grotesk'] font-bold text-2xl text-white mt-2 mb-1.5">
+              Set a new password.
             </h2>
-            <p className="text-slate-400">Enter your new password below</p>
+            <p className="text-slate-400 text-sm">
+              Enter your new password below
+            </p>
           </div>
 
-          {/* Form */}
           <form className="space-y-5" onSubmit={handleSubmit}>
             {/* New Password */}
             <div>
               <label
                 htmlFor="newPassword"
-                className="block text-sm font-semibold text-slate-300 mb-2"
+                className="block font-['JetBrains_Mono'] text-[10.5px] tracking-wide uppercase text-slate-400 mb-2"
               >
                 New Password
               </label>
@@ -223,49 +300,50 @@ const ResetPassword = () => {
                   required
                   value={formData.newPassword}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 pr-12 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="w-full px-3.5 py-2.5 pr-11 text-sm bg-slate-900/40 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 transition-all"
                   placeholder="Enter new password"
                   minLength="6"
                 />
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors"
+                  tabIndex={-1}
                 >
                   {showNewPassword ? (
-                    <EyeOff className="w-5 h-5" />
+                    <EyeOff className="w-4 h-4" />
                   ) : (
-                    <Eye className="w-5 h-5" />
+                    <Eye className="w-4 h-4" />
                   )}
                 </button>
               </div>
 
-              {/* Password Strength Indicator */}
+              {/* Password Strength  */}
               {formData.newPassword && (
-                <div className="mt-2 flex items-center gap-2">
-                  <span className="text-xs font-medium text-slate-400">
-                    Password Strength:
-                  </span>
+                <div className="mt-2.5 flex items-center gap-2">
+                  <div className="flex gap-1 flex-1">
+                    {[0, 1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className={`h-1 flex-1 rounded-full ${
+                          i < passwordStrength
+                            ? strength.color
+                            : "bg-slate-700/50"
+                        }`}
+                      />
+                    ))}
+                  </div>
                   <span
-                    className={`text-xs font-semibold px-2.5 py-1 rounded-md ${
-                      passwordStrength <= 1
-                        ? "text-red-400 bg-red-900/30"
-                        : passwordStrength === 2
-                          ? "text-yellow-400 bg-yellow-900/30"
-                          : passwordStrength === 3
-                            ? "text-blue-400 bg-blue-900/30"
-                            : "text-green-400 bg-green-900/30"
-                    }`}
+                    className={`font-['JetBrains_Mono'] text-[10px] ${strength.text}`}
                   >
-                    {getStrengthText()}
+                    {strength.label}
                   </span>
                 </div>
               )}
 
-              {/* Field Error */}
               {fieldErrors.newPassword && (
-                <div className="mt-2 flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                <div className="mt-2 flex items-start gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-xs text-red-400">
                     {fieldErrors.newPassword}
                   </p>
@@ -277,7 +355,7 @@ const ResetPassword = () => {
             <div>
               <label
                 htmlFor="confirmNewPassword"
-                className="block text-sm font-semibold text-slate-300 mb-2"
+                className="block font-['JetBrains_Mono'] text-[10.5px] tracking-wide uppercase text-slate-400 mb-2"
               >
                 Confirm New Password
               </label>
@@ -289,37 +367,37 @@ const ResetPassword = () => {
                   required
                   value={formData.confirmNewPassword}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 pr-12 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="w-full px-3.5 py-2.5 pr-11 text-sm bg-slate-900/40 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 transition-all"
                   placeholder="Confirm new password"
                   minLength="6"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors"
+                  tabIndex={-1}
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="w-5 h-5" />
+                    <EyeOff className="w-4 h-4" />
                   ) : (
-                    <Eye className="w-5 h-5" />
+                    <Eye className="w-4 h-4" />
                   )}
                 </button>
               </div>
 
-              {/* Password Match Indicator */}
               {formData.confirmNewPassword &&
                 !fieldErrors.confirmNewPassword && (
-                  <div className="mt-2 flex items-center gap-2">
+                  <div className="mt-2 flex items-center gap-1.5">
                     {formData.newPassword === formData.confirmNewPassword ? (
                       <>
-                        <CheckCircle className="w-4 h-4 text-green-400" />
-                        <span className="text-xs text-green-400 font-medium">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-xs text-emerald-400 font-medium">
                           Passwords match
                         </span>
                       </>
                     ) : (
                       <>
-                        <AlertCircle className="w-4 h-4 text-red-400" />
+                        <AlertCircle className="w-3.5 h-3.5 text-red-400" />
                         <span className="text-xs text-red-400 font-medium">
                           Passwords do not match
                         </span>
@@ -328,10 +406,9 @@ const ResetPassword = () => {
                   </div>
                 )}
 
-              {/* Field Error */}
               {fieldErrors.confirmNewPassword && (
-                <div className="mt-2 flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                <div className="mt-2 flex items-start gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-xs text-red-400">
                     {fieldErrors.confirmNewPassword}
                   </p>
@@ -339,65 +416,31 @@ const ResetPassword = () => {
               )}
             </div>
 
-            {/* Success Message */}
             {message && (
-              <div className="bg-green-900/30 border border-green-800/50 rounded-xl p-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-green-200">{message}</p>
-                </div>
+              <div className="border border-emerald-500/30 bg-emerald-500/5 rounded-xl p-4 flex items-start gap-3">
+                <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-emerald-300">{message}</p>
               </div>
             )}
 
-            {/* Error Message */}
             {error && (
-              <div className="bg-red-900/30 border border-red-800/50 rounded-xl p-4">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-red-200">{error}</p>
-                </div>
+              <div className="border border-red-500/30 bg-red-500/5 rounded-xl p-4 flex items-start gap-3">
+                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-red-300">{error}</p>
               </div>
             )}
 
-            {/* Submit Button */}
-            <button
+            <LoaderButton
+              text="Reset Password"
+              loadingText="Resetting password..."
+              loading={loading}
               type="submit"
-              disabled={loading}
-              className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all shadow-lg"
-            >
-              {loading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <svg
-                    className="animate-spin h-5 w-5 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
-                  </svg>
-                  Resetting password...
-                </div>
-              ) : (
-                "Reset Password"
-              )}
-            </button>
+            />
 
-            {/* Back to Login */}
             <div className="text-center">
               <Link
                 to="/login"
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-slate-700 bg-slate-700/30 text-slate-300 hover:text-white hover:border-slate-600 hover:bg-slate-700/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-slate-700/50 bg-slate-900/30 text-slate-300 hover:text-white hover:border-cyan-400/40 transition-all font-medium text-sm"
               >
                 ← Back to Login
               </Link>
@@ -405,26 +448,26 @@ const ResetPassword = () => {
           </form>
 
           {/* Security Notice */}
-          <div className="mt-8 pt-6 border-t border-slate-700">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Lock className="w-4 h-4 text-slate-500" />
-              <span className="text-sm font-semibold text-slate-400">
+          <div className="mt-7 pt-6 border-t border-slate-700/50">
+            <div className="flex items-center justify-center gap-2 mb-3.5">
+              <Lock className="w-3.5 h-3.5 text-slate-500" />
+              <span className="font-['JetBrains_Mono'] text-[10.5px] tracking-wide uppercase text-slate-500">
                 Security Notice
               </span>
             </div>
             <div className="space-y-2 text-xs text-slate-400">
               <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-sm bg-cyan-400 mt-1.5 flex-shrink-0" />
                 <p>
                   You will be logged out of all devices after password reset
                 </p>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-sm bg-indigo-400 mt-1.5 flex-shrink-0" />
                 <p>Use a strong password with letters, numbers, and symbols</p>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-sm bg-amber-400 mt-1.5 flex-shrink-0" />
                 <p>You'll be automatically redirected to login after success</p>
               </div>
             </div>
