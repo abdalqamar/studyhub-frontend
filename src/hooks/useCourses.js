@@ -401,7 +401,7 @@ export const useUpdateLesson = (courseId) => {
 
   return useMutation({
     mutationFn: ({ sectionId, lessonId, formData }) =>
-      courseService.updateLesson(sectionId, lessonId, formData),
+      courseService.updateLesson(courseId, sectionId, lessonId, formData),
 
     onMutate: async ({ sectionId, lessonId, formData }) => {
       await queryClient.cancelQueries(["course", courseId]);
@@ -465,7 +465,7 @@ export const useDeleteLesson = (courseId) => {
   return useMutation({
     // API call
     mutationFn: ({ sectionId, lessonId }) =>
-      courseService.deleteLesson(sectionId, lessonId),
+      courseService.deleteLesson(courseId, sectionId, lessonId),
 
     // Optimistic update
     onMutate: async ({ sectionId, lessonId }) => {

@@ -36,11 +36,11 @@ export const authService = {
   },
 
   // Reset password
-  resetPassword: async (token, newPassword) => {
-    const { data } = await axiosInstance.post(API_ENDPOINTS.RESET_PASSWORD, {
-      token,
-      password: newPassword,
-    });
+  resetPassword: async (token, newPassword, confirmNewPassword) => {
+    const { data } = await axiosInstance.post(
+      API_ENDPOINTS.RESET_PASSWORD(token),
+      { newPassword, confirmNewPassword }
+    );
     return data;
   },
 

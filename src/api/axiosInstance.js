@@ -5,7 +5,13 @@ import { queryClient } from "../main.jsx";
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
-  timeout: 5000,
+  timeout: 15000,
+});
+
+export const uploadAxios = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+  timeout: 120000,
 });
 
 export default axiosInstance;

@@ -145,18 +145,17 @@ export const courseService = {
     return data.newLesson;
   },
 
-  updateLesson: async (sectionId, lessonId, lessonData) => {
+  updateLesson: async (courseId, sectionId, lessonId, lessonData) => {
     const { data } = await axiosInstance.put(
-      API_ENDPOINTS.UPDATE_LESSON(sectionId, lessonId),
+      API_ENDPOINTS.UPDATE_LESSON(courseId, sectionId, lessonId),
       lessonData
     );
-
     return data.updatedLesson;
   },
 
-  deleteLesson: async (sectionId, lessonId) => {
+  deleteLesson: async (courseId, sectionId, lessonId) => {
     const { data } = await axiosInstance.delete(
-      API_ENDPOINTS.DELETE_LESSON(sectionId, lessonId)
+      API_ENDPOINTS.DELETE_LESSON(courseId, sectionId, lessonId)
     );
     return data.lessonId;
   },

@@ -5,7 +5,7 @@ export const API_ENDPOINTS = {
   SEND_OTP: "/auth/send-otp",
   LOGOUT: "/auth/logout",
   FORGOT_PASSWORD: "/auth/forgot-password",
-  RESET_PASSWORD: "/auth/reset-password",
+  RESET_PASSWORD: (token) => `/auth/reset-password/${token}`,
   UPDATE_PASSWORD: "/auth/update-password",
   REFRESH_TOKEN: "/auth/refresh-token",
 
@@ -48,12 +48,14 @@ export const API_ENDPOINTS = {
     `/courses/${courseId}/sections/${sectionId}`,
 
   // Lessons
+
+  ENROLL: (courseId) => `/courses/${courseId}/enroll`,
   CREATE_LESSON: (courseId, sectionId) =>
     `/courses/${courseId}/sections/${sectionId}/lessons`,
-  UPDATE_LESSON: (sectionId, lessonId) =>
-    `/courses/sections/${sectionId}/lessons/${lessonId}`,
-  DELETE_LESSON: (sectionId, lessonId) =>
-    `/courses/${sectionId}/lessons/${lessonId}`,
+  UPDATE_LESSON: (courseId, sectionId, lessonId) =>
+    `/courses/${courseId}/sections/${sectionId}/lessons/${lessonId}`,
+  DELETE_LESSON: (courseId, sectionId, lessonId) =>
+    `/courses/${courseId}/sections/${sectionId}/lessons/${lessonId}`,
 
   // Categories
   CATEGORIES: "/categories",
