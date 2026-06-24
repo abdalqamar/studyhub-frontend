@@ -46,9 +46,6 @@ export const useApproveCourse = () => {
       successToast("Course approved!");
       queryClient.invalidateQueries(["adminCourses"]);
     },
-    onError: (error) => {
-      errorToast(error?.response?.data?.message || "Failed to approve course");
-    },
   });
 };
 
@@ -60,10 +57,6 @@ export const useRejectCourse = () => {
     onSuccess: () => {
       successToast("Course rejected!");
       queryClient.invalidateQueries(["adminCourses"]);
-    },
-
-    onError: (error) => {
-      errorToast(error?.response?.data?.message || "Failed to reject course");
     },
   });
 };
@@ -163,9 +156,6 @@ export const useDeleteCourse = () => {
       );
       successToast("Course deleted successfully!");
     },
-    onError: (error) => {
-      errorToast(error.response?.data?.message || "Failed to delete course");
-    },
   });
 };
 
@@ -179,9 +169,6 @@ export const useEnrollCourse = () => {
       queryClient.invalidateQueries({ queryKey: ["enrolledCourses"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       successToast("Successfully enrolled in course!");
-    },
-    onError: (error) => {
-      errorToast(error.response?.data?.message || "Enrollment failed");
     },
   });
 };
@@ -364,7 +351,6 @@ export const useCreateLesson = (courseId) => {
 
     // Rollback on error
     onError: (err, vars, ctx) => {
-      errorToast("Failed to create lesson");
       if (ctx?.prevCourse) {
         queryClient.setQueryData(["course", courseId], ctx.prevCourse);
       }
@@ -492,7 +478,6 @@ export const useDeleteLesson = (courseId) => {
 
     // Rollback on error
     onError: (err, vars, ctx) => {
-      errorToast("Failed to delete lesson");
       if (ctx?.prevCourse) {
         queryClient.setQueryData(["course", courseId], ctx.prevCourse);
       }
@@ -519,9 +504,6 @@ export const useCreateCourseReview = (courseId) => {
       queryClient.invalidateQueries({ queryKey: ["enrolledCourses"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       successToast("Review submitted successfully");
-    },
-    onError: (error) => {
-      errorToast(error.response?.data?.message);
     },
   });
 };

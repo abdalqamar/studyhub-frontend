@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "../api/endpoints";
 import axiosInstance from "../api/axiosInstance";
+import ErrorBoundary from "../components/ErrorBoundary2";
 import {
   setUser,
   setToken,
@@ -28,7 +29,11 @@ const RootLayout = () => {
       });
   }, [dispatch]);
 
-  return <Outlet />;
+  return (
+    <ErrorBoundary>
+      <Outlet />
+    </ErrorBoundary>
+  );
 };
 
 export default RootLayout;

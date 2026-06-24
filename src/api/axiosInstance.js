@@ -1,23 +1,24 @@
 import axios from "axios";
 import { clearAuth, setToken, setUser } from "../features/auth/authSlice";
 import { queryClient } from "../main.jsx";
+import { errorToast } from "../utils/toastUtils.jsx";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
-  timeout: 15000,
-});
-
-export const uploadAxios = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  withCredentials: true,
-  timeout: 120000,
+  timeout: 15000, // 5000 → 15000
 });
 
 export default axiosInstance;
 
-let store;
+// Upload ke liye alag instance
+export const uploadAxios = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+  timeout: 120000, // 2 minutes
+});
 
+let store;
 export const injectStore = (_store) => {
   store = _store;
 };
@@ -45,13 +46,18 @@ axiosInstance.interceptors.response.use(
   (res) => res,
 
   async (error) => {
-    if (!error.response) return Promise.reject(error);
+    // Network error — no response
+    if (!error.response) {
+      errorToast("Network error — internet connection check karo");
+      return Promise.reject(error);
+    }
 
     const originalRequest = error.config;
     const status = error.response.status;
     const url = originalRequest.url;
+    const message = error.response?.data?.message || "Something went wrong";
 
-    /* refresh-token endpoint returned 401/403 */
+    // refresh-token endpoint fail — logout
     if (
       url.includes("/auth/refresh-token") &&
       (status === 401 || status === 403)
@@ -62,12 +68,12 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    /* public routes  */
+    // public routes — khud handle karein
     if (PUBLIC_ROUTES.some((route) => url.includes(route))) {
       return Promise.reject(error);
     }
 
-    /* other 401 – try refresh once */
+    // 401 — refresh try karo
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -97,6 +103,34 @@ axiosInstance.interceptors.response.use(
       } catch {
         return Promise.reject(error);
       }
+    }
+
+    // 403 — access denied
+    if (status === 403) {
+      errorToast("Access denied");
+      return Promise.reject(error);
+    }
+
+    // 404 — silently reject
+    if (status === 404) {
+      return Promise.reject(error);
+    }
+
+    // 429 — rate limited
+    if (status === 429) {
+      errorToast(message || "Too many requests — try again later");
+      return Promise.reject(error);
+    }
+
+    // 500+ — server error
+    if (status >= 500) {
+      errorToast(message || "Server error — try again later");
+      return Promise.reject(error);
+    }
+
+    // already handled by hook — skip toast
+    if (error._handled) {
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);
