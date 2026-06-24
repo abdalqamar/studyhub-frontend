@@ -4,7 +4,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../../../../components/common/LoadingSpinner";
 import CoursesManagement from "../../shared/CoursesManagement ";
 import { useCategories } from "../../../../hooks/useCategories";
-import { fetchAllCourses, useDeleteCourse } from "../../../../hooks/useCourses";
+import { fetchAllCourses } from "../../../../hooks/courses/useManageCourses";
+import { useDeleteCourse } from "../../../../hooks/courses/useDeleteCourse";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
 import PageLoader from "../../../../components/PageLoader";
 

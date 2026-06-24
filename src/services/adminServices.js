@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from "../api/endpoints";
 
 export const adminService = {
   fetchAllUsers: async ({ role, search, status, page, limit }) => {
-    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_ALL_USERS, {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_USERS, {
       params: { role, search, status, page, limit },
     });
     return data;
@@ -11,7 +11,7 @@ export const adminService = {
 
   updateUserStatus: async (userId, status) => {
     const { data } = await axiosInstance.patch(
-      API_ENDPOINTS.ADMIN_UPDATE_USER_STATUS(userId),
+      API_ENDPOINTS.ADMIN_USER_STATUS(userId),
       { status }
     );
     return data;
@@ -19,16 +19,13 @@ export const adminService = {
 
   deleteUser: async (userId) => {
     const { data } = await axiosInstance.delete(
-      API_ENDPOINTS.ADMIN_DELETE_USER(userId)
+      API_ENDPOINTS.ADMIN_USER_DELETE(userId)
     );
     return data;
   },
 
   fetchAdminDashboardStats: async () => {
-    const { data } = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN_DASHBOARD_STATS
-    );
-
+    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_DASHBOARD);
     return data.data;
   },
 

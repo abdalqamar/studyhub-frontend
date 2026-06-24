@@ -9,7 +9,7 @@ import {
   BookOpen,
   Star,
 } from "lucide-react";
-import { useCourseContent } from "../../../../hooks/useCourses";
+import { useCourseContent } from "../../../../hooks/courses/useCourseContent";
 import LoadingSpinner from "../../../../components/common/LoadingSpinner";
 import { useCallback, useEffect, useState } from "react";
 import VideoPlayer from "./VideoPlayer";
@@ -90,7 +90,7 @@ const ViewCoursePage = () => {
       currentSection,
     });
   };
-  const handleDownloadResource = (resource) => {
+  const handleDownloadResource = () => {
     warningToast("This feature is Coming soon");
   };
 
@@ -204,8 +204,8 @@ const ViewCoursePage = () => {
                       currentLesson.difficulty === "beginner"
                         ? "bg-green-500/20 text-green-400"
                         : currentLesson.difficulty === "intermediate"
-                        ? "bg-yellow-500/20 text-yellow-400"
-                        : "bg-red-500/20 text-red-400"
+                          ? "bg-yellow-500/20 text-yellow-400"
+                          : "bg-red-500/20 text-red-400"
                     }`}
                   >
                     {currentLesson.difficulty}

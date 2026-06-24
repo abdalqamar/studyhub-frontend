@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { Search, Clock, Book, BookOpen, AlertCircle } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
-import { useCourses } from "../../hooks/useCourses";
+import { useCourses } from "../../hooks/courses/index";
 import { useCategories } from "../../hooks/useCategories";
 import { formatDuration } from "../../utils/formatDuration";
 import { errorToast } from "../../utils/toastUtils";

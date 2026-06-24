@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import LoaderButton from "./ui/LoaderButton";
 import { errorToast } from "../utils/toastUtils";
-import { useCreateCourseReview } from "../hooks/useCourses";
+import { useCreateCourseReview } from "../hooks/courses/index";
 
 const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
   const { mutate: createReview, isPending } = useCreateCourseReview(courseId);

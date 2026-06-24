@@ -7,7 +7,7 @@ import {
   useCreateSection,
   useDeleteSection,
   useDeleteLesson,
-} from "../../../../hooks/useCourses";
+} from "../../../../hooks/courses/index";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
 import Modal from "../../../../components/Modal";
 

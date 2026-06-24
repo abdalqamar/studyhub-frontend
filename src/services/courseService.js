@@ -2,128 +2,112 @@ import axiosInstance from "../api/axiosInstance";
 import { API_ENDPOINTS } from "../api/endpoints";
 
 export const courseService = {
-  getAllCourses: async (params) => {
+  //  PUBLIC
+
+  // GET /courses — sab approved courses
+  getCourses: async (params) => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSES, { params });
+    return data;
+  },
+
+  // GET /courses/manage   for admin/instructor
+  getManageCourses: async (params) => {
     const { data } = await axiosInstance.get(API_ENDPOINTS.COURSES_MANAGE, {
       params,
     });
-
     return data;
   },
 
-  // Get all Approved courses
-  fetchAllApprovedCourses: async (params) => {
-    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSES_PUBLIC, {
-      params,
-    });
-
-    return data;
-  },
-
-  // Get single course
-  getCourseById: async (courseId) => {
-    const { data } = await axiosInstance.get(
-      API_ENDPOINTS.GET_COURSE_BY_ID(courseId)
-    );
+  // GET /courses/:id — public detail page
+  getCourseDetails: async (id) => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSE(id));
     return data.course;
   },
 
-  // Get course preview for admin and instructors
+  // GET /courses/:id/preview — admin/instructor preview
   getCoursePreview: async (id) => {
     const { data } = await axiosInstance.get(API_ENDPOINTS.COURSE_PREVIEW(id));
     return data.course;
   },
 
-  // Get course details for public view
-  getCourseDetails: async (id) => {
-    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSE_DETAILS(id));
-    return data.course;
-  },
-
-  getCourseContent: async (id) => {
-    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSE_CONTENT(id));
-
-    return data.course;
-  },
-
-  // Enroll in course
-  enrollInCourse: async (courseId) => {
-    const { data } = await axiosInstance.post(API_ENDPOINTS.ENROLL(courseId));
-    return data;
-  },
-
-  // Approve course (admin)
-  approveCourse: async (id) => {
-    const { data } = await axiosInstance.patch(
-      API_ENDPOINTS.ADMIN_APPROVE_COURSE(id)
+  // GET /courses/edit/:id — instructor edit
+  getCourseById: async (courseId) => {
+    const { data } = await axiosInstance.get(
+      API_ENDPOINTS.COURSE_EDIT(courseId)
     );
     return data.course;
   },
 
-  // Reject course (admin)
+  // GET /courses/:id/content — enrolled student
+  getCourseContent: async (id) => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSE_CONTENT(id));
+    return data.course;
+  },
+
+  //  CRUD ──
+
+  createCourse: async (courseData) => {
+    const { data } = await axiosInstance.post(
+      API_ENDPOINTS.COURSE_CREATE,
+      courseData
+    );
+    return data.course;
+  },
+
+  updateCourse: async (courseId, courseData) => {
+    const { data } = await axiosInstance.put(
+      API_ENDPOINTS.COURSE_UPDATE(courseId),
+      courseData
+    );
+    return data.course;
+  },
+
+  deleteCourse: async (courseId) => {
+    const { data } = await axiosInstance.delete(
+      API_ENDPOINTS.COURSE_DELETE(courseId)
+    );
+    return data;
+  },
+
+  //  ENROLLMENT
+
+  enrollCourse: async (courseId) => {
+    const { data } = await axiosInstance.post(
+      API_ENDPOINTS.COURSE_ENROLL(courseId)
+    );
+    return data;
+  },
+
+  //  ADMIN ACTIONS
+
+  approveCourse: async (id) => {
+    const { data } = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN_COURSE_APPROVE(id)
+    );
+    return data.course;
+  },
+
   rejectCourse: async (courseId, feedback) => {
     const { data } = await axiosInstance.patch(
-      API_ENDPOINTS.ADMIN_REJECT_COURSE(courseId),
+      API_ENDPOINTS.ADMIN_COURSE_REJECT(courseId),
       { feedback }
     );
     return data.course;
   },
 
-  // Create new course (for instructors)
-  createCourse: async (courseData) => {
-    const { data } = await axiosInstance.post(
-      API_ENDPOINTS.CREATE_COURSE,
-      courseData
-    );
-    return data.course;
-  },
-
-  // Update course
-  updateCourse: async (courseId, courseData) => {
-    const { data } = await axiosInstance.put(
-      API_ENDPOINTS.UPDATE_COURSE(courseId),
-      courseData
-    );
-
-    return data.course;
-  },
-
-  // Delete course
-  deleteCourse: async (courseId) => {
-    const { data } = await axiosInstance.delete(
-      API_ENDPOINTS.DELETE_COURSE(courseId)
-    );
-    return data;
-  },
-
-  // Update lesson progress
-  updateLessonProgress: async (courseId, lessonId, progress) => {
-    const { data } = await axiosInstance.post(
-      API_ENDPOINTS.LESSON_PROGRESS(courseId, lessonId),
-      { progress }
-    );
-    return data;
-  },
-
-  // Get course by category
-  getCoursesByCategory: async (categoryId) => {
-    const { data } = await axiosInstance.get(API_ENDPOINTS.COURSES, {
-      params: { category: categoryId },
-    });
-    return data;
-  },
+  //  SECTIONS
 
   createSection: async (courseId, sectionData) => {
     const { data } = await axiosInstance.post(
-      API_ENDPOINTS.CREATE_SECTION(courseId),
+      API_ENDPOINTS.SECTION_CREATE(courseId),
       sectionData
     );
-
     return data;
   },
 
   updateSection: async (courseId, sectionId, sectionData) => {
     const { data } = await axiosInstance.put(
-      API_ENDPOINTS.UPDATE_SECTION(courseId, sectionId),
+      API_ENDPOINTS.SECTION_UPDATE(courseId, sectionId),
       sectionData
     );
     return data.updatedSection;
@@ -131,23 +115,24 @@ export const courseService = {
 
   deleteSection: async (courseId, sectionId) => {
     const { data } = await axiosInstance.delete(
-      API_ENDPOINTS.DELETE_SECTION(courseId, sectionId)
+      API_ENDPOINTS.SECTION_DELETE(courseId, sectionId)
     );
     return data.sectionId;
   },
 
+  //  LESSONS
+
   createLesson: async (courseId, sectionId, lessonData) => {
     const { data } = await axiosInstance.post(
-      API_ENDPOINTS.CREATE_LESSON(courseId, sectionId),
+      API_ENDPOINTS.LESSON_CREATE(courseId, sectionId),
       lessonData
     );
-
     return data.newLesson;
   },
 
   updateLesson: async (courseId, sectionId, lessonId, lessonData) => {
     const { data } = await axiosInstance.put(
-      API_ENDPOINTS.UPDATE_LESSON(courseId, sectionId, lessonId),
+      API_ENDPOINTS.LESSON_UPDATE(courseId, sectionId, lessonId),
       lessonData
     );
     return data.updatedLesson;
@@ -155,14 +140,16 @@ export const courseService = {
 
   deleteLesson: async (courseId, sectionId, lessonId) => {
     const { data } = await axiosInstance.delete(
-      API_ENDPOINTS.DELETE_LESSON(courseId, sectionId, lessonId)
+      API_ENDPOINTS.LESSON_DELETE(courseId, sectionId, lessonId)
     );
     return data.lessonId;
   },
 
-  createCourseReview: async (courseId, reviewData) => {
+  //  REVIEWS
+
+  createReview: async (courseId, reviewData) => {
     const { data } = await axiosInstance.post(
-      API_ENDPOINTS.CREATE_REVIEW(courseId),
+      API_ENDPOINTS.REVIEW_CREATE(courseId),
       reviewData
     );
     return data;

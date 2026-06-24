@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import LessonForm from "./LessonForm";
 import LessonItem from "./LessonItem";
-import { useUpdateSection } from "../../../../hooks/useCourses";
+import { useUpdateSection } from "../../../../hooks/courses/useUpdateSection";
 
 const SectionItem = ({
   section,

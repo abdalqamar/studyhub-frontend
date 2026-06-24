@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { adminService } from "../../services/adminServices";
 
 export const useAdminUsers = ({ role, search, status, page, limit }) => {
@@ -12,6 +12,6 @@ export const useAdminUsers = ({ role, search, status, page, limit }) => {
         page,
         limit,
       }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 };

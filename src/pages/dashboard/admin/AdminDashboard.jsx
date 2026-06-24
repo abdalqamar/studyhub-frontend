@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   }
 
   if (isError) {
-    <ErrorPage />;
+    return <ErrorPage />;
   }
 
   const stats = data?.stats || {};

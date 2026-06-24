@@ -2,7 +2,7 @@ import { ArrowLeft, Clock, Users, Star, User, Calendar } from "lucide-react";
 import CourseTabs from "../../../components/CourseTabs";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useCoursePreview } from "../../../hooks/useCourses";
+import { useCoursePreview } from "../../../hooks/courses/useCoursePreview";
 import PageLoader from "../../../components/PageLoader";
 
 const CoursePreview = () => {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useCategories } from "../hooks/useCategories";
-import { useCourses } from "../hooks/useCourses";
+import { useCourses } from "../hooks/courses/useCourses.js";
 import { formatDuration } from "../utils/formatDuration";
 import { testimonials } from "../data/data.js";
 import LiveCodeDemo from "../components/LiveCodeDemo.jsx";

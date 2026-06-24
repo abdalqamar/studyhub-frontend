@@ -91,9 +91,6 @@ const ViewCourseLayout = lazy(
 const ViewCoursePage = lazy(
   () => import("../pages/dashboard/student/ViewCourse/ViewCoursePage")
 );
-const CourseDetailsWithAI = lazy(
-  () => import("../pages/dashboard/instructor/CourseBuilder/CourseWithAi")
-);
 const CategoryManager = lazy(
   () => import("../pages/dashboard/admin/CategoryManager")
 );
@@ -148,14 +145,7 @@ const router = createBrowserRouter([
               </Suspense>
             ),
           },
-          {
-            path: "ai-suggestion",
-            element: (
-              <Suspense fallback={<PageLoader />}>
-                <CourseDetailsWithAI />
-              </Suspense>
-            ),
-          },
+
           {
             path: "help",
             element: (

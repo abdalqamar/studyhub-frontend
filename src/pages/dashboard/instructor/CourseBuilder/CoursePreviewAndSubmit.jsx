@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Edit, Video, FileText } from "lucide-react";
-import { useUpdateCourse } from "../../../../hooks/useCourses";
+import { useUpdateCourse } from "../../../../hooks/courses/index";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
 
 const CoursePreviewAndSubmit = ({ course, courseId, onBack, onEditStep }) => {

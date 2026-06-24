@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useCourseDetails } from "../../hooks/useCourses";
+import { useCourseDetails } from "../../hooks/courses/index";
 import { formatDuration } from "../../utils/formatDuration";
 import CourseTabs from "../../components/CourseTabs";
 import CoursePurchaseCard from "../../components/CoursePurchaseCard";

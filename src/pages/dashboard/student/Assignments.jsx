@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   X,
   Upload,
@@ -11,8 +11,8 @@ import {
 
 const Assignments = () => {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [assignments, setAssignments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [assignments] = useState([]);
+  const [loading] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [showSubmitModal, setShowSubmitModal] = useState(null);
   const [submissionFile, setSubmissionFile] = useState(null);
@@ -20,140 +20,8 @@ const Assignments = () => {
   const [submitting, setSubmitting] = useState(false);
 
   // Fetch assignments from backend
-  useEffect(() => {
-    fetchAssignments();
-  }, []);
-
-  const fetchAssignments = async () => {
-    try {
-      setLoading(true);
-      // Replace with your actual API endpoint
-      const response = await fetch("/api/assignments", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust based on your auth
-        },
-      });
-      const data = await response.json();
-      setAssignments(data.assignments || data);
-    } catch (error) {
-      console.error("Failed to fetch assignments:", error);
-      // Fallback to mock data for demo
-      setAssignments(getMockAssignments());
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Mock data for development
-  const getMockAssignments = () => [
-    {
-      id: 1,
-      title: "React Component Library",
-      course: "React Masterclass 2024",
-      instructor: "Dr. Sarah Johnson",
-      dueDate: "2024-01-20",
-      status: "pending",
-      submitted: false,
-      points: 100,
-      description:
-        "Build a reusable component library with React and TypeScript",
-      requirements: [
-        "Minimum 5 reusable components",
-        "TypeScript type definitions",
-        "Storybook documentation",
-        "Unit tests with Jest",
-      ],
-      attachments: [
-        { name: "requirements.pdf", url: "#" },
-        { name: "starter-template.zip", url: "#" },
-      ],
-    },
-    {
-      id: 2,
-      title: "REST API Development",
-      course: "Node.js Backend Development",
-      instructor: "Prof. Michael Chen",
-      dueDate: "2024-01-18",
-      status: "pending",
-      submitted: false,
-      points: 150,
-      description:
-        "Create a complete REST API with authentication and authorization",
-      requirements: [
-        "User authentication with JWT",
-        "CRUD operations for main resources",
-        "Role-based access control",
-        "API documentation with Swagger",
-      ],
-      attachments: [],
-    },
-    {
-      id: 3,
-      title: "Design System Project",
-      course: "UI/UX Design Principles",
-      instructor: "Emily Rodriguez",
-      dueDate: "2024-01-15",
-      status: "submitted",
-      submitted: true,
-      submittedAt: "2024-01-14T10:30:00",
-      points: 120,
-      description: "Design and prototype a complete design system",
-      requirements: [
-        "Color palette and typography",
-        "Component library in Figma",
-        "Design tokens documentation",
-        "Interactive prototype",
-      ],
-      attachments: [],
-      submissionFiles: [{ name: "design-system.fig", size: "2.4 MB" }],
-    },
-    {
-      id: 4,
-      title: "JavaScript Algorithms",
-      course: "Advanced JavaScript Patterns",
-      instructor: "Dr. James Park",
-      dueDate: "2024-01-25",
-      status: "pending",
-      submitted: false,
-      points: 80,
-      description: "Solve complex algorithms using modern JavaScript",
-      requirements: [
-        "5 algorithm implementations",
-        "Time complexity analysis",
-        "Space optimization",
-        "Test cases included",
-      ],
-      attachments: [{ name: "algorithm-problems.pdf", url: "#" }],
-    },
-    {
-      id: 5,
-      title: "Data Analysis Report",
-      course: "Python for Data Analysis",
-      instructor: "Dr. Lisa Wang",
-      dueDate: "2024-01-12",
-      status: "graded",
-      submitted: true,
-      submittedAt: "2024-01-11T15:45:00",
-      gradedAt: "2024-01-13T09:20:00",
-      grade: "A",
-      score: 95,
-      points: 200,
-      description: "Analyze dataset and create comprehensive report",
-      requirements: [
-        "Exploratory data analysis",
-        "Statistical visualizations",
-        "Insights and recommendations",
-        "Jupyter notebook submission",
-      ],
-      feedback:
-        "Excellent work! Your visualizations were particularly insightful and the statistical analysis was thorough. Consider exploring more advanced clustering techniques in future projects.",
-      attachments: [{ name: "dataset.csv", url: "#" }],
-      submissionFiles: [
-        { name: "analysis-report.ipynb", size: "1.8 MB" },
-        { name: "visualizations.pdf", size: "3.2 MB" },
-      ],
-    },
-  ];
 
   const filteredAssignments = assignments.filter((assignment) => {
     if (activeFilter === "all") return true;

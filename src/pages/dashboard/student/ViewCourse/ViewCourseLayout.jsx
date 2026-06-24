@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import ViewCourseSidebar from "./ViewCourseSidebar";
-import { useCourseContent } from "../../../../hooks/useCourses";
+import { useCourseContent } from "../../../../hooks/courses/useCourseContent";
 import { ArrowLeft, Menu, BookOpen } from "lucide-react";
 
 const ViewCourseLayout = () => {

@@ -11,7 +11,7 @@ export const categoryService = {
   // Update a category
   updateCategory: async (id, formData) => {
     const { data } = await axiosInstance.put(
-      API_ENDPOINTS.UPDATE_CATEGORY(id),
+      API_ENDPOINTS.CATEGORY_UPDATE(id),
       formData
     );
     return data.updatedCategory;
@@ -21,17 +21,17 @@ export const categoryService = {
   createCategory: async (formData) => {
     console.log(formData);
     const { data } = await axiosInstance.post(
-      API_ENDPOINTS.CREATE_CATEGORY,
+      API_ENDPOINTS.CATEGORY_CREATE,
       formData
     );
-    console.log(data);
+
     return data.updatedCategory;
   },
 
   // Delete a category
   deleteCategory: async (categoryId) => {
     const { data } = await axiosInstance.delete(
-      API_ENDPOINTS.DELETE_CATEGORY(categoryId)
+      API_ENDPOINTS.CATEGORY_DELETE(categoryId)
     );
     return data.message;
   },

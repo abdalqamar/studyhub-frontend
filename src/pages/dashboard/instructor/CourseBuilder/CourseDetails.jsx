@@ -4,7 +4,7 @@ import BenefitsInput from "./BenefitsInput";
 import TagsInput from "./TagsInput";
 import FileUploader from "../course/components/FileUploader";
 import { ChevronRight, Loader } from "lucide-react";
-import { useUpdateCourse } from "../../../../hooks/useCourses";
+import { useUpdateCourse } from "../../../../hooks/courses/index";
 import { useCategories } from "../../../../hooks/useCategories";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
 

@@ -8,7 +8,7 @@ import {
   useApproveCourse,
   useDeleteCourse,
   useRejectCourse,
-} from "../../../hooks/useCourses";
+} from "../../../hooks/courses/index";
 import { useCategories } from "../../../hooks/useCategories";
 import { errorToast, successToast } from "../../../utils/toastUtils";
 import PageLoader from "../../../components/PageLoader";

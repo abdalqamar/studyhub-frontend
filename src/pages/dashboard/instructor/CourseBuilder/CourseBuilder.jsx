@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import RenderProgress from "../course/components/RenderProgress";
 import LoadingSpinner from "../../../../components/common/LoadingSpinner";
-import { useCourseById, useCreateCourse } from "../../../../hooks/useCourses";
+import {
+  useCourseById,
+  useCreateCourse,
+} from "../../../../hooks/courses/index";
 
 const CourseBuilder = () => {
   const { courseId: urlId } = useParams();

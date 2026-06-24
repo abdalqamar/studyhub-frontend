@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import FileUploader from "../course/components/FileUploader";
 import { Save, X } from "lucide-react";
-import { useCreateLesson, useUpdateLesson } from "../../../../hooks/useCourses";
+import {
+  useUpdateLesson,
+  useCreateLesson,
+} from "../../../../hooks/courses/index";
 import { successToast, errorToast } from "../../../../utils/toastUtils";
 import CircularProgressWithLabel from "../../../../components/CircularProgressWithLabel";
 const LessonForm = ({

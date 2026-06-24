@@ -16,7 +16,7 @@ const RootLayout = () => {
 
   useEffect(() => {
     axiosInstance
-      .post(API_ENDPOINTS.REFRESH_TOKEN)
+      .post(API_ENDPOINTS.AUTH_REFRESH_TOKEN)
       .then(({ data }) => {
         dispatch(setToken(data.accessToken));
         dispatch(setUser(data.user));
