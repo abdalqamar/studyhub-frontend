@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import CoursesManagement from "../shared/CoursesManagement ";
 import {
-  fetchAllCourses,
+  useManageCourses,
   useApproveCourse,
   useDeleteCourse,
   useRejectCourse,
@@ -49,7 +49,7 @@ const AdminManageCourses = () => {
     isLoading: coursesLoading,
     isError,
     error,
-  } = fetchAllCourses({
+  } = useManageCourses({
     search: debouncedSearch,
     status: statusFilter,
     category: categoryFilter,

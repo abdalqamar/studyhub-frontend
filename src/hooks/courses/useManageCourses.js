@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { courseService } from "../../services/courseService";
 import { courseKeys } from "../../lib/queryKeys";
-export const fetchAllCourses = ({
+export const useManageCourses = ({
   instructor,
   search,
   status,

@@ -4,8 +4,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../../../../components/common/LoadingSpinner";
 import CoursesManagement from "../../shared/CoursesManagement ";
 import { useCategories } from "../../../../hooks/useCategories";
-import { fetchAllCourses } from "../../../../hooks/courses/useManageCourses";
-import { useDeleteCourse } from "../../../../hooks/courses/useDeleteCourse";
+import {
+  useManageCourses,
+  useDeleteCourse,
+} from "../../../../hooks/courses/index";
 import { errorToast, successToast } from "../../../../utils/toastUtils";
 import PageLoader from "../../../../components/PageLoader";
 
@@ -41,7 +43,7 @@ const InstructorManageCourses = () => {
     isLoading: coursesLoading,
     isError,
     error,
-  } = fetchAllCourses({
+  } = useManageCourses({
     instructor: "me",
     search: debouncedSearch,
     status: statusFilter,

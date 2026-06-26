@@ -17,9 +17,6 @@ const Navbar = () => {
   const { data: user, isLoading } = profileQuery;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cartItems] = useState(3);
-
-  const showCart = user && user.role !== "instructor" && user.role !== "admin";
 
   // Close mobile menu on navigation
   useEffect(() => {
@@ -98,25 +95,6 @@ const Navbar = () => {
 
             {/* Right Actions */}
             <div className="hidden md:flex items-center space-x-6">
-              {/* Cart - only for logged in students */}
-              {/* {showCart && (
-                <Link
-                  to="/cart"
-                  className="relative text-white hover:text-primary-text transition-all duration-200 transform hover:scale-110"
-                  aria-label={`Shopping cart with ${cartItems} items`}
-                >
-                  <ShoppingCart size={24} />
-                  {cartItems > 0 && (
-                    <span
-                      className="absolute -top-2 -right-2 bg-accent-color text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transition-transform hover:scale-110"
-                      aria-label={`${cartItems} items in cart`}
-                    >
-                      {cartItems > 99 ? "99+" : cartItems}
-                    </span>
-                  )}
-                </Link>
-              )} */}
-
               {isLoading ? (
                 <UserPlaceholder />
               ) : user ? (
@@ -163,19 +141,18 @@ const Navbar = () => {
             role="dialog"
             aria-modal="true"
           >
-            <div className="px-6 py-6 pb-20">
-              {/* Menu Items */}
-              <div className="space-y-3 mb-8">
+            <div className="px-5 py-5 pb-16">
+              <div className="space-y-1.5 mb-6">
                 {NAVLINK.map((link, index) => (
                   <NavLink
                     key={index}
                     to={link.to}
                     onClick={closeMobileMenu}
                     className={({ isActive }) =>
-                      `block py-4 px-6 rounded-xl transition-all duration-200 font-medium text-lg transform hover:scale-[1.02] ${
+                      `block py-3 px-5 rounded-lg transition-colors duration-200 font-medium text-base ${
                         isActive
-                          ? "bg-blue-600/30 text-white border border-blue-500/40 shadow-lg"
-                          : "bg-blue-600/5 text-white hover:bg-blue-600/25 border border-blue-500/20 hover:shadow-md"
+                          ? "bg-cyan-500/10 text-cyan-300 border border-cyan-400/30"
+                          : "text-slate-300 hover:bg-slate-800/60 hover:text-white border border-transparent"
                       }`
                     }
                   >
@@ -190,10 +167,10 @@ const Navbar = () => {
                   to={`/${user.role}`}
                   onClick={closeMobileMenu}
                   className={({ isActive }) =>
-                    `block py-4 px-6 rounded-xl transition-all duration-200 font-medium text-lg mb-5 transform hover:scale-[1.02] ${
+                    `block py-3 px-5 rounded-lg transition-colors duration-200 font-medium text-base mb-4 ${
                       isActive
-                        ? "bg-blue-600/30 text-white border border-blue-500/40 shadow-lg"
-                        : "bg-blue-600/5 text-white hover:bg-blue-600/25 border border-blue-500/20 hover:shadow-md"
+                        ? "bg-cyan-500/10 text-cyan-300 border border-cyan-400/30"
+                        : "text-slate-300 hover:bg-slate-800/60 hover:text-white border border-transparent"
                     }`
                   }
                 >
@@ -202,29 +179,16 @@ const Navbar = () => {
               )}
 
               {/* Divider */}
-              <div className="h-px bg-white/10 my-8"></div>
-
-              {/* Cart Link */}
-              {showCart && (
-                <Link
-                  to="/cart"
-                  onClick={closeMobileMenu}
-                  className="flex items-center gap-3 py-4 px-6 text-white hover:bg-white/10 rounded-xl transition-all duration-200 font-medium text-lg mb-5 bg-white/5 transform hover:scale-[1.02] hover:shadow-md"
-                  aria-label={`View cart with ${cartItems} items`}
-                >
-                  <ShoppingCart size={24} />
-                  <span>Cart ({cartItems})</span>
-                </Link>
-              )}
+              <div className="h-px bg-white/10 my-6" />
 
               {/* Auth Actions */}
               {isLoading ? (
-                <div className="w-full py-4 px-6 bg-slate-700/50 rounded-xl animate-pulse" />
+                <div className="w-full py-3 px-5 bg-slate-800/50 rounded-lg animate-pulse" />
               ) : user ? (
                 <button
                   onClick={handleLogout}
                   disabled={logoutMutation.isLoading}
-                  className="w-full py-4 px-6 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-95"
+                  className="w-full py-3 px-5 bg-red-600/90 hover:bg-red-600 text-white rounded-lg font-semibold text-base transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Logout"
                 >
                   {logoutMutation.isLoading ? "Logging out..." : "Logout"}
@@ -233,9 +197,9 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   onClick={closeMobileMenu}
-                  className="flex items-center justify-center gap-2 bg-blue-600 text-white px-5 py-4 rounded-xl hover:bg-opacity-90 transition-all duration-200 font-medium text-lg transform hover:scale-[1.02] hover:shadow-lg active:scale-95"
+                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-3 rounded-lg transition-all duration-200 font-medium text-base"
                 >
-                  <LogIn size={20} />
+                  <LogIn size={18} />
                   Login
                 </Link>
               )}

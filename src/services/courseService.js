@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance, { uploadAxios } from "../api/axiosInstance";
 import { API_ENDPOINTS } from "../api/endpoints";
 
 export const courseService = {
@@ -123,7 +123,7 @@ export const courseService = {
   //  LESSONS
 
   createLesson: async (courseId, sectionId, lessonData) => {
-    const { data } = await axiosInstance.post(
+    const { data } = await uploadAxios.post(
       API_ENDPOINTS.LESSON_CREATE(courseId, sectionId),
       lessonData
     );
@@ -131,7 +131,7 @@ export const courseService = {
   },
 
   updateLesson: async (courseId, sectionId, lessonId, lessonData) => {
-    const { data } = await axiosInstance.put(
+    const { data } = await uploadAxios.put(
       API_ENDPOINTS.LESSON_UPDATE(courseId, sectionId, lessonId),
       lessonData
     );
@@ -139,7 +139,7 @@ export const courseService = {
   },
 
   deleteLesson: async (courseId, sectionId, lessonId) => {
-    const { data } = await axiosInstance.delete(
+    const { data } = await uploadAxios.delete(
       API_ENDPOINTS.LESSON_DELETE(courseId, sectionId, lessonId)
     );
     return data.lessonId;

@@ -25,7 +25,7 @@ const CourseDetails = () => {
     error,
   } = useCourseDetails(courseId);
   const { user } = useSelector((state) => state.auth);
-
+  console.log(course);
   if (isLoading) return <PageLoader />;
 
   // Error Handling
@@ -133,9 +133,9 @@ const CourseDetails = () => {
             <div className="flex items-center gap-2 text-slate-400 bg-slate-800/50 px-4 py-2.5 rounded-lg">
               <Clock className="w-4 h-4 flex-shrink-0" />
               <span className="text-sm">
-                {course.totalDuration > 0
+                {course.totalLectures > 0
                   ? formatDuration(course.totalDuration)
-                  : "Duration not set"}
+                  : 0}
               </span>
             </div>
 

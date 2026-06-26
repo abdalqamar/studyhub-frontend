@@ -31,6 +31,8 @@ const PUBLIC_ROUTES = [
   "/auth/forgot-password",
   "/auth/reset-password",
   "/auth/send-otp",
+  "/courses",
+  "/categories",
 ];
 
 axiosInstance.interceptors.request.use(
@@ -48,7 +50,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     // Network error — no response
     if (!error.response) {
-      errorToast("Network error — internet connection check karo");
+      errorToast("Please check your internet connection and try again");
       return Promise.reject(error);
     }
 
@@ -58,11 +60,21 @@ axiosInstance.interceptors.response.use(
     const message = error.response?.data?.message || "Something went wrong";
 
     // refresh-token endpoint fail — logout
+
     if (
       url.includes("/auth/refresh-token") &&
       (status === 401 || status === 403)
     ) {
       refreshTokenPromise = null;
+
+      const code = error.response?.data?.code;
+      const message = error.response?.data?.message;
+
+      if (code === "SESSION_EXPIRED") {
+        errorToast("Session expired — please login again");
+      } else if (status === 403) {
+        errorToast(message);
+      }
       store.dispatch(clearAuth());
       queryClient.removeQueries({ queryKey: ["profile"] });
       return Promise.reject(error);

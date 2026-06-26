@@ -16,4 +16,4 @@ export { useCreateLesson } from "./useCreateLesson";
 export { useUpdateLesson } from "./useUpdateLesson";
 export { useDeleteLesson } from "./useDeleteLesson";
 export { useCreateCourseReview } from "./useCreateCourseReview";
-export { fetchAllCourses } from "./useManageCourses";
+export { useManageCourses } from "./useManageCourses";

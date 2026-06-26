@@ -37,7 +37,7 @@ const CoursesPage = () => {
     page: currentPage,
     limit: ITEMS_PER_PAGE,
   });
-
+  console.log(coursesData);
   const { data: categoriesData = [], isLoading: categoriesLoading } =
     useCategories();
 
