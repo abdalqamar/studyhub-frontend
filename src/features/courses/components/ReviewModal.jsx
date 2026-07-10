@@ -16,28 +16,20 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: {
-      rating: 0,
-      review: "",
-    },
+    defaultValues: { rating: 0, review: "" },
   });
 
   const rating = watch("rating");
   const reviewText = watch("review");
 
-  // Reset form when opened
   useEffect(() => {
     register("rating", { required: true });
     reset({ rating: 0, review: "" });
   }, [register, reset]);
 
-  // Submit Handler
   const onSubmit = (data) => {
     createReview(
-      {
-        rating: data.rating,
-        review: data.review,
-      },
+      { rating: data.rating, review: data.review },
       {
         onSuccess: () => {
           setShowReviewModal(false);
@@ -53,38 +45,36 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="relative w-full max-w-md bg-surface border border-border rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <h2 className="text-2xl font-bold text-slate-100">Add Review</h2>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+      <div className="relative w-full max-w-md bg-surface border border-border rounded-2xl overflow-hidden">
+        <div className="flex items-center justify-between p-5 border-b border-border">
+          <h2 className="font-display text-lg font-bold text-text-1">
+            Add review
+          </h2>
           <button
             onClick={() => setShowReviewModal(false)}
-            className="p-2 hover:bg-surface-2 rounded-lg transition-colors"
+            className="w-8 h-8 flex items-center justify-center border border-border-strong text-text-2 hover:text-text-1 rounded-lg transition-colors"
           >
-            <X size={24} className="text-text-2" />
+            <X size={16} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
-          {/* Rating */}
+        <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-slate-100 mb-3">
+            <label className="block text-sm font-medium text-text-1 mb-3">
               How would you rate this course?
             </label>
 
-            <div className="flex gap-3 text-4xl">
+            <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
                   type="button"
                   onClick={() => setValue("rating", star)}
-                  className={`transition-all transform hover:scale-110 ${
-                    star <= rating ? "text-yellow-400" : "text-text-3"
-                  }`}
+                  className={`transition-transform hover:scale-110 ${star <= rating ? "text-gold" : "text-text-3"}`}
                 >
                   <Star
-                    size={32}
+                    size={26}
                     fill={star <= rating ? "currentColor" : "none"}
                   />
                 </button>
@@ -92,13 +82,12 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
             </div>
 
             {errors.rating && (
-              <p className="text-red-400 text-sm mt-2">Please give a rating.</p>
+              <p className="text-danger text-xs mt-2">Please give a rating.</p>
             )}
           </div>
 
-          {/*  Review Text */}
           <div>
-            <label className="block text-sm font-semibold text-slate-100 mb-3">
+            <label className="block text-sm font-medium text-text-1 mb-3">
               Share your feedback
             </label>
 
@@ -106,33 +95,30 @@ const ReviewModal = ({ setShowReviewModal, courseId, setIsSidebarOpen }) => {
               {...register("review", { required: true })}
               placeholder="Tell us what you think about this course..."
               rows="5"
-              className="w-full px-4 py-3 bg-surface-2 border border-border-strong rounded-lg text-slate-100 placeholder-text-3 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold focus:ring-opacity-20 resize-none"
+              className="w-full px-3.5 py-3 bg-surface-2 border border-border-strong rounded-xl text-text-1 placeholder-text-3 outline-none focus:ring-2 focus:ring-gold transition-all resize-none text-sm"
             />
 
             {errors.review && (
-              <p className="text-red-400 text-sm mt-1">
-                Please enter a review.
-              </p>
+              <p className="text-danger text-xs mt-1">Please enter a review.</p>
             )}
           </div>
 
-          {/* Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               disabled={isPending}
               onClick={() => setShowReviewModal(false)}
-              className="flex-1 py-3 px-4 text-gold hover:text-gold border border-gold/30  hover:border-gold/40 bg-surface-2 hover:bg-surface-2/80 font-semibold rounded-lg transition-all duration-300"
+              className="flex-1 py-2.5 px-4 text-text-1 border border-border-strong hover:border-text-3 bg-surface-2 hover:bg-surface-raised font-medium rounded-xl transition-all duration-200"
             >
               Cancel
             </button>
             <LoaderButton
-              text="Submit Review"
+              text="Submit review"
               loadingText="Submitting..."
               loading={isPending}
               disabled={rating === 0 || !reviewText.trim() || isPending}
               type="submit"
-              className={`flex-1 py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed `}
+              className="flex-1 py-2.5 px-4 bg-gold hover:bg-gold-dim text-bg font-medium rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </form>

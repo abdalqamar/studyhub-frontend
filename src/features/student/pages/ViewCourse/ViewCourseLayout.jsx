@@ -1,8 +1,8 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import ViewCourseSidebar from "./ViewCourseSidebar";
-import { useCourseContent } from "../../../../hooks/courses/useCourseContent";
 import { ArrowLeft, Menu, BookOpen } from "lucide-react";
+import { useCourseContent } from "@/features/courses/hooks";
+import ViewCourseSidebar from "./ViewCourseSidebar";
 
 const ViewCourseLayout = () => {
   const { courseId } = useParams();
@@ -18,21 +18,21 @@ const ViewCourseLayout = () => {
   if (error) {
     return (
       <div className="flex items-center justify-center h-screen bg-surface">
-        <div className="text-center p-8 bg-surface-2 rounded-xl border border-border">
-          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <BookOpen className="text-red-400" size={24} />
+        <div className="text-center p-8 bg-surface-2 rounded-2xl border border-border">
+          <div className="w-14 h-14 bg-danger-soft rounded-full flex items-center justify-center mx-auto mb-4">
+            <BookOpen className="text-danger" size={22} />
           </div>
-          <h2 className="text-xl font-bold text-slate-100 mb-2">
-            Course Not Found
+          <h2 className="font-display text-xl font-bold text-text-1 mb-2">
+            Course not found
           </h2>
-          <p className="text-text-2 mb-6">
+          <p className="text-text-2 text-sm mb-6">
             We couldn't load the course content.
           </p>
           <button
             onClick={handleBackToCourses}
-            className="px-6 py-3 bg-gold hover:bg-gold-dim text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-600/25"
+            className="px-5 py-2.5 bg-gold hover:bg-gold-dim text-bg font-semibold rounded-xl transition-colors duration-200"
           >
-            Back to Courses
+            Back to courses
           </button>
         </div>
       </div>
@@ -49,44 +49,40 @@ const ViewCourseLayout = () => {
         />
       )}
 
-      {/* Sidebar */}
       <ViewCourseSidebar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
         course={course}
       />
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="bg-surface-2 border-b border-border px-6 py-4 flex items-center  gap-4 ">
+        <div className="bg-surface-2 border-b border-border px-5 py-3.5 flex items-center gap-3">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="lg:hidden px-4 py-2 bg-surface-2 hover:bg-surface-2 text-slate-100 font-semibold rounded-lg transition-colors flex items-center gap-2"
+            className="lg:hidden w-9 h-9 flex items-center justify-center bg-surface border border-border-strong text-text-2 hover:text-text-1 rounded-lg transition-colors"
           >
-            <Menu size={20} />
+            <Menu size={18} />
           </button>
 
           <button
             onClick={handleBackToCourses}
-            className="flex items-center gap-2 py-2 px-4 text-white hover:text-gold border border-gold/30  hover:border-gold/40 bg-surface-2 hover:bg-surface-2/80 font-semibold rounded-lg transition-all duration-300"
+            className="flex items-center gap-2 py-2 px-3.5 text-text-2 hover:text-gold border border-border-strong hover:border-gold-dim bg-surface font-medium text-[13px] rounded-lg transition-all duration-200"
           >
-            <ArrowLeft size={18} />
-            Back to Courses
+            <ArrowLeft size={16} />
+            Back to courses
           </button>
 
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="hidden lg:flex items-center gap-2 px-4 py-2 text-white hover:text-gold border border-gold/30  hover:border-gold/40 bg-surface-2 hover:bg-surface-2/80 font-semibold rounded-lg transition-all duration-300"
+            className="hidden lg:flex items-center gap-2 px-3.5 py-2 text-text-2 hover:text-gold border border-border-strong hover:border-gold-dim bg-surface font-medium text-[13px] rounded-lg transition-all duration-200"
           >
-            <Menu size={18} />
-            {isSidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+            <Menu size={16} />
+            {isSidebarOpen ? "Hide sidebar" : "Show sidebar"}
           </button>
 
           <div className="flex-1" />
         </div>
 
-        {/* Content Area */}
         <main className="flex-1 overflow-y-auto p-6 bg-surface">
           <Outlet />
         </main>
