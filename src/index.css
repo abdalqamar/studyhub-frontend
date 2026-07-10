@@ -2,17 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* base surfaces */
+  --bg: #0a0e1a;
+  --surface: #12172a;
+  --surface-2: #171d33;
+  --surface-raised: #1c2340;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+
+  /* premium accent */
+  --gold: #d4a537;
+  --gold-soft: rgba(212, 165, 55, 0.14);
+  --gold-dim: rgba(212, 165, 55, 0.35);
+
+  /* secondary accents */
+  --teal: #2dd4bf;
+  --teal-soft: rgba(45, 212, 191, 0.14);
+  --blue-app: #5b8def;
+  --blue-app-soft: rgba(91, 141, 239, 0.14);
+  --red: #e2574c;
+  --red-soft: rgba(226, 87, 76, 0.14);
+
+  /* text */
+  --text-1: #edeff5;
+  --text-2: #9aa1b8;
+  --text-3: #5c6480;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
+  background: var(--bg);
+  color: var(--text-1);
 }
 
+/* ---------- date input (browser default override) ---------- */
 input[type="date"] {
   color-scheme: dark;
-  background-color: slateblue;
-  color: white;
-  border: 1px solid #2a2a2a;
+  background-color: var(--surface-2);
+  color: var(--text-1);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 12px;
 }
@@ -27,6 +58,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
 }
 
+/* ---------- video.js player ---------- */
 .video-js {
   width: 100% !important;
   height: 100% !important;
@@ -38,6 +70,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   height: 100% !important;
 }
 
+/* ---------- utilities ---------- */
 @layer utilities {
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;
@@ -46,11 +79,12 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     background: transparent;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #475569; /* slate-600 */
+    background-color: var(--surface-raised);
     border-radius: 20px;
   }
 }
 
+/* ---------- shimmer loading skeleton ---------- */
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
@@ -63,9 +97,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .shimmer {
   background: linear-gradient(
     90deg,
-    rgba(30, 41, 59, 0.5) 0%,
-    rgba(51, 65, 85, 0.8) 50%,
-    rgba(30, 41, 59, 0.5) 100%
+    var(--surface) 0%,
+    var(--surface-2) 50%,
+    var(--surface) 100%
   );
   background-size: 1000px 100%;
   animation: shimmer 2s infinite linear;

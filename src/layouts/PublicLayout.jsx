@@ -1,7 +1,7 @@
+import ScrollToTop from "@/shared/components/ScrollToTop";
+import Footer from "@/shared/layout/Footer";
+import Navbar from "@/shared/layout/Navbar";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/common/Navbar";
-import Footer from "../components/common/Footer";
-import ScrollToTop from "../components/ScrollToTop";
 
 const PublicLayout = () => {
   return (

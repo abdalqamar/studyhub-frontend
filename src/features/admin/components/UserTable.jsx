@@ -1,0 +1,195 @@
+import Modal from "@/shared/components/Modal";
+import formatLastActive from "@/shared/utils/formatLastActive";
+import { warningToast } from "@/shared/utils/toastUtils";
+import { Ban, CheckCircle, Edit, Trash2 } from "lucide-react";
+import { useState } from "react";
+
+const getInitials = (name = "") =>
+  name
+    .split(" ")
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+const iconBtn =
+  "w-8 h-8 flex items-center justify-center rounded-lg border bg-transparent transition-all duration-150";
+
+const UserTable = ({
+  users,
+  isStudentTab,
+  handleDeleteUser,
+  handleToggleUserStatus,
+}) => {
+  const [modalData, setModalData] = useState(null);
+
+  const getStatusConfig = (status) => {
+    switch (status) {
+      case "active":
+        return { text: "Active", classes: "bg-teal-soft text-teal" };
+      case "suspended":
+        return { text: "Suspended", classes: "bg-danger-soft text-danger" };
+      case "inactive":
+        return { text: "Inactive", classes: "bg-surface-2 text-text-3" };
+      default:
+        return { text: status, classes: "bg-surface-2 text-text-3" };
+    }
+  };
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <thead>
+          <tr className="bg-surface-2 border-b border-border">
+            <th className="px-5 py-3.5 text-left font-mono text-[10.5px] tracking-wider uppercase text-text-3">
+              User
+            </th>
+            <th className="px-5 py-3.5 text-left font-mono text-[10.5px] tracking-wider uppercase text-text-3">
+              {isStudentTab ? "Courses enrolled" : "Created courses"}
+            </th>
+            <th className="px-5 py-3.5 text-left font-mono text-[10.5px] tracking-wider uppercase text-text-3">
+              {isStudentTab ? "Last active" : "Students"}
+            </th>
+            <th className="px-5 py-3.5 text-left font-mono text-[10.5px] tracking-wider uppercase text-text-3">
+              Status
+            </th>
+            <th className="px-5 py-3.5 text-right font-mono text-[10.5px] tracking-wider uppercase text-text-3">
+              Actions
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {users?.map((user) => {
+            const fullName = `${user?.firstName} ${user?.lastName}`;
+            const status = getStatusConfig(user.status);
+
+            return (
+              <tr
+                key={user._id}
+                className="border-t border-border hover:bg-surface-2/60 transition-colors"
+              >
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full overflow-hidden ring-1 ring-border-strong flex-shrink-0 bg-gradient-to-br from-accent-blue to-teal flex items-center justify-center">
+                      {user?.profileImage ? (
+                        <img
+                          src={user.profileImage}
+                          alt={fullName}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="font-display text-[12px] font-bold text-bg">
+                          {getInitials(fullName)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[13.5px] font-medium text-text-1 truncate">
+                        {fullName}
+                      </div>
+                      <div className="text-text-3 text-xs truncate">
+                        {user.email}
+                      </div>
+                      <div className="text-text-3 text-[10.5px] font-mono mt-0.5">
+                        Joined{" "}
+                        {new Date(user.createdAt).toLocaleDateString("en-IN", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="px-5 py-3.5 font-mono text-[13px] text-text-1">
+                  {isStudentTab
+                    ? (user.coursesEnrolled ?? 0)
+                    : (user.coursesCreated ?? 0)}
+                </td>
+
+                <td className="px-5 py-3.5 text-[13px] text-text-2">
+                  {isStudentTab
+                    ? user.lastActive
+                      ? formatLastActive(user.lastActive)
+                      : "Never"
+                    : (user.totalStudents ?? "—")}
+                </td>
+
+                <td className="px-5 py-3.5">
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-medium font-mono ${status.classes}`}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                    {status.text}
+                  </span>
+                </td>
+
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center justify-end gap-1.5">
+                    {(user.status === "active" ||
+                      user.status === "inactive") && (
+                      <button
+                        onClick={() => handleToggleUserStatus(user)}
+                        title="Suspend user"
+                        className={`${iconBtn} border-gold-dim text-gold hover:bg-gold-soft`}
+                      >
+                        <Ban size={14} />
+                      </button>
+                    )}
+
+                    {user.status === "suspended" && (
+                      <button
+                        onClick={() => handleToggleUserStatus(user)}
+                        title="Activate user"
+                        className={`${iconBtn} border-teal-soft text-teal hover:bg-teal-soft`}
+                      >
+                        <CheckCircle size={14} />
+                      </button>
+                    )}
+
+                    <button
+                      onClick={() =>
+                        warningToast("Edit user feature coming soon!")
+                      }
+                      title="Edit user"
+                      className={`${iconBtn} border-accent-blue-soft text-accent-blue hover:bg-accent-blue-soft`}
+                    >
+                      <Edit size={14} />
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        setModalData({
+                          type: "delete",
+                          title: "Delete User?",
+                          message: `Are you sure you want to delete ${fullName}?`,
+                          details:
+                            "This will permanently remove this user and all associated data. This action cannot be undone.",
+                          confirmText: "Delete User",
+                          cancelText: "Cancel",
+                          onConfirm: () => handleDeleteUser(user),
+                          onClose: () => setModalData(null),
+                        })
+                      }
+                      title="Delete user"
+                      className={`${iconBtn} border-danger-soft text-danger hover:bg-danger-soft`}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      {modalData && <Modal modalData={modalData} />}
+    </div>
+  );
+};
+
+export default UserTable;

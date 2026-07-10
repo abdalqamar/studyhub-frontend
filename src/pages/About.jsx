@@ -16,20 +16,20 @@ import {
   Compass,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import HighlightedText from "../components/ui/HighlightedText";
+import HighlightedText from "../shared/ui/HighlightedText";
 
 const colorMap = {
   blue: {
-    text: "text-blue-400",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/30",
-    grad: "from-blue-500 to-cyan-500",
+    text: "text-gold",
+    bg: "bg-gold/10",
+    border: "border-gold/30",
+    grad: "from-blue-500 to-gold",
   },
   cyan: {
-    text: "text-cyan-400",
-    bg: "bg-cyan-500/10",
-    border: "border-cyan-500/30",
-    grad: "from-cyan-500 to-blue-500",
+    text: "text-gold",
+    bg: "bg-gold/10",
+    border: "border-gold/30",
+    grad: "from-gold to-blue-500",
   },
   emerald: {
     text: "text-emerald-400",
@@ -54,8 +54,8 @@ const colorMap = {
 function RegMark({ className }) {
   return (
     <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
-      <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
-      <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
+      <span className="absolute top-1/2 left-0 w-4 h-px bg-gold/70 -translate-y-1/2" />
+      <span className="absolute left-1/2 top-0 w-px h-4 bg-gold/70 -translate-x-1/2" />
     </span>
   );
 }
@@ -147,34 +147,34 @@ const timeline = [
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50" style={pageStyle}>
+    <div className="min-h-screen bg-bg text-text-1" style={pageStyle}>
       {/*  HERO  */}
       <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left content */}
             <div className="space-y-7">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full">
-                <Sparkles className="w-4 h-4 text-cyan-400" />
-                <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-full">
+                <Sparkles className="w-4 h-4 text-gold" />
+                <span className="font-mono text-xs tracking-wide uppercase text-gold">
                   About StudyHub
                 </span>
               </div>
 
               <div>
-                <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">
+                <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">
                   <span className="text-white">Empowering</span>
                   <br />
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-gold to-cyan-400 bg-clip-text text-transparent">
                     Every Learner
                   </span>
                   <br />
                   <span className="text-white">to Succeed</span>
                 </h1>
-                <div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+                <div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-gold rounded-full" />
               </div>
 
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg text-text-2 leading-relaxed max-w-xl">
                 We're on a mission to make quality, project-based education
                 accessible to anyone with the will to learn — no enterprise
                 contract required.
@@ -188,10 +188,10 @@ const About = () => {
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-2 px-4 py-2 bg-slate-900/40 border border-slate-700/50 rounded-lg hover:border-cyan-500/40 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-surface/40 border border-border/50 rounded-lg hover:border-gold/40 transition-colors"
                   >
-                    <item.icon className="w-4 h-4 text-cyan-400" />
-                    <span className="text-sm text-slate-300">{item.text}</span>
+                    <item.icon className="w-4 h-4 text-gold" />
+                    <span className="text-sm text-text-2">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -204,13 +204,13 @@ const About = () => {
                   return (
                     <div
                       key={i}
-                      className="bg-slate-900/40 border border-slate-700/50 rounded-xl p-4 hover:border-cyan-500/30 transition-colors"
+                      className="bg-surface/40 border border-border/50 rounded-xl p-4 hover:border-gold/30 transition-colors"
                     >
                       <Icon className={`w-5 h-5 mb-2 ${c.text}`} />
                       <p className="text-2xl font-bold text-white mb-0.5">
                         {stat.value}
                       </p>
-                      <p className="text-xs text-slate-400">{stat.label}</p>
+                      <p className="text-xs text-text-2">{stat.label}</p>
                     </div>
                   );
                 })}
@@ -218,15 +218,15 @@ const About = () => {
             </div>
 
             <div className="relative order-first lg:order-last">
-              <div className="relative border border-slate-700/50 rounded-2xl bg-slate-900/40 overflow-hidden">
+              <div className="relative border border-border/50 rounded-2xl bg-surface/40 overflow-hidden">
                 <RegMark className="-top-2 -left-2" />
                 <RegMark className="-top-2 -right-2" />
 
-                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-slate-700/50">
+                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-border/50">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                  <span className="ml-2 font-['JetBrains_Mono'] text-[11px] text-slate-500">
+                  <span className="ml-2 font-mono text-[11px] text-text-3">
                     platform.activity
                   </span>
                 </div>
@@ -237,28 +237,28 @@ const About = () => {
                       <span className="absolute inset-0 rounded-full bg-emerald-400" />
                       <span className="absolute -inset-1 rounded-full border border-emerald-400/50 animate-ping" />
                     </span>
-                    <span className="font-['JetBrains_Mono'] text-xs text-emerald-400 tracking-wide">
+                    <span className="font-mono text-xs text-emerald-400 tracking-wide">
                       LIVE NOW
                     </span>
                   </div>
 
-                  <p className="font-['Space_Grotesk'] font-bold text-xl text-white mb-1">
+                  <p className="font-display font-bold text-xl text-white mb-1">
                     2,847 learners online
                   </p>
-                  <p className="text-sm text-slate-400 mb-6">
+                  <p className="text-sm text-text-2 mb-6">
                     Across 500+ courses, right now
                   </p>
 
-                  <div className="space-y-2.5 border-t border-slate-700/50 pt-4">
-                    <div className="flex items-center gap-2 font-['JetBrains_Mono'] text-[11px] text-slate-400">
+                  <div className="space-y-2.5 border-t border-border/50 pt-4">
+                    <div className="flex items-center gap-2 font-mono text-[11px] text-text-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                       <span>Completed — React Fundamentals, Module 4</span>
                     </div>
-                    <div className="flex items-center gap-2 font-['JetBrains_Mono'] text-[11px] text-slate-400">
-                      <ArrowRight className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                    <div className="flex items-center gap-2 font-mono text-[11px] text-text-2">
+                      <ArrowRight className="w-3.5 h-3.5 text-gold flex-shrink-0" />
                       <span>Started — SQL for Working Analysts</span>
                     </div>
-                    <div className="flex items-center gap-2 font-['JetBrains_Mono'] text-[11px] text-slate-400">
+                    <div className="flex items-center gap-2 font-mono text-[11px] text-text-2">
                       <Award className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
                       <span>Certificate earned — UI/UX with Figma</span>
                     </div>
@@ -266,33 +266,33 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="absolute -z-10 -top-6 -right-6 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl" />
-              <div className="absolute -z-10 -bottom-6 -left-6 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl" />
+              <div className="absolute -z-10 -top-6 -right-6 w-32 h-32 bg-gold/10 rounded-full blur-3xl" />
+              <div className="absolute -z-10 -bottom-6 -left-6 w-40 h-40 bg-gold/10 rounded-full blur-3xl" />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative border-t border-border/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div className="space-y-5">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full">
-                <Compass className="w-4 h-4 text-cyan-400" />
-                <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-full">
+                <Compass className="w-4 h-4 text-gold" />
+                <span className="font-mono text-xs tracking-wide uppercase text-gold">
                   Who We Are
                 </span>
               </div>
 
-              <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl leading-tight">
+              <h2 className="font-display font-bold text-3xl sm:text-4xl leading-tight">
                 <span className="text-white">Innovators in</span>
                 <br />
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-gold to-cyan-400 bg-clip-text text-transparent">
                   Modern Learning
                 </span>
               </h2>
 
-              <p className="text-slate-300 leading-relaxed">
+              <p className="text-text-2 leading-relaxed">
                 We're a small team reshaping how people learn to code and build
                 — beautifully simple, project-driven courses that actually end
                 in something you can show.
@@ -315,19 +315,19 @@ const About = () => {
                     key={i}
                     className="flex items-start gap-3 group hover:translate-x-1 transition-transform"
                   >
-                    <div className="mt-0.5 p-1 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
-                      <item.icon className="w-4 h-4 text-cyan-400" />
+                    <div className="mt-0.5 p-1 bg-gold/10 rounded-lg group-hover:bg-gold/20 transition-colors">
+                      <item.icon className="w-4 h-4 text-gold" />
                     </div>
-                    <span className="text-slate-300 text-sm">{item.text}</span>
+                    <span className="text-text-2 text-sm">{item.text}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-1">
-                <Target className="w-4 h-4 text-blue-400" />
-                <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-blue-300">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-full mb-1">
+                <Target className="w-4 h-4 text-gold" />
+                <span className="font-mono text-xs tracking-wide uppercase text-gold">
                   Our Mission
                 </span>
               </div>
@@ -338,7 +338,7 @@ const About = () => {
                 return (
                   <div
                     key={i}
-                    className={`group relative p-5 rounded-xl border border-slate-700/50 bg-slate-900/30 hover:${c.border} transition-all`}
+                    className={`group relative p-5 rounded-xl border border-border/50 bg-surface/30 hover:${c.border} transition-all`}
                   >
                     <div className="flex items-start gap-4">
                       <div className={`p-2 ${c.bg} rounded-lg flex-shrink-0`}>
@@ -348,7 +348,7 @@ const About = () => {
                         <p className="font-semibold text-white mb-1">
                           {item.title}
                         </p>
-                        <p className="text-sm text-slate-400">{item.desc}</p>
+                        <p className="text-sm text-text-2">{item.desc}</p>
                       </div>
                     </div>
                   </div>
@@ -360,16 +360,16 @@ const About = () => {
       </section>
 
       {/* Impact Section */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative border-t border-border/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-5">
-              <TrendingUp className="w-4 h-4 text-cyan-400" />
-              <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-full mb-5">
+              <TrendingUp className="w-4 h-4 text-gold" />
+              <span className="font-mono text-xs tracking-wide uppercase text-gold">
                 The Numbers
               </span>
             </div>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
               Where we stand today
             </h2>
           </div>
@@ -381,7 +381,7 @@ const About = () => {
               return (
                 <div
                   key={i}
-                  className="relative p-6 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-slate-600 transition-all"
+                  className="relative p-6 rounded-2xl border border-border/50 bg-surface/30 hover:border-border-strong transition-all"
                 >
                   <div className={`inline-flex p-2 rounded-lg ${c.bg} mb-4`}>
                     <Icon className={`w-5 h-5 ${c.text}`} />
@@ -389,7 +389,7 @@ const About = () => {
                   <p className={`text-3xl font-bold ${c.text} mb-1`}>
                     {stat.value}
                   </p>
-                  <p className="text-sm text-slate-400">{stat.label}</p>
+                  <p className="text-sm text-text-2">{stat.label}</p>
                   <div
                     className={`mt-3 h-1 w-10 bg-gradient-to-r ${c.grad} rounded-full opacity-60`}
                   />
@@ -401,16 +401,16 @@ const About = () => {
       </section>
 
       {/*  VALUES  */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative border-t border-border/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-5">
-              <Lightbulb className="w-4 h-4 text-cyan-400" />
-              <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-full mb-5">
+              <Lightbulb className="w-4 h-4 text-gold" />
+              <span className="font-mono text-xs tracking-wide uppercase text-gold">
                 What Drives Us
               </span>
             </div>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
               Our core values
             </h2>
           </div>
@@ -422,7 +422,7 @@ const About = () => {
               return (
                 <div
                   key={i}
-                  className="group relative p-6 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-cyan-500/30 transition-all"
+                  className="group relative p-6 rounded-2xl border border-border/50 bg-surface/30 hover:border-gold/30 transition-all"
                 >
                   <div
                     className={`inline-flex p-3 rounded-xl ${c.bg} group-hover:scale-105 transition-transform mb-4`}
@@ -432,7 +432,7 @@ const About = () => {
                   <h4 className="font-bold text-lg text-white mb-2">
                     {value.title}
                   </h4>
-                  <p className="text-sm text-slate-400 leading-relaxed">
+                  <p className="text-sm text-text-2 leading-relaxed">
                     {value.desc}
                   </p>
                   <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -446,23 +446,23 @@ const About = () => {
       </section>
 
       {/*  TIMELINE  */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative border-t border-border/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-center text-white mb-12">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-center text-white mb-12">
             Our journey
           </h2>
           <div className="space-y-6 relative">
-            <div className="absolute left-[23px] top-2 bottom-2 w-px bg-slate-700/50" />
+            <div className="absolute left-[23px] top-2 bottom-2 w-px bg-surface-2/50" />
             {timeline.map((item, i) => (
               <div key={i} className="pl-16 relative">
-                <div className="absolute left-0 top-0 w-12 h-12 rounded-full border-2 border-cyan-400/60 bg-slate-950 flex items-center justify-center font-['JetBrains_Mono'] text-[10px] text-cyan-400">
+                <div className="absolute left-0 top-0 w-12 h-12 rounded-full border-2 border-gold/60 bg-bg flex items-center justify-center font-mono text-[10px] text-gold">
                   {item.year.slice(2)}
                 </div>
-                <div className="p-4 rounded-xl border border-slate-700/50 bg-slate-900/30 hover:border-slate-600 transition">
-                  <p className="font-['JetBrains_Mono'] text-xs text-cyan-400 mb-1">
+                <div className="p-4 rounded-xl border border-border/50 bg-surface/30 hover:border-border-strong transition">
+                  <p className="font-mono text-xs text-gold mb-1">
                     {item.year}
                   </p>
-                  <p className="text-slate-300">{item.event}</p>
+                  <p className="text-text-2">{item.event}</p>
                 </div>
               </div>
             ))}
@@ -471,20 +471,20 @@ const About = () => {
       </section>
 
       {/*  CTA  */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative border-t border-border/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl mb-4">
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl mb-4">
+            <span className="bg-gradient-to-r from-gold to-cyan-400 bg-clip-text text-transparent">
               Ready to start learning?
             </span>
           </h2>
-          <p className="text-slate-300 mb-8 max-w-xl mx-auto">
+          <p className="text-text-2 mb-8 max-w-xl mx-auto">
             Join thousands of learners building real skills, one project at a
             time.
           </p>
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-md shadow-blue-500/20 transition-all"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-gold to-gold hover:from-gold-dim hover:to-gold shadow-md shadow-gold-glow/20 transition-all"
           >
             Get Started Free
             <ArrowRight className="w-4 h-4" />

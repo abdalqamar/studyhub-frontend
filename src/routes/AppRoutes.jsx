@@ -1,18 +1,23 @@
 import { ROLES } from "../constants/roles";
 import { createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import PageLoader from "../components/PageLoader";
+import PageLoader from "../shared/ui/PageLoader";
 
 const NotFound = lazy(() => import("../pages/NotFound"));
 const Home = lazy(() => import("../pages/Home"));
-const Login = lazy(() => import("../pages/auth/Login"));
+const Login = lazy(() => import("@/features/auth/pages/Login"));
 const About = lazy(() => import("../pages/About"));
 const Contact = lazy(() => import("../pages/Contact"));
-const ResetPassword = lazy(() => import("../pages/auth/ResetPassword"));
-const VerifyOtp = lazy(() => import("../pages/auth/VerifyOtp"));
-const Register = lazy(() => import("../pages/auth/Register"));
-const CoursesPage = lazy(() => import("../pages/courses/CoursesPage"));
-const CourseDetails = lazy(() => import("../pages/courses/CourseDetails"));
+const ResetPassword = lazy(() => import("@/features/auth/pages/ResetPassword"));
+const ForgotPassword = lazy(
+  () => import("@/features/auth/pages/ForgotPassword")
+);
+const VerifyOtp = lazy(() => import("@/features/auth/pages/VerifyOtp"));
+const Register = lazy(() => import("@/features/auth/pages/Register"));
+const CoursesPage = lazy(() => import("@/features/courses/pages/CoursesPage"));
+const CourseDetails = lazy(
+  () => import("@/features/courses/pages/CourseDetails")
+);
 
 //Layouts
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -20,80 +25,75 @@ import RoleProtectedRoute from "./RoleProtectedRoute";
 import RootLayout from "../layouts/RootLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import PublicRoute from "./PublicRoute";
-import InstructorAssignments from "../pages/dashboard/instructor/InstructorAssignments";
+import InstructorAssignments from "@/features/instructor/pages/InstructorAssignments";
 
 //Student
 const StudentDashboard = lazy(
-  () => import("../pages/dashboard/student/StudentDashboard")
+  () => import("@/features/student/pages/StudentDashboard")
 );
-const Assignments = lazy(
-  () => import("../pages/dashboard/student/Assignments")
+const Assignments = lazy(() => import("@/features/student/pages/Assignments"));
+const LiveClasses = lazy(() => import("@/features/student/pages/LiveClasses"));
+const ViewCourseLayout = lazy(
+  () => import("@/features/student/pages/ViewCourse/ViewCourseLayout")
 );
-const LiveClasses = lazy(
-  () => import("../pages/dashboard/student/LiveClasses")
+const ViewCoursePage = lazy(
+  () => import("@/features/student/pages/ViewCourse/ViewCoursePage")
 );
-const Wishlist = lazy(() => import("../pages/dashboard/student/Wishlist"));
-const Community = lazy(() => import("../pages/dashboard/student/Community"));
-const MyCourses = lazy(() => import("../pages/dashboard/student/MyCourses"));
+const Wishlist = lazy(() => import("@/features/student/pages/Wishlist"));
+const Community = lazy(() => import("@/features/student/pages/Community"));
+const MyCourses = lazy(() => import("@/features/student/pages/MyCourses"));
 const NotificationsPage = lazy(
-  () => import("../pages/dashboard/student/NotificationsPage")
+  () => import("@/features/student/pages/NotificationsPage")
 );
-const ProfileSettings = lazy(() => import("../pages/profile/ProfileSettings"));
+const ProfileSettings = lazy(
+  () => import("@/features/profile/pages/ProfileSettings")
+);
 
 //Instructor
 const InstructorDashboard = lazy(
-  () => import("../pages/dashboard/instructor/InstructorDashboard")
+  () => import("@/features/instructor/pages/InstructorDashboard")
 );
 const InstructorManageCourses = lazy(
-  () =>
-    import("../pages/dashboard/instructor/manageCourses/InstructorManageCourses")
+  () => import("@/features/instructor/pages/InstructorManageCourses")
 );
 const InstructorNotifications = lazy(
-  () => import("../pages/dashboard/instructor/InstructorNotifications")
+  () => import("@/features/instructor/pages/InstructorNotifications")
 );
 const InstructorEarnings = lazy(
-  () => import("../pages/dashboard/instructor/InstructorEarnings")
+  () => import("@/features/instructor/pages/InstructorEarnings")
 );
 const InstructorLiveClasses = lazy(
-  () => import("../pages/dashboard/instructor/components/InstructorLiveClasses")
+  () => import("@/features/instructor/pages/InstructorLiveClasses")
 );
 const InstructorManageUsers = lazy(
-  () => import("../pages/dashboard/instructor/InstructorManageUsers")
+  () => import("@/features/instructor/pages/InstructorManageUsers")
 );
 const CourseBuilder = lazy(
-  () => import("../pages/dashboard/instructor/CourseBuilder/CourseBuilder")
+  () => import("@/features/course-builder/CourseBuilder")
 );
 
 //Admin
 const AdminDashboard = lazy(
-  () => import("../pages/dashboard/admin/AdminDashboard")
+  () => import("@/features/admin/pages/AdminDashboard")
 );
-const ManageUsers = lazy(() => import("../pages/dashboard/admin/ManageUsers"));
+const ManageUsers = lazy(() => import("@/features/admin/pages/ManageUsers"));
 const AdminManageCourses = lazy(
-  () => import("../pages/dashboard/admin/AdminManageCourses")
+  () => import("@/features/admin/pages/AdminManageCourses")
 );
 const TransactionsPage = lazy(
-  () => import("../pages/dashboard/admin/TransactionsPage")
+  () => import("@/features/admin/pages/TransactionsPage")
 );
 const AdminNotifications = lazy(
-  () => import("../pages/dashboard/admin/AdminNotifications")
+  () => import("@/features/admin/pages/AdminNotifications")
 );
 const SystemSettings = lazy(
-  () => import("../pages/dashboard/admin/SystemSettings")
+  () => import("@/features/admin/pages/SystemSettings")
 );
-const CoursePreview = lazy(
-  () => import("../pages/dashboard/shared/CoursePreview")
-);
-const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword"));
-const ViewCourseLayout = lazy(
-  () => import("../pages/dashboard/student/ViewCourse/ViewCourseLayout")
-);
-const ViewCoursePage = lazy(
-  () => import("../pages/dashboard/student/ViewCourse/ViewCoursePage")
-);
+const CoursePreview = lazy(() => import("@/shared/pages/CoursePreview"));
 const CategoryManager = lazy(
-  () => import("../pages/dashboard/admin/CategoryManager")
+  () => import("@/features/admin/pages/CategoryManager")
 );
+
 const HelpCenter = lazy(() => import("../pages/HelpCenter"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("../pages/TermsOfService"));

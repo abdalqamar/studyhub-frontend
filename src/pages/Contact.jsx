@@ -1,5 +1,4 @@
-import HighlightedText from "../components/ui/HighlightedText";
-import { Link } from "react-router-dom";
+import HighlightedText from "@/shared/ui/HighlightedText";
 import { useState } from "react";
 import {
   Mail,
@@ -11,29 +10,14 @@ import {
   Clock,
   Zap,
   MessageCircle,
-  Globe,
-  Sparkles,
-  CheckCircle2,
   Headphones,
-  Users,
+  CheckCircle2,
 } from "lucide-react";
 
 const colorMap = {
-  blue: {
-    text: "text-blue-400",
-    bg: "bg-blue-500/10",
-    grad: "from-blue-500 to-cyan-500",
-  },
-  cyan: {
-    text: "text-cyan-400",
-    bg: "bg-cyan-500/10",
-    grad: "from-cyan-500 to-blue-500",
-  },
-  indigo: {
-    text: "text-indigo-400",
-    bg: "bg-indigo-500/10",
-    grad: "from-indigo-500 to-purple-500",
-  },
+  blue: { text: "text-blue-400", bg: "bg-blue-500/10" },
+  cyan: { text: "text-cyan-400", bg: "bg-cyan-500/10" },
+  indigo: { text: "text-indigo-400", bg: "bg-indigo-500/10" },
 };
 
 const SUPPORT_EMAIL = "studyhubinfo@gmail.com";
@@ -62,42 +46,6 @@ const contactMethods = [
     color: "indigo",
   },
 ];
-
-const faqs = [
-  {
-    q: "Are courses free or paid?",
-    a: "Most courses are free. A few advanced paths have a small one-time fee — pricing is always shown before you enroll, no surprises.",
-  },
-  {
-    q: "Do I get a certificate?",
-    a: "Yes — every course you complete gives you a certificate you can add to your resume or LinkedIn.",
-  },
-  {
-    q: "How long do I have access to a course?",
-    a: "Lifetime access. Once you enroll, the course is yours — including any future updates to the content.",
-  },
-  {
-    q: "Can I get help if I'm stuck on a problem?",
-    a: "Yes — use the AI Doubt Solver inside any course for instant help, or post in the course discussion for human answers.",
-  },
-  {
-    q: "What if a course isn't what I expected?",
-    a: "Reach out within 7 days of enrolling and we'll sort it out — refund or course swap, your call.",
-  },
-  {
-    q: "Do you offer instructor accounts?",
-    a: "Yes — apply through the instructor application page and our team will review your submission.",
-  },
-];
-
-function RegMark({ className }) {
-  return (
-    <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
-      <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
-      <span className="absolute left-1/2 top-0 w-px h-4 bg-cyan-400/70 -translate-x-1/2" />
-    </span>
-  );
-}
 
 const pageStyle = {
   backgroundImage:
@@ -139,7 +87,6 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50" style={pageStyle}>
-      {/* Hero Section */}
       <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
@@ -149,13 +96,11 @@ const Contact = () => {
                 Let's Connect
               </span>
             </div>
-
             <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
               <span className="text-white">Ready to</span>
               <br />
               <HighlightedText text="Get Started?" />
             </h1>
-
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Have a question about a course, your account, or anything else?
               We're here to help.
@@ -195,7 +140,6 @@ const Contact = () => {
       <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
-            {/* Form */}
             <div className="lg:col-span-3 space-y-6">
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-4">
@@ -316,7 +260,6 @@ const Contact = () => {
               </form>
             </div>
 
-            {/* Sidebar */}
             <div className="lg:col-span-2 space-y-5">
               <div className="p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-cyan-500/30 transition-all">
                 <div className="flex items-start gap-3.5">
@@ -377,84 +320,7 @@ const Contact = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 text-center">
-                <Users className="w-7 h-7 text-cyan-400 mx-auto mb-2.5" />
-                <p className="text-2xl font-bold text-white mb-1">50K+</p>
-                <p className="text-sm text-slate-400">
-                  Learners we get to help
-                </p>
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-5">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
-                FAQ
-              </span>
-            </div>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-3">
-              Common questions
-            </h2>
-            <p className="text-slate-400">
-              Quick answers — for anything else, just reach out.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {faqs.map((faq, i) => (
-              <div
-                key={i}
-                className="group p-5 rounded-2xl border border-slate-700/50 bg-slate-900/30 hover:border-cyan-500/30 transition-all"
-              >
-                <h3 className="font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                  {faq.q}
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  {faq.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Cta Section */}
-      <section className="relative border-t border-slate-800/50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6">
-            <Globe className="w-4 h-4 text-cyan-400" />
-            <span className="font-['JetBrains_Mono'] text-xs tracking-wide uppercase text-cyan-300">
-              Need More Help?
-            </span>
-          </div>
-
-          <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl mb-4 leading-tight">
-            <span className="text-white">Can't find what</span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              you're looking for?
-            </span>
-          </h2>
-
-          <p className="text-slate-300 mb-8 max-w-xl mx-auto">
-            Check out the Help Center for detailed guides and answers.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              to="/help"
-              className="px-7 py-2.5 text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-md shadow-blue-500/20 transition-all"
-            >
-              Visit Help Center
-            </Link>
           </div>
         </div>
       </section>

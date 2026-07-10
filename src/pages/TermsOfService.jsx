@@ -23,16 +23,16 @@ const TermsOfService = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 overflow-x-hidden py-24">
+    <div className="min-h-screen bg-gradient-to-b from-bg via-surface to-bg text-text-1 overflow-x-hidden py-24">
       <div className="container mx-auto px-4 py-12 pt-16">
         {/* Header */}
         <div className="text-center mb-12 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gold to-purple-400">
             Terms of Service
           </h1>
-          <div className="inline-flex items-center justify-center px-4 py-2 bg-slate-800/50 rounded-full border border-slate-700/50 mb-6">
+          <div className="inline-flex items-center justify-center px-4 py-2 bg-surface-2/50 rounded-full border border-border/50 mb-6">
             <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
-            <span className="text-slate-300 text-sm">
+            <span className="text-text-2 text-sm">
               Last Updated:{" "}
               {new Date().toLocaleDateString("en-US", {
                 year: "numeric",
@@ -41,12 +41,12 @@ const TermsOfService = () => {
               })}
             </span>
           </div>
-          <div className="p-6 bg-slate-800/30 rounded-2xl border border-slate-700/50">
-            <p className="text-slate-300 mb-3">
+          <div className="p-6 bg-surface-2/30 rounded-2xl border border-border/50">
+            <p className="text-text-2 mb-3">
               Please read these Terms of Service carefully before using our
               Learning Management System platform.
             </p>
-            <p className="text-slate-400 text-sm">
+            <p className="text-text-2 text-sm">
               By accessing or using our platform, you agree to be bound by these
               terms. If you disagree with any part, please do not use our
               services.
@@ -57,12 +57,12 @@ const TermsOfService = () => {
         <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
           {/* Sidebar Navigation */}
           <div className="lg:w-1/4">
-            <div className="sticky top-24 bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+            <div className="sticky top-24 bg-surface-2/30 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-blue-300">
+                <h3 className="text-lg font-semibold text-gold">
                   Table of Contents
                 </h3>
-                <div className="text-xs px-3 py-1 bg-slate-700/50 rounded-full">
+                <div className="text-xs px-3 py-1 bg-surface-2/50 rounded-full">
                   {Math.round(readProgress)}% read
                 </div>
               </div>
@@ -74,8 +74,8 @@ const TermsOfService = () => {
                     onClick={() => scrollToSection(section.id)}
                     className={`block w-full text-left px-4 py-2.5 rounded-lg transition-all duration-200 text-sm ${
                       currentSection === section.id
-                        ? "bg-blue-600/20 text-blue-300 border-l-4 border-blue-500"
-                        : "text-slate-300 hover:bg-slate-700/50 hover:text-white"
+                        ? "bg-gold/20 text-gold border-l-4 border-gold"
+                        : "text-text-2 hover:bg-surface-2/50 hover:text-white"
                     }`}
                   >
                     {section.title}
@@ -84,26 +84,26 @@ const TermsOfService = () => {
               </nav>
 
               {/* Important Highlights */}
-              <div className="mt-8 p-4 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                <h4 className="font-medium mb-3 text-slate-200 flex items-center">
-                  <Info className="w-5 h-5 mr-2 text-blue-400" />
+              <div className="mt-8 p-4 bg-surface/50 rounded-xl border border-border/50">
+                <h4 className="font-medium mb-3 text-text-2 flex items-center">
+                  <Info className="w-5 h-5 mr-2 text-gold" />
                   Key Points
                 </h4>
-                <ul className="text-xs text-slate-400 space-y-2">
+                <ul className="text-xs text-text-2 space-y-2">
                   <li className="flex items-start">
-                    <div className="w-1 h-1 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                    <div className="w-1 h-1 bg-gold rounded-full mt-1.5 mr-2"></div>
                     <span>Minimum age: 13 years</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="w-1 h-1 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                    <div className="w-1 h-1 bg-gold rounded-full mt-1.5 mr-2"></div>
                     <span>Payments processed by Razorpay</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="w-1 h-1 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                    <div className="w-1 h-1 bg-gold rounded-full mt-1.5 mr-2"></div>
                     <span>Content for personal use only</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="w-1 h-1 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                    <div className="w-1 h-1 bg-gold rounded-full mt-1.5 mr-2"></div>
                     <span>Instructors own their content</span>
                   </li>
                 </ul>
@@ -111,7 +111,7 @@ const TermsOfService = () => {
 
               {/* Acceptance Button */}
               <div className="mt-6">
-                <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center">
+                <button className="w-full px-4 py-3 bg-gradient-to-r from-gold to-gold hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center">
                   <svg
                     className="w-5 h-5 mr-2"
                     fill="none"
@@ -127,7 +127,7 @@ const TermsOfService = () => {
                   </svg>
                   I Accept These Terms
                 </button>
-                <p className="text-xs text-slate-500 text-center mt-2">
+                <p className="text-xs text-text-3 text-center mt-2">
                   By clicking, you agree to all terms
                 </p>
               </div>
@@ -137,21 +137,21 @@ const TermsOfService = () => {
           {/* Main Content */}
           <div className="lg:w-3/4">
             <div
-              className="bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6 md:p-8 max-h-[80vh] overflow-y-auto"
+              className="bg-surface-2/30 backdrop-blur-sm rounded-2xl border border-border/50 p-6 md:p-8 max-h-[80vh] overflow-y-auto"
               onScroll={handleScroll}
             >
               {/* 1. Acceptance of Terms */}
               <section id="acceptance" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">1</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">1</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Acceptance of Terms
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
+                <div className="space-y-4 text-text-2 ml-12">
                   <p>
                     Welcome to our Learning Management System (the "Platform").
                     These Terms of Service ("Terms") govern your access to and
@@ -159,25 +159,25 @@ const TermsOfService = () => {
                     content, features, and services provided.
                   </p>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                    <p className="font-medium text-slate-200 mb-2">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-border/50">
+                    <p className="font-medium text-text-2 mb-2">
                       By accessing or using our Platform, you agree to:
                     </p>
                     <ul className="space-y-2 ml-4">
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                         <span>
                           Be bound by these Terms and our Privacy Policy
                         </span>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                         <span>
                           Comply with all applicable laws and regulations
                         </span>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                         <span>Use the Platform only for lawful purposes</span>
                       </li>
                     </ul>
@@ -200,24 +200,24 @@ const TermsOfService = () => {
               {/* 2. Eligibility */}
               <section id="eligibility" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">2</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">2</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Eligibility
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-blue-700/30">
-                    <h3 className="text-xl font-semibold mb-3 text-blue-300">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-gold-dim/30">
+                    <h3 className="text-xl font-semibold mb-3 text-gold">
                       Age Requirements
                     </h3>
                     <ul className="space-y-3">
                       <li className="flex items-start">
-                        <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3 mt-0.5">
+                        <div className="w-6 h-6 bg-gold/20 rounded-lg flex items-center justify-center mr-3 mt-0.5">
                           <svg
-                            className="w-4 h-4 text-blue-400"
+                            className="w-4 h-4 text-gold"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -231,19 +231,19 @@ const TermsOfService = () => {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-text-2">
                             Minimum Age: 13 Years
                           </p>
-                          <p className="text-sm text-slate-400">
+                          <p className="text-sm text-text-2">
                             You must be at least 13 years old to create an
                             account
                           </p>
                         </div>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3 mt-0.5">
+                        <div className="w-6 h-6 bg-gold/20 rounded-lg flex items-center justify-center mr-3 mt-0.5">
                           <svg
-                            className="w-4 h-4 text-blue-400"
+                            className="w-4 h-4 text-gold"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -257,10 +257,10 @@ const TermsOfService = () => {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-text-2">
                             Parental Consent
                           </p>
-                          <p className="text-sm text-slate-400">
+                          <p className="text-sm text-text-2">
                             Users under 18 require parent/guardian permission
                           </p>
                         </div>
@@ -272,24 +272,24 @@ const TermsOfService = () => {
 
                   <ul className="space-y-3 ml-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>You meet the minimum age requirements</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         You have the legal capacity to enter into these Terms
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Your use of the Platform does not violate any applicable
                         law
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         You are not prohibited from receiving our services under
                         applicable laws
@@ -307,15 +307,15 @@ const TermsOfService = () => {
               {/* 3. User Accounts */}
               <section id="user-accounts" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">3</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">3</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     User Accounts
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
+                <div className="space-y-4 text-text-2 ml-12">
                   <p>
                     To access certain features, you must create a user account.
                     You are responsible for maintaining the confidentiality of
@@ -323,60 +323,60 @@ const TermsOfService = () => {
                   </p>
 
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         Account Responsibilities
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Provide accurate and complete information</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Keep your password secure and confidential
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Notify us immediately of unauthorized use</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Maintain only one account per person</span>
                         </li>
                       </ul>
                     </div>
 
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         Account Security
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Use strong, unique passwords</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Log out after each session</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Enable two-factor authentication if available
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Be cautious on public networks</span>
                         </li>
                       </ul>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-orange-700/30">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-orange-700/30">
                     <h4 className="font-semibold mb-2 text-orange-300">
                       Important Notice
                     </h4>
@@ -399,16 +399,16 @@ const TermsOfService = () => {
               {/* 4. Instructor Accounts & Responsibilities */}
               <section id="instructor-accounts" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">4</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">4</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Instructor Accounts & Responsibilities
                   </h2>
                 </div>
 
-                <div className="space-y-6 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-purple-700/30">
+                <div className="space-y-6 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-purple-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-purple-300">
                       Instructor Requirements
                     </h3>
@@ -420,7 +420,7 @@ const TermsOfService = () => {
 
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-3">
-                        <h4 className="font-medium text-slate-200">
+                        <h4 className="font-medium text-text-2">
                           Content Standards
                         </h4>
                         <ul className="space-y-2 text-sm">
@@ -442,7 +442,7 @@ const TermsOfService = () => {
                       </div>
 
                       <div className="space-y-3">
-                        <h4 className="font-medium text-slate-200">
+                        <h4 className="font-medium text-text-2">
                           Legal Compliance
                         </h4>
                         <ul className="space-y-2 text-sm">
@@ -463,7 +463,7 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Instructor Payments
                   </h4>
                   <p>
@@ -474,23 +474,23 @@ const TermsOfService = () => {
 
                   <ul className="space-y-2 ml-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Providing accurate payment information</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Understanding and complying with tax obligations
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Maintaining minimum payout thresholds</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Content Ownership
                     </h4>
                     <p>
@@ -506,17 +506,17 @@ const TermsOfService = () => {
               {/* 5. Course Access & Usage */}
               <section id="course-access" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">5</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">5</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Course Access & Usage
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl">
-                    <h3 className="text-xl font-semibold mb-4 text-blue-300">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl">
+                    <h3 className="text-xl font-semibold mb-4 text-gold">
                       License to Access
                     </h3>
                     <p className="mb-4">
@@ -528,7 +528,7 @@ const TermsOfService = () => {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className="font-medium mb-2 text-slate-200">
+                        <h4 className="font-medium mb-2 text-text-2">
                           ✅ Permitted Uses
                         </h4>
                         <ul className="space-y-2 text-sm">
@@ -548,7 +548,7 @@ const TermsOfService = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium mb-2 text-slate-200">
+                        <h4 className="font-medium mb-2 text-text-2">
                           ❌ Prohibited Uses
                         </h4>
                         <ul className="space-y-2 text-sm">
@@ -569,7 +569,7 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Access Period
                   </h4>
                   <p>
@@ -579,25 +579,25 @@ const TermsOfService = () => {
 
                   <ul className="space-y-2 ml-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         The course is removed by the instructor or platform
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Your account is terminated for violation of terms
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>The platform ceases operations</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-blue-700/30">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-gold-dim/30">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Digital Products Only
                     </h4>
                     <p className="text-sm">
@@ -613,16 +613,16 @@ const TermsOfService = () => {
               {/* 6. Payments, Pricing & Taxes */}
               <section id="payments" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">6</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">6</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Payments, Pricing & Taxes
                   </h2>
                 </div>
 
-                <div className="space-y-6 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-green-700/30">
+                <div className="space-y-6 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-green-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-green-300">
                       Payment Processing
                     </h3>
@@ -647,7 +647,7 @@ const TermsOfService = () => {
                         <h4 className="font-bold text-lg text-slate-100">
                           Razorpay Payment Gateway
                         </h4>
-                        <p className="text-slate-400">
+                        <p className="text-text-2">
                           All payments are securely processed through Razorpay
                         </p>
                       </div>
@@ -671,10 +671,10 @@ const TermsOfService = () => {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-text-2">
                             Secure Payment Processing
                           </p>
-                          <p className="text-sm text-slate-400">
+                          <p className="text-sm text-text-2">
                             Razorpay is PCI-DSS compliant and uses bank-level
                             security
                           </p>
@@ -698,10 +698,10 @@ const TermsOfService = () => {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-text-2">
                             No Sensitive Data Storage
                           </p>
-                          <p className="text-sm text-slate-400">
+                          <p className="text-sm text-text-2">
                             We do not store card numbers, UPI details, or
                             banking information
                           </p>
@@ -710,7 +710,7 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Pricing
                   </h4>
                   <p>
@@ -721,27 +721,27 @@ const TermsOfService = () => {
                   </p>
 
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-2 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-2 text-gold">
                         Currency & Taxes
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             All prices include applicable taxes unless stated
                             otherwise
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             International users may see prices converted to
                             local currency
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Additional bank or payment processor fees may apply
                           </span>
@@ -749,25 +749,25 @@ const TermsOfService = () => {
                       </ul>
                     </div>
 
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-2 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-2 text-gold">
                         Payment Terms
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Payment is required before course access is granted
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             All payments are final unless refunds apply
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Failed payments may result in access suspension
                           </span>
@@ -781,16 +781,16 @@ const TermsOfService = () => {
               {/* 7. Refund & Cancellation Policy */}
               <section id="refund-policy" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">7</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">7</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Refund & Cancellation Policy
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-yellow-700/30">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-yellow-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-yellow-300">
                       30-Day Money-Back Guarantee
                     </h3>
@@ -800,11 +800,11 @@ const TermsOfService = () => {
                         <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center mr-3">
                           <span className="text-yellow-400 font-bold">30</span>
                         </div>
-                        <span className="font-medium text-slate-200">
+                        <span className="font-medium text-text-2">
                           Days Refund Window
                         </span>
                       </div>
-                      <p className="text-sm text-slate-400 ml-11">
+                      <p className="text-sm text-text-2 ml-11">
                         You may request a refund within 30 days of purchase if
                         you are not satisfied with the course.
                       </p>
@@ -831,49 +831,49 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Refund Eligibility
                   </h4>
                   <p>To be eligible for a refund, you must:</p>
 
                   <ul className="space-y-2 ml-4 mb-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Submit your request within 30 days of purchase
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Have completed less than 50% of the course content
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Provide a valid reason for dissatisfaction</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Non-Refundable Situations
                     </h4>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                         <span>Requests submitted after 30 days</span>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                         <span>More than 50% of course content completed</span>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                         <span>Certificate already issued</span>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                        <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                         <span>Abuse or violation of terms</span>
                       </li>
                     </ul>
@@ -889,23 +889,23 @@ const TermsOfService = () => {
               {/* 8. Intellectual Property Rights */}
               <section id="intellectual-property" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">8</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">8</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Intellectual Property Rights
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl">
-                    <h3 className="text-xl font-semibold mb-4 text-blue-300">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl">
+                    <h3 className="text-xl font-semibold mb-4 text-gold">
                       Ownership Rights
                     </h3>
 
                     <div className="space-y-6">
                       <div>
-                        <h4 className="font-medium mb-2 text-slate-200">
+                        <h4 className="font-medium mb-2 text-text-2">
                           Platform Content
                         </h4>
                         <p className="text-sm">
@@ -917,7 +917,7 @@ const TermsOfService = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium mb-2 text-slate-200">
+                        <h4 className="font-medium mb-2 text-text-2">
                           Instructor Content
                         </h4>
                         <p className="text-sm">
@@ -930,7 +930,7 @@ const TermsOfService = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium mb-2 text-slate-200">
+                        <h4 className="font-medium mb-2 text-text-2">
                           Student Content
                         </h4>
                         <p className="text-sm">
@@ -943,7 +943,7 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     License Restrictions
                   </h4>
                   <p>You may not:</p>
@@ -972,8 +972,8 @@ const TermsOfService = () => {
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-blue-700/30">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-gold-dim/30">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Copyright Complaints
                     </h4>
                     <p className="text-sm">
@@ -988,15 +988,15 @@ const TermsOfService = () => {
               {/* 9. User-Generated Content */}
               <section id="user-content" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">9</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">9</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     User-Generated Content
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
+                <div className="space-y-4 text-text-2 ml-12">
                   <p>
                     Our platform allows users to create and share content,
                     including course reviews, discussion posts, assignments, and
@@ -1004,66 +1004,66 @@ const TermsOfService = () => {
                   </p>
 
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         Your Responsibility
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Only share content you have rights to</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Ensure content is appropriate and respectful
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Do not share personal information of others
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Comply with all applicable laws</span>
                         </li>
                       </ul>
                     </div>
 
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         License to Platform
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             You grant us a license to display your content
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             License is worldwide, non-exclusive, royalty-free
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Purpose is to operate and improve the platform
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>You can delete your content at any time</span>
                         </li>
                       </ul>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-orange-700/30">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-orange-700/30">
                     <h4 className="font-semibold mb-2 text-orange-300">
                       Content Monitoring
                     </h4>
@@ -1086,16 +1086,16 @@ const TermsOfService = () => {
               {/* 10. Prohibited Activities */}
               <section id="prohibited-activities" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">10</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">10</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Prohibited Activities
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-red-700/30">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-red-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-red-300">
                       Strictly Prohibited
                     </h3>
@@ -1103,7 +1103,7 @@ const TermsOfService = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-medium mb-2 text-slate-200">
+                          <h4 className="font-medium mb-2 text-text-2">
                             Account Violations
                           </h4>
                           <ul className="space-y-1 text-sm">
@@ -1127,7 +1127,7 @@ const TermsOfService = () => {
                         </div>
 
                         <div>
-                          <h4 className="font-medium mb-2 text-slate-200">
+                          <h4 className="font-medium mb-2 text-text-2">
                             Content Violations
                           </h4>
                           <ul className="space-y-1 text-sm">
@@ -1149,7 +1149,7 @@ const TermsOfService = () => {
 
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-medium mb-2 text-slate-200">
+                          <h4 className="font-medium mb-2 text-text-2">
                             Platform Abuse
                           </h4>
                           <ul className="space-y-1 text-sm">
@@ -1173,7 +1173,7 @@ const TermsOfService = () => {
                         </div>
 
                         <div>
-                          <h4 className="font-medium mb-2 text-slate-200">
+                          <h4 className="font-medium mb-2 text-text-2">
                             Legal Violations
                           </h4>
                           <ul className="space-y-1 text-sm">
@@ -1201,8 +1201,8 @@ const TermsOfService = () => {
                     reporting to appropriate authorities.
                   </p>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Reporting Violations
                     </h4>
                     <p className="text-sm">
@@ -1217,39 +1217,39 @@ const TermsOfService = () => {
               {/* 11. Termination & Suspension of Accounts */}
               <section id="termination" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">11</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">11</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Termination & Suspension of Accounts
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
+                <div className="space-y-4 text-text-2 ml-12">
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         By You
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>You may delete your account at any time</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Account deletion is permanent and irreversible
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Some data may be retained as required by law
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Active subscriptions may continue until cancelled
                           </span>
@@ -1257,27 +1257,27 @@ const TermsOfService = () => {
                       </ul>
                     </div>
 
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         By Platform
                       </h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             We may suspend or terminate accounts for violations
                           </span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>Termination may be without prior notice</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>No refunds for terminated accounts</span>
                         </li>
                         <li className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 mr-2"></div>
+                          <div className="w-2 h-2 bg-gold rounded-full mt-1.5 mr-2"></div>
                           <span>
                             Appeals may be submitted to our support team
                           </span>
@@ -1286,34 +1286,34 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Effects of Termination
                   </h4>
                   <p>Upon termination of your account:</p>
 
                   <ul className="space-y-2 ml-4 mb-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Your right to use the platform immediately ceases
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>You lose access to all courses and content</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Any certificates earned may become invalid</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>We may delete or anonymize your data</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-blue-700/30">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-gold-dim/30">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Data Retention After Termination
                     </h4>
                     <p className="text-sm">
@@ -1329,16 +1329,16 @@ const TermsOfService = () => {
               {/* 12. Disclaimer of Warranties */}
               <section id="warranties" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">12</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">12</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Disclaimer of Warranties
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-orange-700/30">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-orange-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-orange-300">
                       Important Disclaimer
                     </h3>
@@ -1366,10 +1366,10 @@ const TermsOfService = () => {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-text-2">
                             No Guarantee of Results
                           </p>
-                          <p className="text-sm text-slate-400">
+                          <p className="text-sm text-text-2">
                             We do not guarantee any specific educational or
                             career outcomes
                           </p>
@@ -1393,10 +1393,10 @@ const TermsOfService = () => {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-text-2">
                             Content Accuracy
                           </p>
-                          <p className="text-sm text-slate-400">
+                          <p className="text-sm text-text-2">
                             We do not warrant the accuracy or completeness of
                             course content
                           </p>
@@ -1411,25 +1411,25 @@ const TermsOfService = () => {
 
                   <ul className="space-y-2 ml-4 mb-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Warranties of merchantability or fitness for a
                         particular purpose
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Warranties that the platform will be uninterrupted or
                         error-free
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Warranties that defects will be corrected</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Warranties regarding the security of the platform
                       </span>
@@ -1447,16 +1447,16 @@ const TermsOfService = () => {
               {/* 13. Limitation of Liability */}
               <section id="liability" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">13</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">13</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Limitation of Liability
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-red-700/30">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-red-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-red-300">
                       Important Limitation
                     </h3>
@@ -1484,7 +1484,7 @@ const TermsOfService = () => {
                             />
                           </svg>
                         </div>
-                        <span className="font-medium text-slate-200">
+                        <span className="font-medium text-text-2">
                           No liability for business losses
                         </span>
                       </div>
@@ -1504,7 +1504,7 @@ const TermsOfService = () => {
                             />
                           </svg>
                         </div>
-                        <span className="font-medium text-slate-200">
+                        <span className="font-medium text-text-2">
                           No liability for lost data or opportunities
                         </span>
                       </div>
@@ -1524,14 +1524,14 @@ const TermsOfService = () => {
                             />
                           </svg>
                         </div>
-                        <span className="font-medium text-slate-200">
+                        <span className="font-medium text-text-2">
                           No liability for third-party actions
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Direct Damages Cap
                   </h4>
                   <p>
@@ -1542,19 +1542,19 @@ const TermsOfService = () => {
 
                   <ul className="space-y-2 ml-4 mb-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         The amount you have paid us in the last 12 months, or
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>One hundred US dollars ($100)</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Exceptions
                     </h4>
                     <p className="text-sm">
@@ -1574,17 +1574,17 @@ const TermsOfService = () => {
               {/* 14. Indemnification */}
               <section id="indemnification" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">14</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">14</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Indemnification
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl">
-                    <h3 className="text-xl font-semibold mb-4 text-blue-300">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl">
+                    <h3 className="text-xl font-semibold mb-4 text-gold">
                       Your Responsibility
                     </h3>
                     <p>
@@ -1595,38 +1595,38 @@ const TermsOfService = () => {
                     </p>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Covered Claims
                   </h4>
                   <p>This indemnification covers claims arising from:</p>
 
                   <ul className="space-y-2 ml-4 mb-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Your use or misuse of the platform</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Your violation of these Terms</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         Your violation of any law or third-party rights
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Your user-generated content</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Your interactions with other users</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl border border-blue-700/30">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl border border-gold-dim/30">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Our Rights
                     </h4>
                     <p className="text-sm">
@@ -1641,18 +1641,18 @@ const TermsOfService = () => {
               {/* 15. Governing Law & Jurisdiction */}
               <section id="governing-law" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">15</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">15</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Governing Law & Jurisdiction
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
+                <div className="space-y-4 text-text-2 ml-12">
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         Governing Law
                       </h4>
                       <p className="text-sm">
@@ -1662,8 +1662,8 @@ const TermsOfService = () => {
                       </p>
                     </div>
 
-                    <div className="p-4 bg-slate-900/50 rounded-xl">
-                      <h4 className="font-semibold mb-3 text-blue-300">
+                    <div className="p-4 bg-surface/50 rounded-xl">
+                      <h4 className="font-semibold mb-3 text-gold">
                         Jurisdiction
                       </h4>
                       <p className="text-sm">
@@ -1675,8 +1675,8 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       International Users
                     </h4>
                     <p className="text-sm">
@@ -1688,7 +1688,7 @@ const TermsOfService = () => {
                     </p>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Dispute Resolution
                   </h4>
                   <p>
@@ -1703,16 +1703,16 @@ const TermsOfService = () => {
               {/* 16. Changes to Terms */}
               <section id="changes" className="mb-12">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">16</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">16</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Changes to Terms
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-purple-700/30">
+                <div className="space-y-4 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-purple-700/30">
                     <h3 className="text-xl font-semibold mb-4 text-purple-300">
                       Right to Modify
                     </h3>
@@ -1804,7 +1804,7 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Effective Date
                   </h4>
                   <p>
@@ -1813,8 +1813,8 @@ const TermsOfService = () => {
                     changes were last made.
                   </p>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Your Continued Use
                     </h4>
                     <p className="text-sm">
@@ -1835,36 +1835,36 @@ const TermsOfService = () => {
               {/* 17. Contact Information */}
               <section id="contact">
                 <div className="flex items-start mb-6">
-                  <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-400 font-bold">17</span>
+                  <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center mr-4">
+                    <span className="text-gold font-bold">17</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-blue-300 pt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gold pt-1">
                     Contact Information
                   </h2>
                 </div>
 
-                <div className="space-y-6 text-slate-300 ml-12">
-                  <div className="p-6 bg-slate-900/50 rounded-xl border border-blue-700/30">
-                    <h3 className="text-xl font-semibold mb-4 text-blue-300">
+                <div className="space-y-6 text-text-2 ml-12">
+                  <div className="p-6 bg-surface/50 rounded-xl border border-gold-dim/30">
+                    <h3 className="text-xl font-semibold mb-4 text-gold">
                       Platform Contact
                     </h3>
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-medium text-slate-200 mb-2">
+                          <h4 className="font-medium text-text-2 mb-2">
                             Legal & Terms Inquiries
                           </h4>
                           <p className="text-sm">Email: studyhubedu.online</p>
                         </div>
                         <div>
-                          <h4 className="font-medium text-slate-200 mb-2">
+                          <h4 className="font-medium text-text-2 mb-2">
                             General Support
                           </h4>
                           <p className="text-sm">Email: studyhubedu.online</p>
                         </div>
                         <div>
-                          <h4 className="font-medium text-slate-200 mb-2">
+                          <h4 className="font-medium text-text-2 mb-2">
                             Response Time
                           </h4>
                           <p className="text-sm">
@@ -1875,7 +1875,7 @@ const TermsOfService = () => {
 
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-medium text-slate-200 mb-2">
+                          <h4 className="font-medium text-text-2 mb-2">
                             Instructor Support
                           </h4>
                           <p className="text-sm">
@@ -1883,7 +1883,7 @@ const TermsOfService = () => {
                           </p>
                         </div>
                         <div>
-                          <h4 className="font-medium text-slate-200 mb-2">
+                          <h4 className="font-medium text-text-2 mb-2">
                             Copyright Claims
                           </h4>
                           <p className="text-sm">
@@ -1891,7 +1891,7 @@ const TermsOfService = () => {
                           </p>
                         </div>
                         <div>
-                          <h4 className="font-medium text-slate-200 mb-2">
+                          <h4 className="font-medium text-text-2 mb-2">
                             Business Hours
                           </h4>
                           <p className="text-sm">
@@ -1902,7 +1902,7 @@ const TermsOfService = () => {
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-slate-200">
+                  <h4 className="text-xl font-semibold text-text-2">
                     Contacting Us
                   </h4>
                   <p>
@@ -1911,27 +1911,27 @@ const TermsOfService = () => {
 
                   <ul className="space-y-2 ml-4 mb-4">
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Your full name and registered email address</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>The specific section of the Terms in question</span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>
                         A clear description of your concern or question
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
+                      <div className="w-2 h-2 bg-gold rounded-full mt-2 mr-3"></div>
                       <span>Any relevant account or transaction details</span>
                     </li>
                   </ul>
 
-                  <div className="p-4 bg-slate-900/50 rounded-xl">
-                    <h4 className="font-semibold mb-2 text-blue-300">
+                  <div className="p-4 bg-surface/50 rounded-xl">
+                    <h4 className="font-semibold mb-2 text-gold">
                       Electronic Communications
                     </h4>
                     <p className="text-sm">
@@ -1943,7 +1943,7 @@ const TermsOfService = () => {
                     </p>
                   </div>
 
-                  <p className="mt-6 text-center text-slate-400">
+                  <p className="mt-6 text-center text-text-2">
                     These Terms of Service were last updated on{" "}
                     {new Date().toLocaleDateString("en-US", {
                       year: "numeric",
@@ -1956,24 +1956,24 @@ const TermsOfService = () => {
               </section>
 
               {/* Final Acceptance Section */}
-              <div className="mt-12 pt-8 border-t border-slate-700/50">
+              <div className="mt-12 pt-8 border-t border-border/50">
                 <div className="text-center">
                   <h3 className="text-2xl font-bold mb-4 text-slate-100">
                     Thank you for reading our Terms of Service
                   </h3>
-                  <p className="text-slate-400 mb-6">
+                  <p className="text-text-2 mb-6">
                     By using our platform, you acknowledge that you have read,
                     understood, and agree to be bound by these Terms.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200">
+                    <button className="px-6 py-3 bg-gradient-to-r from-gold to-gold hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200">
                       I Accept These Terms
                     </button>
-                    <button className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg border border-slate-700 transition-all duration-200">
+                    <button className="px-6 py-3 bg-surface-2 hover:bg-surface-2 text-white font-medium rounded-lg border border-border transition-all duration-200">
                       Download PDF Version
                     </button>
                   </div>
-                  <p className="text-xs text-slate-500 mt-4">
+                  <p className="text-xs text-text-3 mt-4">
                     You may print or save a copy of these Terms for your records
                   </p>
                 </div>
@@ -1985,7 +1985,7 @@ const TermsOfService = () => {
 
       {/* Decorative Elements */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gold/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
       </div>
     </div>

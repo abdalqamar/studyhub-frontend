@@ -1,18 +1,22 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { ROLES } from "../constants/roles";
+
+import { ROLES } from "@/constants/roles";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 const PublicRoute = ({ children }) => {
-  const { user } = useSelector((state) => state.auth);
+  const user = useAuthStore((state) => state.user);
 
-  if (user) {
-    if (user.role === ROLES.STUDENT) return <Navigate to="/student" replace />;
-    if (user.role === ROLES.INSTRUCTOR)
-      return <Navigate to="/instructor" replace />;
-    if (user.role === ROLES.ADMIN) return <Navigate to="/admin" replace />;
+  if (!user) {
+    return children;
   }
 
-  return children;
+  const redirectMap = {
+    [ROLES.STUDENT]: "/student",
+    [ROLES.INSTRUCTOR]: "/instructor",
+    [ROLES.ADMIN]: "/admin",
+  };
+
+  return <Navigate to={redirectMap[user.role] ?? "/"} replace />;
 };
 
 export default PublicRoute;

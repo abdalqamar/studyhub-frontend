@@ -1,8 +1,10 @@
-import { useSelector } from "react-redux";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 import { Navigate } from "react-router-dom";
 
 const RoleProtectedRoute = ({ children, allowedRoles }) => {
-  const { accessToken, user, authChecked } = useSelector((state) => state.auth);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const user = useAuthStore((state) => state.user);
+  const authChecked = useAuthStore((state) => state.authChecked);
 
   if (!authChecked) {
     return null;

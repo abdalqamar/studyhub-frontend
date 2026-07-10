@@ -1,0 +1,39 @@
+import axiosInstance from "@/lib/axiosInstance";
+import { API_ENDPOINTS } from "@/lib/endpoints";
+
+export const adminService = {
+  fetchAllUsers: async ({ role, search, status, page, limit }) => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_USERS, {
+      params: { role, search, status, page, limit },
+    });
+    return data;
+  },
+
+  updateUserStatus: async (userId, status) => {
+    const { data } = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN_USER_STATUS(userId),
+      { status }
+    );
+    return data;
+  },
+
+  deleteUser: async (userId) => {
+    const { data } = await axiosInstance.delete(
+      API_ENDPOINTS.ADMIN_USER_DELETE(userId)
+    );
+    return data;
+  },
+
+  fetchAdminDashboardStats: async () => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_DASHBOARD);
+    return data.data;
+  },
+
+  fetchAdminTransactions: async (params) => {
+    const { data } = await axiosInstance.get(API_ENDPOINTS.ADMIN_TRANSACTIONS, {
+      params,
+    });
+
+    return data.data;
+  },
+};
