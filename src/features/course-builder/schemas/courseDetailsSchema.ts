@@ -7,8 +7,9 @@ export const courseDetailsSchema = z.object({
     .min(1, "Course name is required")
     .min(3, "Minimum 3 characters required"),
   description: z.string().trim().min(1, "Description is required"),
+  // courseDetailsSchema.ts
   price: z.coerce
-    .number({ invalid_type_error: "Price is required" })
+    .number({ error: "Price is required" })
     .min(0, "Price can't be negative"),
   category: z.string().min(1, "Category is required"),
   tags: z
@@ -36,3 +37,5 @@ export const courseDetailsSchema = z.object({
   requirements: z.string().optional(),
   instructions: z.string().optional(),
 });
+
+export type CourseDetailsFormValues = z.infer<typeof courseDetailsSchema>;
