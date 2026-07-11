@@ -8,6 +8,7 @@ import PageLoader from "@/shared/ui/PageLoader";
 import SearchBar from "@/shared/layout/SearchBar";
 import Pagination from "@/shared/components/Pagination";
 import CourseCard from "../components/CourseCard";
+import CourseCardSkeleton from "../components/CourseCardSkeleton";
 
 const CoursesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,7 +28,6 @@ const CoursesPage = () => {
 
   const {
     data: coursesData,
-    isLoading: coursesLoading,
     isFetching: coursesFetching,
     isError: coursesError,
     error: coursesErrorMsg,
@@ -171,13 +171,7 @@ const CoursesPage = () => {
 
       {/* Grid */}
       <section className="max-w-7xl mx-auto py-6 px-6 pb-16">
-        {coursesLoading && (
-          <div className="flex justify-center py-8">
-            <div className="w-7 h-7 border-2 border-gold border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
-
-        {coursesError && !coursesLoading && (
+        {coursesError && !coursesFetching && (
           <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
             <div className="w-14 h-14 rounded-full bg-danger-soft flex items-center justify-center">
               <AlertCircle size={22} className="text-danger" />
@@ -201,14 +195,14 @@ const CoursesPage = () => {
         {!coursesError && (
           <>
             {coursesFetching ? (
-              <div className="flex justify-center py-20">
-                <div className="w-7 h-7 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                {[...Array(8)].map((_, i) => (
+                  <CourseCardSkeleton key={i} />
+                ))}
               </div>
             ) : (
               <>
-                <div
-                  className={`grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-opacity duration-200 ${coursesFetching ? "opacity-50 pointer-events-none" : "opacity-100"}`}
-                >
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                   {courses.map((course) => (
                     <CourseCard key={course._id} course={course} />
                   ))}
