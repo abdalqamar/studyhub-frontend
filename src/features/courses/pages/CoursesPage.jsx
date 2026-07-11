@@ -1,4 +1,3 @@
-// CoursesPage.jsx
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { Search, BookOpen, AlertCircle } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
@@ -29,6 +28,7 @@ const CoursesPage = () => {
   const {
     data: coursesData,
     isLoading: coursesLoading,
+    isFetching: coursesFetching,
     isError: coursesError,
     error: coursesErrorMsg,
   } = useCourses({
@@ -198,34 +198,44 @@ const CoursesPage = () => {
           </div>
         )}
 
-        {!coursesLoading && !coursesError && (
+        {!coursesError && (
           <>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {courses.map((course) => (
-                <CourseCard key={course._id} course={course} />
-              ))}
-            </div>
-
-            {courses.length === 0 && (
-              <div className="text-center text-text-3 mt-16">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-surface-2 border border-border mb-4">
-                  <Search size={20} className="text-text-3" />
+            {coursesFetching ? (
+              <div className="flex justify-center py-20">
+                <div className="w-7 h-7 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <>
+                <div
+                  className={`grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-opacity duration-200 ${coursesFetching ? "opacity-50 pointer-events-none" : "opacity-100"}`}
+                >
+                  {courses.map((course) => (
+                    <CourseCard key={course._id} course={course} />
+                  ))}
                 </div>
-                <p className="text-text-2">No courses found</p>
-                <p className="text-sm mt-1">
-                  Try adjusting your search or filter criteria.
-                </p>
-              </div>
-            )}
 
-            {pagination?.totalPages > 1 && (
-              <div className="pb-6 mt-8">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={pagination.totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </div>
+                {courses.length === 0 && (
+                  <div className="text-center text-text-3 mt-16">
+                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-surface-2 border border-border mb-4">
+                      <Search size={20} className="text-text-3" />
+                    </div>
+                    <p className="text-text-2">No courses found</p>
+                    <p className="text-sm mt-1">
+                      Try adjusting your search or filter criteria.
+                    </p>
+                  </div>
+                )}
+
+                {pagination?.totalPages > 1 && (
+                  <div className="pb-6 mt-8">
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={pagination.totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

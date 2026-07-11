@@ -8,7 +8,7 @@ import { PUBLIC_ROUTES } from "@/constants/publicRoutes";
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
-  timeout: 15000,
+  timeout: 30000,
 });
 
 export default axiosInstance;
