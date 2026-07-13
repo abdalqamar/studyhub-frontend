@@ -1,9 +1,19 @@
-import axios from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { queryClient } from "@/app/queryClient";
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { errorToast } from "@/shared/utils/toastUtils";
 import { API_ENDPOINTS } from "./endpoints";
 import { PUBLIC_ROUTES } from "@/constants/publicRoutes";
+
+interface RetryableRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
+// backend error shape
+interface ApiErrorData {
+  code?: string;
+  message?: string;
+}
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -13,7 +23,7 @@ const axiosInstance = axios.create({
 
 export default axiosInstance;
 
-let refreshTokenPromise = null;
+let refreshTokenPromise: Promise<string> | null = null;
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -27,14 +37,14 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res) => res,
 
-  async (error) => {
+  async (error: AxiosError<ApiErrorData>) => {
     // Network error — no response
     if (!error.response) {
       errorToast("Please check your internet connection and try again");
       return Promise.reject(error);
     }
 
-    const originalRequest = error.config;
+    const originalRequest = error.config as RetryableRequestConfig;
     const status = error.response.status;
     const url = originalRequest?.url ?? "";
 
@@ -48,11 +58,11 @@ axiosInstance.interceptors.response.use(
 
       const code = error.response?.data?.code;
       const message = error.response?.data?.message;
-      console.log("code", code, "message", message);
+
       if (code === "SESSION_EXPIRED") {
         errorToast("Session expired — please login again");
       } else if (status === 403) {
-        errorToast(message);
+        errorToast(message ?? "Access denied");
       }
       useAuthStore.getState().clearAuth();
       queryClient.removeQueries({ queryKey: ["profile"] });
@@ -60,7 +70,7 @@ axiosInstance.interceptors.response.use(
     }
 
     // public routes
-    if (PUBLIC_ROUTES.some((route) => url.includes(route))) {
+    if (PUBLIC_ROUTES.some((route: string) => url.includes(route))) {
       return Promise.reject(error);
     }
 
@@ -118,11 +128,6 @@ axiosInstance.interceptors.response.use(
     // 500+ — server error
     if (status >= 500) {
       errorToast("Server error — try again later");
-      return Promise.reject(error);
-    }
-
-    // already handled by hook — skip toast
-    if (error._handled) {
       return Promise.reject(error);
     }
 
