@@ -1,13 +1,36 @@
-export const generateExcelReport = (courses, successToast, errorToast) => {
+interface CourseInstructor {
+  firstName?: string;
+  lastName?: string;
+}
+
+interface CourseCategory {
+  name?: string;
+}
+
+interface ExportableCourse {
+  title: string;
+  instructor?: CourseInstructor;
+  category?: CourseCategory;
+  enrolledCount?: number;
+  rating?: number | string;
+  status?: string;
+  price?: number | string;
+  duration?: string;
+}
+
+export const generateExcelReport = (
+  courses: ExportableCourse[],
+  successToast: (msg: string) => void,
+  errorToast: (msg: string) => void
+) => {
   try {
     if (!courses || courses.length === 0) {
       errorToast("No courses available to generate report");
       return;
     }
 
-    // Prepare data
     const data = courses.map((course) => ({
-      Title: course.courseName || "N/A",
+      Title: course.title || "N/A",
       Instructor: course.instructor
         ? `${course.instructor.firstName || ""} ${course.instructor.lastName || ""}`.trim() ||
           "N/A"
@@ -19,7 +42,6 @@ export const generateExcelReport = (courses, successToast, errorToast) => {
       Price: course.price || "N/A",
       Duration: course.duration || "N/A",
     }));
-
     // Create Excel content (XML format)
     let excelContent = `
       <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -104,69 +126,5 @@ export const generateExcelReport = (courses, successToast, errorToast) => {
   } catch (error) {
     console.error("Error generating Excel report:", error);
     errorToast("Failed to generate Excel report");
-  }
-};
-
-/**
- * Generate and download CSV report
- * @param {Array} courses - Array of course objects
- * @param {Function} successToast - Success toast notification function
- * @param {Function} errorToast - Error toast notification function
- */
-export const generateCSVReport = (courses, successToast, errorToast) => {
-  try {
-    if (!courses || courses.length === 0) {
-      errorToast("No courses available to generate report");
-      return;
-    }
-
-    const csvData = courses.map((course) => ({
-      Title: course.courseName || "N/A",
-      Instructor: course.instructor
-        ? `${course.instructor.firstName || ""} ${course.instructor.lastName || ""}`.trim() ||
-          "N/A"
-        : "N/A",
-      Category: course.category?.name || "N/A",
-      Students: course.enrolledCount || 0,
-      Rating: course.rating || "N/A",
-      Status: course.status || "N/A",
-      Price: course.price || "N/A",
-      Duration: course.duration || "N/A",
-    }));
-
-    // Escape CSV values
-    const escapeCSV = (value) => {
-      const stringValue = String(value);
-      if (
-        stringValue.includes(",") ||
-        stringValue.includes('"') ||
-        stringValue.includes("\n")
-      ) {
-        return `"${stringValue.replace(/"/g, '""')}"`;
-      }
-      return stringValue;
-    };
-
-    const headers = Object.keys(csvData[0]).join(",");
-    const rows = csvData
-      .map((row) => Object.values(row).map(escapeCSV).join(","))
-      .join("\n");
-
-    const csv = `${headers}\n${rows}`;
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = `courses-report-${new Date().toISOString().split("T")[0]}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-
-    successToast("CSV report downloaded successfully");
-  } catch (error) {
-    console.error("Error generating CSV report:", error);
-    errorToast("Failed to generate CSV report");
   }
 };

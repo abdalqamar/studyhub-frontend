@@ -1,10 +1,16 @@
 import { errorToast, successToast } from "./toastUtils";
 
+interface DownloadNotesParams {
+  userNotes: string;
+  currentLesson?: { title: string };
+  currentSection?: { sectionName: string };
+}
+
 export const downloadNotesAsPDF = async ({
   userNotes,
   currentLesson,
   currentSection,
-}) => {
+}: DownloadNotesParams) => {
   if (!userNotes?.trim()) {
     errorToast("No notes to download! Write something first.");
     return;
@@ -39,7 +45,7 @@ export const downloadNotesAsPDF = async ({
     const lines = pdf.splitTextToSize(userNotes, textWidth);
     let y = 50;
 
-    lines.forEach((line) => {
+    lines.forEach((line: string) => {
       if (y > pageHeight - margin) {
         pdf.addPage();
         y = margin;

@@ -1,4 +1,4 @@
-export const formatDuration = (duration) => {
+export const formatDuration = (duration: string) => {
   if (!duration) return "0h 0m";
 
   const parts = duration.split(" ");

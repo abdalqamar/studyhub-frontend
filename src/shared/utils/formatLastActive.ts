@@ -1,5 +1,5 @@
-const formatLastActive = (date) => {
-  const diff = Date.now() - new Date(date);
+const formatLastActive = (date: string | Date | number) => {
+  const diff = Date.now() - new Date(date).getTime();
   const min = Math.floor(diff / 60000);
 
   if (min < 60) return `${min} min ago`;

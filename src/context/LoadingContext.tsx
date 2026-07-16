@@ -1,6 +1,18 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  ReactNode,
+} from "react";
 
-const LoadingContext = createContext(null);
+interface LoadingContextValue {
+  isLoading: boolean;
+  show: () => void;
+  hide: () => void;
+}
+
+const LoadingContext = createContext<LoadingContextValue | null>(null);
 
 const OrbitLoader = () => {
   return (
@@ -23,8 +35,12 @@ const OrbitLoader = () => {
   );
 };
 
-export const LoadingProvider = ({ children }) => {
-  const [loadingCount, setLoadingCount] = useState(0);
+interface LoadingProviderProps {
+  children: ReactNode;
+}
+
+export const LoadingProvider = ({ children }: LoadingProviderProps) => {
+  const [loadingCount, setLoadingCount] = useState<number>(0);
 
   const isLoading = loadingCount > 0;
 
@@ -39,7 +55,6 @@ export const LoadingProvider = ({ children }) => {
   return (
     <LoadingContext.Provider value={{ isLoading, show, hide }}>
       {children}
-
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
           <OrbitLoader />
@@ -49,7 +64,7 @@ export const LoadingProvider = ({ children }) => {
   );
 };
 
-export const useLoading = () => {
+export const useLoading = (): LoadingContextValue => {
   const ctx = useContext(LoadingContext);
 
   if (!ctx) {

@@ -4,7 +4,7 @@ import { X, CheckCircle, AlertTriangle, CircleX } from "lucide-react";
 const TOAST_ID = "global-toast"; // one toast at a time
 
 // Success Toast
-export const successToast = (msg) => {
+export const successToast = (msg: string) => {
   toast.dismiss(); // remove old toast
 
   toast.custom(
@@ -32,7 +32,7 @@ export const successToast = (msg) => {
 };
 
 // Error Toast
-export const errorToast = (msg) => {
+export const errorToast = (msg: string) => {
   toast.dismiss();
 
   toast.custom(
@@ -60,7 +60,7 @@ export const errorToast = (msg) => {
 };
 
 // Warning Toast
-export const warningToast = (msg) => {
+export const warningToast = (msg: string) => {
   toast.dismiss();
 
   toast.custom(
