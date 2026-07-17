@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { CSSProperties, ReactNode } from "react";
 
-function RegMark({ className }) {
+interface RegMarkProps {
+  className: string;
+}
+
+function RegMark({ className }: RegMarkProps) {
   return (
     <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
       <span className="absolute top-1/2 left-0 w-4 h-px bg-cyan-400/70 -translate-y-1/2" />
@@ -9,12 +14,17 @@ function RegMark({ className }) {
   );
 }
 
-const pageStyle = {
+const pageStyle: CSSProperties = {
   backgroundImage:
     "repeating-linear-gradient(0deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(34,211,238,0.045) 0px, rgba(34,211,238,0.045) 1px, transparent 1px, transparent 40px)",
 };
 
-const AuthCardShell = ({ children, tall = false }) => (
+interface AuthCardShellProps {
+  children: ReactNode;
+  tall?: boolean;
+}
+
+const AuthCardShell = ({ children, tall = false }: AuthCardShellProps) => (
   <div
     className={`min-h-screen bg-slate-950 flex items-center justify-center px-4 ${tall ? "py-20" : ""}`}
     style={pageStyle}

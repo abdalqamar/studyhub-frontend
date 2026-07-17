@@ -1,5 +1,17 @@
-const TabsFilter = ({ userType, statusFilter, onStatusChange }) => {
-  const isActive = (tabId) =>
+import { UserRole } from "@/types";
+
+interface TabsFilterProps {
+  userType: UserRole;
+  statusFilter: string;
+  onStatusChange: (status: string) => void;
+}
+
+const TabsFilter = ({
+  userType,
+  statusFilter,
+  onStatusChange,
+}: TabsFilterProps) => {
+  const isActive = (tabId: string) =>
     tabId === "all" ? !statusFilter : statusFilter === tabId;
 
   const tabs = [

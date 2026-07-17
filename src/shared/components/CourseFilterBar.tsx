@@ -1,5 +1,17 @@
 import SearchBar from "../layout/SearchBar";
 import TabsFilter from "./TabsFilter";
+import { UserRole, Category } from "@/types";
+
+interface CourseFilterBarProps {
+  userType: UserRole;
+  statusFilter: string;
+  onStatusChange: (status: string) => void;
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
+  categoryFilter: string;
+  onCategoryChange: (categoryId: string) => void;
+  categories: Category[];
+}
 
 const CourseFilterBar = ({
   userType,
@@ -10,7 +22,7 @@ const CourseFilterBar = ({
   categoryFilter,
   onCategoryChange,
   categories,
-}) => {
+}: CourseFilterBarProps) => {
   return (
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-surface border border-border rounded-2xl p-3.5 mb-5">
       <TabsFilter

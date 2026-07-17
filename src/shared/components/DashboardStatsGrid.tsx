@@ -1,6 +1,14 @@
 import { clipCardStyle } from "@/shared/ui/clipCardStyle";
+import { LucideIcon } from "lucide-react";
 
-const ACCENTS = {
+interface AccentConfig {
+  iconBg: string;
+  iconText: string;
+  bar: string;
+  corner: string;
+}
+
+const ACCENTS: Record<string, AccentConfig> = {
   gold: {
     iconBg: "bg-gold-soft",
     iconText: "text-gold",
@@ -51,7 +59,23 @@ const ACCENTS = {
   },
 };
 
-const StatsCard = ({ value, label, color = "gold", icon: Icon, total }) => {
+export type AccentColor = keyof typeof ACCENTS;
+
+interface StatsCardProps {
+  value: number | string;
+  label: string;
+  color?: AccentColor;
+  icon?: LucideIcon;
+  total?: number;
+}
+
+const StatsCard = ({
+  value,
+  label,
+  color = "gold",
+  icon: Icon,
+  total = 0,
+}: StatsCardProps) => {
   const a = ACCENTS[color] ?? ACCENTS.gold;
 
   const numericValue = typeof value === "number" ? value : Number(value) || 0;
@@ -95,7 +119,18 @@ const StatsCard = ({ value, label, color = "gold", icon: Icon, total }) => {
   );
 };
 
-const StatsGrid = ({ stats }) => {
+interface Stat {
+  value: number | string;
+  label: string;
+  color?: AccentColor;
+  icon?: LucideIcon;
+}
+
+interface StatsGridProps {
+  stats: Stat[];
+}
+
+const StatsGrid = ({ stats }: StatsGridProps) => {
   const total =
     typeof stats?.[0]?.value === "number"
       ? stats[0].value

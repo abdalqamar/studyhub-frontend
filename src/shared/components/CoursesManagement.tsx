@@ -10,11 +10,31 @@ import {
 } from "lucide-react";
 import { generateExcelReport } from "../utils/exportUtils";
 import { errorToast, successToast } from "../utils/toastUtils";
-import StatsGrid from "./DashboardStatsGrid";
+import StatsGrid, { AccentColor } from "./DashboardStatsGrid";
 import CourseFilterBar from "./CourseFilterBar";
 import CourseTableRow from "@/features/instructor/components/manageCourses/CourseTableRow";
 import Pagination from "./Pagination";
 import CourseModals from "@/features/instructor/components/manageCourses/CourseModals";
+import { Course, Category, CourseAction, UserRole } from "@/types";
+
+type ModalType = "delete" | "feedback" | "reject";
+
+interface CoursesManagementProps {
+  userType: UserRole;
+  courses: Course[];
+  categories: Category[];
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
+  statusFilter: string;
+  categoryFilter: string;
+  onCategoryChange: (categoryId: string) => void;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  onCourseAction: (action: string, course: Course | null) => void;
+  onStatusChange: (status: string) => void;
+  onAddCourse: () => void;
+}
 
 const CoursesManagement = ({
   userType,
@@ -31,19 +51,18 @@ const CoursesManagement = ({
   onCourseAction,
   onStatusChange,
   onAddCourse,
-}) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [showRejectModal, setShowRejectModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [rejectFeedback, setRejectFeedback] = useState("");
+}: CoursesManagementProps) => {
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState<boolean>(false);
+  const [showRejectModal, setShowRejectModal] = useState<boolean>(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [rejectFeedback, setRejectFeedback] = useState<string>("");
 
-  const handleExcelDownload = () => {
+  const handleExcelDownload = (): void => {
     generateExcelReport(courses, successToast, errorToast);
   };
 
-  // Handle Actions
-  const handleAction = (action, course) => {
+  const handleAction = (action: CourseAction, course: Course): void => {
     setSelectedCourse(course);
 
     switch (action) {
@@ -66,23 +85,23 @@ const CoursesManagement = ({
     }
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = (): void => {
     onCourseAction("delete", selectedCourse);
     setShowDeleteModal(false);
     setSelectedCourse(null);
   };
 
-  const handleConfirmReject = () => {
+  const handleConfirmReject = (): void => {
     onCourseAction("reject", {
       ...selectedCourse,
       feedback: rejectFeedback,
-    });
+    } as Course);
     setShowRejectModal(false);
     setRejectFeedback("");
     setSelectedCourse(null);
   };
 
-  const handleCloseModal = (modalType) => {
+  const handleCloseModal = (modalType: ModalType): void => {
     switch (modalType) {
       case "delete":
         setShowDeleteModal(false);
@@ -98,8 +117,7 @@ const CoursesManagement = ({
     setSelectedCourse(null);
   };
 
-  // Table Headers
-  const tableHeaders =
+  const tableHeaders: string[] =
     userType === "admin"
       ? ["Course", "Instructor", "Students", "Rating", "Status", "Actions"]
       : ["Course", "Students", "Rating", "Status", "Actions"];
@@ -108,32 +126,31 @@ const CoursesManagement = ({
     {
       value: courses?.length || 0,
       label: "Total Courses",
-      color: "blue",
+      color: "blue" as AccentColor,
       icon: BookOpen,
     },
     {
       value: courses?.filter((c) => c.status === "approved").length,
       label: userType === "instructor" ? "Active" : "Published Courses",
-      color: "green",
+      color: "green" as AccentColor,
       icon: CheckCircle,
     },
     {
       value: courses?.filter((c) => c.status === "pending").length,
       label: "Pending Courses",
-      color: "yellow",
+      color: "yellow" as AccentColor,
       icon: Clock,
     },
     {
       value: courses?.filter((c) => c.status === "rejected").length,
       label: "Rejected Courses",
-      color: "red",
+      color: "red" as AccentColor,
       icon: XCircle,
     },
   ];
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
       <div className="mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex-1">
@@ -148,7 +165,6 @@ const CoursesManagement = ({
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Download Excel Button */}
             <button
               onClick={handleExcelDownload}
               className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:scale-105 whitespace-nowrap border border-green-500"
@@ -157,7 +173,6 @@ const CoursesManagement = ({
               Download Excel
             </button>
 
-            {/* Conditional Buttons */}
             {userType === "admin" && (
               <Link
                 to={"/admin/category"}
@@ -181,10 +196,8 @@ const CoursesManagement = ({
         </div>
       </div>
 
-      {/* Stats Cards */}
       <StatsGrid stats={adminStats} />
 
-      {/* Filter Bar */}
       <CourseFilterBar
         userType={userType}
         statusFilter={statusFilter}
@@ -195,7 +208,7 @@ const CoursesManagement = ({
         onCategoryChange={onCategoryChange}
         categories={categories}
       />
-      {/* Table */}
+
       <div className="bg-surface-2 rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -224,7 +237,6 @@ const CoursesManagement = ({
           </table>
         </div>
 
-        {/* Empty State */}
         {courses?.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 px-4">
             <div className="w-20 h-20 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mb-6">
@@ -255,7 +267,6 @@ const CoursesManagement = ({
           </div>
         )}
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
@@ -265,7 +276,6 @@ const CoursesManagement = ({
         )}
       </div>
 
-      {/* Modals */}
       <CourseModals
         showDeleteModal={showDeleteModal}
         showFeedbackModal={showFeedbackModal}

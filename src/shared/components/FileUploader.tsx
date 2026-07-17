@@ -1,19 +1,52 @@
 import { Play, Upload, X } from "lucide-react";
 import { useState, useRef } from "react";
 
-const ACCEPT_TYPES = { image: "image/*", video: "video/*", pdf: ".pdf" };
-const PLACEHOLDER_TEXT = {
+type FileType = "image" | "video" | "pdf";
+
+const ACCEPT_TYPES: Record<FileType, string> = {
+  image: "image/*",
+  video: "video/*",
+  pdf: ".pdf",
+};
+
+const PLACEHOLDER_TEXT: Record<FileType, string> = {
   image: "Upload an image",
   video: "Upload video file",
   pdf: "Upload PDF file",
 };
-const HINT_TEXT = {
+
+const HINT_TEXT: Record<FileType, string> = {
   image: "PNG, JPG, GIF up to 10MB",
   video: "MP4, MOV up to 100MB",
   pdf: "PDF up to 50MB",
 };
 
-const ProgressRing = ({ value, size = 64, strokeWidth = 5 }) => {
+interface ProgressRingProps {
+  value: number;
+  size?: number;
+  strokeWidth?: number;
+}
+
+interface UploadOverlayProps {
+  progress: number;
+}
+
+type CurrentFile = File | string | null;
+
+interface FileUploaderProps {
+  type?: FileType;
+  onFileChange: (file: File | null) => void;
+  currentFile?: CurrentFile;
+  className?: string;
+  disabled?: boolean;
+  uploadProgress?: number;
+}
+
+const ProgressRing = ({
+  value,
+  size = 64,
+  strokeWidth = 5,
+}: ProgressRingProps) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
@@ -43,7 +76,7 @@ const ProgressRing = ({ value, size = 64, strokeWidth = 5 }) => {
   );
 };
 
-const UploadOverlay = ({ progress }) => (
+const UploadOverlay = ({ progress }: UploadOverlayProps) => (
   <div className="absolute inset-0 bg-black/65 backdrop-blur-[1px] flex flex-col items-center justify-center gap-2">
     <div className="relative flex items-center justify-center">
       <ProgressRing value={progress} />
@@ -64,18 +97,18 @@ const FileUploader = ({
   className = "",
   disabled = false,
   uploadProgress,
-}) => {
+}: FileUploaderProps) => {
   const isUploading = typeof uploadProgress === "number";
-  const [dragActive, setDragActive] = useState(false);
-  const [showVideoModal, setShowVideoModal] = useState(false);
-  const inputRef = useRef(null);
-  const videoRef = useRef(null);
+  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleFileSelect = (file) => {
+  const handleFileSelect = (file: File | null): void => {
     if (file && !disabled) onFileChange(file);
   };
 
-  const handleDrag = (e) => {
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
     e.stopPropagation();
     if (disabled) return;
@@ -83,7 +116,7 @@ const FileUploader = ({
     else if (e.type === "dragleave") setDragActive(false);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
@@ -91,33 +124,33 @@ const FileUploader = ({
     if (e.dataTransfer.files?.[0]) handleFileSelect(e.dataTransfer.files[0]);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (disabled) return;
     if (e.target.files?.[0]) handleFileSelect(e.target.files[0]);
   };
 
-  const handleRemove = () => {
+  const handleRemove = (): void => {
     if (disabled) return;
     onFileChange(null);
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  const handleContainerClick = () => {
+  const handleContainerClick = (): void => {
     if (disabled || currentFile) return;
     inputRef.current?.click();
   };
 
-  const handleVideoPreviewClick = () => {
+  const handleVideoPreviewClick = (): void => {
     if (disabled || type !== "video" || !currentFile) return;
     setShowVideoModal(true);
   };
 
-  const handleModalClose = () => {
+  const handleModalClose = (): void => {
     setShowVideoModal(false);
     videoRef.current?.pause();
   };
 
-  const getFilePreview = (file) =>
+  const getFilePreview = (file: CurrentFile) =>
     file instanceof File ? URL.createObjectURL(file) : file || "";
 
   return (
@@ -217,7 +250,7 @@ const FileUploader = ({
               </div>
             )}
 
-            {type === "pdf" && (
+            {type === "pdf" && currentFile instanceof File && (
               <div className="text-center py-2">
                 <div className="text-teal font-medium truncate text-sm">
                   {currentFile.name}
@@ -306,12 +339,14 @@ const FileUploader = ({
               </video>
             </div>
 
-            <div className="mt-3 text-white text-center">
-              <div className="font-medium text-sm">{currentFile.name}</div>
-              <div className="text-xs text-text-3 font-mono">
-                {(currentFile.size / (1024 * 1024)).toFixed(2)} MB
+            {currentFile instanceof File && (
+              <div className="mt-3 text-white text-center">
+                <div className="font-medium text-sm">{currentFile.name}</div>
+                <div className="text-xs text-text-3 font-mono">
+                  {(currentFile.size / (1024 * 1024)).toFixed(2)} MB
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}

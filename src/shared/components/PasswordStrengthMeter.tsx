@@ -1,11 +1,23 @@
-const strengthMeta = [
+interface StrengthMeta {
+  label: string;
+  color: string;
+  text: string;
+}
+
+const strengthMeta: StrengthMeta[] = [
   { label: "Weak", color: "bg-red-400", text: "text-red-400" },
   { label: "Fair", color: "bg-amber-400", text: "text-amber-400" },
   { label: "Good", color: "bg-indigo-400", text: "text-indigo-400" },
   { label: "Strong", color: "bg-emerald-400", text: "text-emerald-400" },
 ];
 
-const PasswordStrengthMeter = ({ password, strength }) => {
+const PasswordStrengthMeter = ({
+  password,
+  strength,
+}: {
+  password: string;
+  strength: number;
+}) => {
   if (!password) return null;
   const meta = strengthMeta[Math.min(strength, 3)];
   return (
@@ -25,7 +37,7 @@ const PasswordStrengthMeter = ({ password, strength }) => {
   );
 };
 
-export const calcPasswordStrength = (password) => {
+export const calcPasswordStrength = (password: string) => {
   let strength = 0;
   if (password.length >= 8) strength++;
   if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;

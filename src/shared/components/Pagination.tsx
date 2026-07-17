@@ -1,5 +1,7 @@
-const getPageNumbers = (current, total) => {
-  const pages = [];
+type PageItem = number | "...";
+
+const getPageNumbers = (current: number, total: number): PageItem[] => {
+  const pages: PageItem[] = [];
   const delta = 1;
 
   for (let i = 1; i <= total; i++) {
@@ -16,7 +18,17 @@ const getPageNumbers = (current, total) => {
   return pages;
 };
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) => {
   if (!totalPages || totalPages <= 1) return null;
 
   const pages = getPageNumbers(currentPage, totalPages);

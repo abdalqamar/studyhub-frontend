@@ -1,24 +1,28 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
+interface Crumb {
+  name: string;
+  path: string;
+}
+
 const Breadcrumb = () => {
   const location = useLocation();
 
-  const formatName = (segment) =>
+  const formatName = (segment: string): string =>
     segment
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-  const generateBreadcrumbs = () => {
+  const generateBreadcrumbs = (): Crumb[] => {
     const paths = location.pathname.split("/").filter(Boolean);
-    const crumbs = [];
+    const crumbs: Crumb[] = [];
 
     for (let i = 0; i < paths.length; i++) {
       const pathSegment = paths[i];
       const fullPath = "/" + paths.slice(0, i + 1).join("/");
 
-      // Skip MongoDB ID
       if (/^[a-f\d]{24}$/i.test(pathSegment) || /^\d+$/.test(pathSegment)) {
         continue;
       }

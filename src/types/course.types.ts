@@ -1,9 +1,11 @@
+import { Category } from "@/types";
+
 export interface Lesson {
   _id: string;
   title: string;
-  description: string;
-  videoUrl?: string | null;
-  duration?: number;
+  description?: string;
+  duration?: string;
+  videoUrl?: string;
 }
 
 export interface Section {
@@ -12,8 +14,31 @@ export interface Section {
   lesson: Lesson[];
 }
 
+export interface CourseInstructor {
+  firstName?: string;
+  lastName?: string;
+}
+
 export interface Course {
   _id: string;
-  courseContent: Section[];
-  [key: string]: unknown;
+  title: string;
+  description?: string;
+  thumbnail?: string;
+  price?: number | string;
+  category?: Category;
+  courseContent?: Section[];
+  whatYouWillLearn?: string[];
+  status?: "approved" | "pending" | "rejected";
+  instructor?: CourseInstructor;
+  enrolledCount?: number;
+  rating?: number | string;
+  duration?: string;
 }
+
+export type CourseAction =
+  | "delete"
+  | "feedback"
+  | "reject"
+  | "edit"
+  | "preview"
+  | "approve";

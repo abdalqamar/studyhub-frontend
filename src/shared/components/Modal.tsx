@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom";
+import { ReactNode } from "react";
 import {
   AlertTriangle,
   Trash2,
@@ -8,10 +9,33 @@ import {
   X,
 } from "lucide-react";
 
-const Modal = ({ modalData }) => {
+type ModalType = "delete" | "warning" | "success" | "info" | "danger";
+
+interface ModalData {
+  type?: ModalType;
+  title?: string;
+  message?: string;
+  details?: string;
+  cancelText?: string;
+  confirmText?: string;
+  onClose?: () => void;
+  onConfirm?: () => void;
+}
+
+interface ModalProps {
+  modalData: ModalData | null;
+}
+
+interface IconConfig {
+  icon: ReactNode;
+  bgColor: string;
+  buttonColor: string;
+}
+
+const Modal = ({ modalData }: ModalProps) => {
   if (!modalData) return null;
 
-  const getIconConfig = () => {
+  const getIconConfig = (): IconConfig => {
     switch (modalData?.type) {
       case "delete":
         return {
