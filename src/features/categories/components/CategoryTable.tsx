@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { Edit, Trash2 } from "lucide-react";
-import Modal from "@/shared/components/Modal";
+import Modal, { ModalData } from "@/shared/components/Modal";
+import type { Category } from "@/types";
+
+interface CategoryTableProps {
+  categories: Category[];
+  onEdit: (category: Category) => void;
+  onDelete: (categoryId: string) => void;
+  editingCategoryId: string | null;
+  isDeleting: boolean;
+  isUpdating: boolean;
+}
 
 const CategoryTable = ({
   categories,
@@ -9,10 +19,10 @@ const CategoryTable = ({
   editingCategoryId,
   isDeleting,
   isUpdating,
-}) => {
-  const [modalData, setModalData] = useState(null);
+}: CategoryTableProps) => {
+  const [modalData, setModalData] = useState<ModalData | null>(null);
 
-  const handleDeleteClick = (category) => {
+  const handleDeleteClick = (category: Category) => {
     setModalData({
       type: "delete",
       title: "Delete Category?",

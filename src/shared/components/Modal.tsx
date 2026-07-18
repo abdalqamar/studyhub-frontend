@@ -11,7 +11,7 @@ import {
 
 type ModalType = "delete" | "warning" | "success" | "info" | "danger";
 
-interface ModalData {
+export interface ModalData {
   type?: ModalType;
   title?: string;
   message?: string;

@@ -1,18 +1,51 @@
+import { ReactNode } from "react";
+
+interface CourseCategoryDatum {
+  name?: string;
+  _id?: string | { name?: string } | null;
+  count?: number;
+  total?: number;
+}
+
+interface Segment {
+  name: string;
+  pct: number;
+  color: string;
+  dasharray: string;
+  dashoffset: number;
+}
+
 const PALETTE = ["#d4a537", "#2dd4bf", "#5b8def", "#8b7ae0", "#e2574c"];
 
-const CardShell = ({ children }) => (
+interface CardShellProps {
+  children: ReactNode;
+}
+
+const CardShell = ({ children }: CardShellProps) => (
   <div className="bg-surface border border-border rounded-[14px] p-5">
     {children}
   </div>
 );
 
-const getName = (c) => c.name || c._id?.name || c._id || "Other";
-const getCount = (c) => c.count ?? c.total ?? 0;
+const getName = (c: CourseCategoryDatum): string => {
+  if (c.name) return c.name;
+  if (typeof c._id === "object" && c._id?.name) return c._id.name;
+  if (typeof c._id === "string") return c._id;
+  return "Other";
+};
+
+const getCount = (c: CourseCategoryDatum): number => c.count ?? c.total ?? 0;
 
 const RADIUS = 46;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-const CourseCategoriesChart = ({ courseCategories }) => {
+interface CourseCategoriesChartProps {
+  courseCategories: CourseCategoryDatum[];
+}
+
+const CourseCategoriesChart = ({
+  courseCategories,
+}: CourseCategoriesChartProps) => {
   if (!courseCategories || courseCategories.length === 0) {
     return (
       <CardShell>
@@ -29,11 +62,11 @@ const CourseCategoriesChart = ({ courseCategories }) => {
   const total = courseCategories.reduce((sum, c) => sum + getCount(c), 0) || 1;
 
   let offsetSoFar = 0;
-  const segments = courseCategories.map((c, i) => {
+  const segments: Segment[] = courseCategories.map((c, i) => {
     const count = getCount(c);
     const pct = count / total;
     const dash = pct * CIRCUMFERENCE;
-    const segment = {
+    const segment: Segment = {
       name: getName(c),
       pct: Math.round(pct * 100),
       color: PALETTE[i % PALETTE.length],

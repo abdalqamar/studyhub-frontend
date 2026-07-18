@@ -1,6 +1,21 @@
 import FileUploader from "@/shared/components/FileUploader";
 import { Save, X } from "lucide-react";
 
+interface CategoryFormData {
+  name: string;
+  description: string;
+  image: File | string | null;
+}
+
+interface CategoryFormProps {
+  mode: "create" | "edit";
+  formData: CategoryFormData;
+  onFormChange: (data: CategoryFormData) => void;
+  onSubmit: () => void;
+  onCancel: () => void;
+  isLoading: boolean;
+}
+
 const CategoryForm = ({
   mode,
   formData,
@@ -8,7 +23,7 @@ const CategoryForm = ({
   onSubmit,
   onCancel,
   isLoading,
-}) => {
+}: CategoryFormProps) => {
   const isEditMode = mode === "edit";
 
   return (
@@ -37,7 +52,7 @@ const CategoryForm = ({
             onFormChange({ ...formData, description: e.target.value })
           }
           className="w-full bg-surface-2 border border-border-strong rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-gold"
-          rows="3"
+          rows={3}
           placeholder="Enter category description"
         />
       </div>
@@ -50,7 +65,6 @@ const CategoryForm = ({
           type="image"
           onFileChange={(file) => onFormChange({ ...formData, image: file })}
           currentFile={formData.image}
-          accept="image/*"
         />
         <p className="text-xs text-text-3 mt-1">
           {isEditMode

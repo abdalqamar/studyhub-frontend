@@ -2,27 +2,38 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { categoryService } from "@/features/categories/services/categoryServices";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import { useGlobalMutation } from "@/shared/hooks/useGlobalMutation";
+import { categoryKeys } from "@/lib/queryKeys";
+import { AxiosError } from "axios";
+import { Category } from "@/types";
+
+interface ApiErrorData {
+  message?: string;
+}
+
+interface UpdateCategoryPayload {
+  id: string;
+  formData: FormData | Partial<Category>;
+}
 
 export const useCategories = () => {
   return useQuery({
-    queryKey: ["categories"],
+    queryKey: categoryKeys.all,
     queryFn: categoryService.getAllCategories,
-    onError: (error) => {
-      errorToast(
-        error?.response?.data?.message || "Failed to fetch categories"
-      );
-    },
   });
 };
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
 
-  return useGlobalMutation({
+  return useGlobalMutation<
+    Category,
+    AxiosError<ApiErrorData>,
+    Partial<Category>
+  >({
     mutationFn: categoryService.createCategory,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: categoryKeys.all });
       successToast("Category created");
     },
 
@@ -35,11 +46,11 @@ export const useCreateCategory = () => {
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
 
-  return useGlobalMutation({
+  return useGlobalMutation<string, AxiosError<ApiErrorData>, string>({
     mutationFn: categoryService.deleteCategory,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: categoryKeys.all });
       successToast("Category deleted");
     },
 
@@ -52,12 +63,19 @@ export const useDeleteCategory = () => {
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
 
-  return useGlobalMutation({
+  return useGlobalMutation<
+    Category,
+    AxiosError<ApiErrorData>,
+    UpdateCategoryPayload
+  >({
     mutationFn: ({ id, formData }) =>
       categoryService.updateCategory(id, formData),
 
     onSuccess: () => {
-      queryClient.invalidateQueries(["categories"]);
+      queryClient.invalidateQueries({ queryKey: categoryKeys.all });
+    },
+    onError: (error) => {
+      errorToast(error?.response?.data?.message || "Failed to update category");
     },
   });
 };
