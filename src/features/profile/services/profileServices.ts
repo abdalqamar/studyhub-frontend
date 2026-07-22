@@ -1,15 +1,33 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { API_ENDPOINTS } from "@/lib/endpoints";
+import type { User } from "@/types";
+
+interface UpdatePasswordPayload {
+  oldPassword: string;
+  newPassword: string;
+}
+
+interface EnrolledCourse {
+  _id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  category: string;
+  instructor: string;
+  progressPercentage: number;
+  totalDuration: string;
+  totalLessons: number;
+}
 
 export const profileService = {
   // Get user profile
-  getProfile: async () => {
+  getProfile: async (): Promise<User> => {
     const { data } = await axiosInstance.get(API_ENDPOINTS.PROFILE);
     return data?.user;
   },
 
   // Update user profile
-  updateProfile: async (profileData) => {
+  updateProfile: async (profileData: Partial<User>): Promise<User> => {
     const { data } = await axiosInstance.put(
       API_ENDPOINTS.PROFILE_UPDATE,
       profileData
@@ -18,7 +36,7 @@ export const profileService = {
   },
 
   // Update profile photo
-  updatePhoto: async (photoData) => {
+  updatePhoto: async (photoData: FormData): Promise<User> => {
     const { data } = await axiosInstance.put(
       API_ENDPOINTS.PROFILE_PHOTO,
       photoData
@@ -27,16 +45,18 @@ export const profileService = {
   },
 
   // Update user password
-  updatePassword: async (passwordData) => {
+  updatePassword: async (
+    passwordData: UpdatePasswordPayload
+  ): Promise<void> => {
     const { data } = await axiosInstance.put(
-      API_ENDPOINTS.PROFILE_UPDATE_PASSWORD,
+      API_ENDPOINTS.AUTH_UPDATE_PASSWORD,
       passwordData
     );
     return data;
   },
 
   //User Enrolled courses
-  getEnrolledCourses: async () => {
+  getEnrolledCourses: async (): Promise<EnrolledCourse[]> => {
     const { data } = await axiosInstance.get(
       API_ENDPOINTS.PROFILE_ENROLLED_COURSES
     );

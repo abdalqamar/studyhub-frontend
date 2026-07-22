@@ -11,7 +11,14 @@ export const useManageCourses = ({
   limit,
 }) => {
   return useQuery({
-    queryKey: courseKeys.manage({ instructor, search, status, page }),
+    queryKey: courseKeys.manage({
+      instructor,
+      search,
+      status,
+      category,
+      page,
+      limit,
+    }),
     queryFn: () =>
       courseService.getManageCourses({
         instructor,

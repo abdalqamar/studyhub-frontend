@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { adminService } from "../services/adminServices";
+import { adminKeys } from "@/lib/queryKeys";
 
 export const useAdminDashboardStats = () => {
   return useQuery({
-    queryKey: ["admin-dashboard"],
+    queryKey: adminKeys.dashboard(),
     queryFn: adminService.fetchAdminDashboardStats,
   });
 };

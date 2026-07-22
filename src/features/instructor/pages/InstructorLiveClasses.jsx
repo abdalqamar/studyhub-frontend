@@ -101,15 +101,6 @@ const InstructorLiveClasses = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    });
-  };
-
   const getClassStatus = (classItem) => {
     const classDate = new Date(classItem.date);
     const [startHours, startMinutes] = classItem.startTime
@@ -449,8 +440,6 @@ const InstructorLiveClasses = () => {
         <div className="space-y-4">
           {liveClasses.map((classItem) => {
             const status = getClassStatus(classItem);
-            const canJoin = canJoinClass(classItem);
-
             return (
               <div
                 key={classItem.id}

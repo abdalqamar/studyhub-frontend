@@ -29,12 +29,10 @@ const InstructorAssignments = () => {
   });
 
   useEffect(() => {
-    fetchSubmissions();
-  }, []);
-
-  const fetchSubmissions = async () => {
+    // Temporary local data until the assignments API is delivered.
     setAssignments(getMockSubmissions());
-  };
+    // The mock dataset is static and intentionally only seeds this screen once.
+  }, []);
 
   // Mock data for development
   const getMockSubmissions = () => [

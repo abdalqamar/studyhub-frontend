@@ -31,7 +31,7 @@ const calculateStats = (courses) => {
     totalProgress,
     completedCourses,
     totalLearningMinutes,
-    certificates: completedCourses, // 1 certificate per completed course
+    certificates: completedCourses,
   };
 };
 

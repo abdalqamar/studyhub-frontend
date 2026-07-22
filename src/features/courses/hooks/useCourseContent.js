@@ -6,5 +6,6 @@ export const useCourseContent = (courseId) => {
   return useQuery({
     queryKey: courseKeys.content(courseId),
     queryFn: () => courseService.getCourseContent(courseId),
+    enabled: !!courseId,
   });
 };

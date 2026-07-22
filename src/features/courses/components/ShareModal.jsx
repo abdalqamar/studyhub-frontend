@@ -12,7 +12,7 @@ const ShareModal = ({ isOpen, onClose, shareUrl, shareTitle }) => {
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
+    } catch {
       errorToast("Failed to copy link to clipboard");
     }
   };

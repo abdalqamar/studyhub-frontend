@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { courseService } from "../services/courseService";
 import { successToast } from "@/shared/utils/toastUtils";
+import { courseKeys, profileKeys } from "@/lib/queryKeys";
 
 export const useEnrollCourse = () => {
   const queryClient = useQueryClient();
@@ -8,8 +9,8 @@ export const useEnrollCourse = () => {
   return useMutation({
     mutationFn: (courseId) => courseService.enrollCourse(courseId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["enrolledCourses"] });
-      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      queryClient.invalidateQueries({ queryKey: profileKeys.enrolledCourses() });
+      queryClient.invalidateQueries({ queryKey: courseKeys.all });
       successToast("Successfully enrolled in course!");
     },
   });

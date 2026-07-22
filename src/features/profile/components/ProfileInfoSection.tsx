@@ -3,9 +3,26 @@ import { useForm } from "react-hook-form";
 import { useProfile } from "../hooks/useProfile";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import FormInput from "@/shared/ui/FormInput";
+import type { User } from "@/types";
 
-const ProfileInfoSection = ({ user, isEditing, toggleEdit }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
+interface ProfileInfoSectionProps {
+  user: User;
+  isEditing: boolean;
+  toggleEdit: () => void;
+}
+
+interface ProfileInfoFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+const ProfileInfoSection = ({
+  user,
+  isEditing,
+  toggleEdit,
+}: ProfileInfoSectionProps) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(user?.profileImage);
 
   const { updateProfileMutation, updatePhotoMutation } = useProfile();
@@ -15,7 +32,7 @@ const ProfileInfoSection = ({ user, isEditing, toggleEdit }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<ProfileInfoFormData>();
 
   useEffect(() => {
     if (user) {
@@ -29,18 +46,18 @@ const ProfileInfoSection = ({ user, isEditing, toggleEdit }) => {
     }
   }, [user, reset]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     setSelectedFile(file);
 
     const reader = new FileReader();
-    reader.onloadend = () => setPreviewUrl(reader.result);
+    reader.onloadend = () => setPreviewUrl(reader.result as string);
     reader.readAsDataURL(file);
   };
 
-  // ⬆ Upload Photo
+  //  Upload Photo
   const handleUpdatePhoto = () => {
     if (!selectedFile) return errorToast("Please select a photo.");
 
@@ -59,7 +76,7 @@ const ProfileInfoSection = ({ user, isEditing, toggleEdit }) => {
   };
 
   // Update Profile Info
-  const onSubmit = (data) => {
+  const onSubmit = (data: ProfileInfoFormData) => {
     updateProfileMutation.mutate(data, {
       onSuccess: () => {
         successToast("Profile updated");

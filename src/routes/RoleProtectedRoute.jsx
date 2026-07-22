@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { Navigate } from "react-router-dom";
+import PageLoader from "@/shared/ui/PageLoader";
 
 const RoleProtectedRoute = ({ children, allowedRoles }) => {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -7,7 +8,7 @@ const RoleProtectedRoute = ({ children, allowedRoles }) => {
   const authChecked = useAuthStore((state) => state.authChecked);
 
   if (!authChecked) {
-    return null;
+    return <PageLoader />;
   }
 
   if (!accessToken) {

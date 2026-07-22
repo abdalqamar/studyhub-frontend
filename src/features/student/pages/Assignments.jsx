@@ -8,6 +8,8 @@ import {
   CheckCircle,
   Clock,
 } from "lucide-react";
+import { useSubmitAssignment } from "../hooks/useSubmitAssignment";
+import { errorToast, successToast } from "@/shared/utils/toastUtils";
 
 const Assignments = () => {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -17,7 +19,7 @@ const Assignments = () => {
   const [showSubmitModal, setShowSubmitModal] = useState(null);
   const [submissionFile, setSubmissionFile] = useState(null);
   const [submissionNotes, setSubmissionNotes] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const submitAssignmentMutation = useSubmitAssignment();
 
   // Fetch assignments from backend
 
@@ -74,50 +76,31 @@ const Assignments = () => {
   };
 
   const handleSubmitAssignment = async () => {
-    if (!submissionFile) {
-      alert("Please upload a file");
+    if (!submissionFile || !showSubmitModal) {
+      errorToast("Please upload a file");
       return;
     }
 
-    setSubmitting(true);
-
-    try {
-      const formData = new FormData();
-      formData.append("file", submissionFile);
-      formData.append("notes", submissionNotes);
-      formData.append("assignmentId", showSubmitModal.id);
-
-      // Replace with your actual API endpoint
-      const response = await fetch(
-        `/api/assignments/${showSubmitModal.id}/submit`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (response.ok) {
-        // Refresh assignments
-        await fetchAssignments();
-
-        // Close modal and reset
+    submitAssignmentMutation.mutate(
+      {
+        assignmentId: showSubmitModal.id,
+        file: submissionFile,
+        notes: submissionNotes,
+      },
+      {
+        onSuccess: () => {
         setShowSubmitModal(null);
         setSubmissionFile(null);
         setSubmissionNotes("");
-
-        alert("Assignment submitted successfully!");
-      } else {
-        throw new Error("Submission failed");
+          successToast("Assignment submitted successfully!");
+        },
+        onError: (error) => {
+          errorToast(
+            error?.response?.data?.message || "Failed to submit assignment"
+          );
+        },
       }
-    } catch (error) {
-      console.error("Submission error:", error);
-      alert("Failed to submit assignment. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+    );
   };
 
   if (loading) {
@@ -600,16 +583,18 @@ const Assignments = () => {
                     setSubmissionNotes("");
                   }}
                   className="flex-1 border border-border-strong hover:bg-surface-2 text-text-2 px-6 py-3 rounded-lg font-medium transition-colors"
-                  disabled={submitting}
+                  disabled={submitAssignmentMutation.isPending}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSubmitAssignment}
-                  disabled={!submissionFile || submitting}
+                  disabled={!submissionFile || submitAssignmentMutation.isPending}
                   className="flex-1 bg-gold hover:bg-gold-dim disabled:bg-surface-2 disabled:text-text-3 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg shadow-gold-glow/20"
                 >
-                  {submitting ? "Submitting..." : "Submit Assignment"}
+                  {submitAssignmentMutation.isPending
+                    ? "Submitting..."
+                    : "Submit Assignment"}
                 </button>
               </div>
             </div>

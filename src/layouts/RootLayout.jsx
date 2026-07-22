@@ -4,6 +4,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import axiosInstance from "@/lib/axiosInstance";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import ErrorBoundary from "@/shared/components/ErrorBoundary";
+import PageLoader from "@/shared/ui/PageLoader";
 
 const RootLayout = () => {
   const setUser = useAuthStore((state) => state.setUser);
@@ -11,6 +12,7 @@ const RootLayout = () => {
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const setAuthChecked = useAuthStore((state) => state.setAuthChecked);
   const setInitializing = useAuthStore((state) => state.setInitializing);
+  const isInitializing = useAuthStore((state) => state.isInitializing);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -36,6 +38,10 @@ const RootLayout = () => {
 
     initializeAuth();
   }, [setUser, setAccessToken, clearAuth, setAuthChecked, setInitializing]);
+
+  if (isInitializing) {
+    return <PageLoader />;
+  }
 
   return (
     <ErrorBoundary>

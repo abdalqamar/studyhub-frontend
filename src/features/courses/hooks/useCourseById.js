@@ -4,7 +4,7 @@ import { courseService } from "../services/courseService";
 
 export const useCourseById = (courseId) => {
   return useQuery({
-    queryKey: courseKeys.detail(courseId),
+    queryKey: courseKeys.edit(courseId),
     queryFn: () => courseService.getCourseById(courseId),
     enabled: !!courseId,
   });

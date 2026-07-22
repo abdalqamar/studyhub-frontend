@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authService } from "@/features/auth/services/authServices";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import { useGlobalMutation } from "@/shared/hooks/useGlobalMutation";
+import { profileKeys } from "@/lib/queryKeys";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export const useAuth = () => {
   const loginMutation = useGlobalMutation({
     mutationFn: authService.login,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries({ queryKey: profileKeys.all });
     },
   });
 
@@ -17,7 +18,7 @@ export const useAuth = () => {
     mutationFn: authService.logout,
 
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["profile"] });
+      queryClient.removeQueries({ queryKey: profileKeys.all });
       queryClient.clear();
     },
 

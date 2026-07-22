@@ -7,12 +7,12 @@ import StudyProgressChart from "../components/charts/StudyProgressChart";
 import CourseProgressChart from "../components/charts/CourseProgressChart";
 import WatchTimeChart from "../components/charts/WatchTimeChart";
 import LeaderboardChart from "../components/charts/LeaderboardChart";
-import RecentActivity from "../components/RecentActivity";
+import RecentActivity from "../components/RecentActivity"; 
 import Achievements from "../components/Achievements";
 
 const StudentDashboard = () => {
   return (
-    <div className="min-h-screen bg-surface text-slate-100">
+    <div className="min-h-screen bg-surface text-slate-100 p-6">
       {/*  Quick Actions */}
       <div className="mb-8">
         <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">

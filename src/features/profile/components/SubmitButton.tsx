@@ -1,6 +1,9 @@
-import React from "react";
+interface SubmitButtonProps {
+  isEditing: boolean;
+  loading: boolean;
+}
 
-const SubmitButton = ({ isEditing, loading }) => {
+const SubmitButton = ({ isEditing, loading }: SubmitButtonProps) => {
   return (
     <button
       type="submit"

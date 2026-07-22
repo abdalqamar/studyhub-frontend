@@ -25,7 +25,7 @@ export const useCourseContentMutation = ({
   useGlobal = true,
 }) => {
   const queryClient = useQueryClient();
-  const queryKey = courseKeys.detail(courseId);
+  const queryKey = courseKeys.edit(courseId);
   const mutationHook = useGlobal ? useGlobalMutation : useMutation;
 
   return mutationHook({

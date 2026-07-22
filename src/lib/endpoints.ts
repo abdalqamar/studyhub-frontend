@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
   AUTH_RESET_PASSWORD: (token: string) => `/auth/reset-password/${token}`,
   AUTH_UPDATE_PASSWORD: "/auth/update-password",
   AUTH_REFRESH_TOKEN: "/auth/refresh-token",
+  AUTH_ME: "/users/me",
 
   //  COURSES
   COURSES: "/courses", // public list
@@ -62,4 +63,7 @@ export const API_ENDPOINTS = {
   PROFILE_UPDATE: "/users/update-profile",
   PROFILE_PHOTO: "/users/update-photo",
   PROFILE_ENROLLED_COURSES: "/users/enrolled-courses",
+
+  // ASSIGNMENTS
+  ASSIGNMENT_SUBMIT: (id: string) => `/assignments/${id}/submit`,
 } as const;

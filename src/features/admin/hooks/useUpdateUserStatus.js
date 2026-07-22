@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminService } from "../services/adminServices";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
+import { adminKeys } from "@/lib/queryKeys";
 
 export const useUpdateUserStatus = () => {
   const queryClient = useQueryClient();
@@ -18,7 +19,7 @@ export const useUpdateUserStatus = () => {
         successToast("User status updated");
       }
       queryClient.invalidateQueries({
-        queryKey: ["admin-users"],
+        queryKey: adminKeys.users(),
       });
     },
 
@@ -39,7 +40,7 @@ export const useDeleteUser = () => {
     onSuccess: () => {
       successToast("User deleted successfully");
       queryClient.invalidateQueries({
-        queryKey: ["admin-users"],
+        queryKey: adminKeys.users(),
       });
     },
 

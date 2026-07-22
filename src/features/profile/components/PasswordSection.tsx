@@ -5,7 +5,18 @@ import { useProfile } from "../hooks/useProfile";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import FormInput from "@/shared/ui/FormInput";
 
-const PasswordSection = ({ isEditing, toggleEdit }) => {
+interface PasswordSectionProps {
+  isEditing: boolean;
+  toggleEdit: () => void;
+}
+
+interface PasswordFormData {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+const PasswordSection = ({ isEditing, toggleEdit }: PasswordSectionProps) => {
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -19,11 +30,11 @@ const PasswordSection = ({ isEditing, toggleEdit }) => {
     watch,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<PasswordFormData>();
 
   const password = watch("newPassword");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: PasswordFormData) => {
     updatePasswordMutation.mutate(data, {
       onSuccess: () => {
         successToast("Password updated successfully please login again");
@@ -33,7 +44,6 @@ const PasswordSection = ({ isEditing, toggleEdit }) => {
         clearProfile();
       },
       onError: (error) => {
-        console.log(error);
         errorToast(error?.response?.data?.message || "Update failed");
       },
     });

@@ -9,7 +9,7 @@ export const useUpdateCourse = (courseId) => {
   return useGlobalMutation({
     mutationFn: (courseData) => courseService.updateCourse(courseId, courseData),
     onSuccess: (updatedCourse) => {
-      queryClient.setQueryData(courseKeys.detail(courseId), updatedCourse);
+      queryClient.setQueryData(courseKeys.edit(courseId), updatedCourse);
       queryClient.invalidateQueries({ queryKey: courseKeys.all });
     },
   });

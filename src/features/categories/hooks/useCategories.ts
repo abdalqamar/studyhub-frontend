@@ -17,7 +17,7 @@ interface UpdateCategoryPayload {
 
 export const useCategories = () => {
   return useQuery({
-    queryKey: categoryKeys.all,
+    queryKey: categoryKeys.list(),
     queryFn: categoryService.getAllCategories,
   });
 };

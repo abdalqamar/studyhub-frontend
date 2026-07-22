@@ -11,7 +11,7 @@ export const useCreateCourse = () => {
     mutationFn: (courseData) => courseService.createCourse(courseData),
 
     onSuccess: (createdCourse) => {
-      queryClient.setQueryData(courseKeys.detail(createdCourse._id), createdCourse);
+      queryClient.setQueryData(courseKeys.edit(createdCourse._id), createdCourse);
       successToast("Course created successfully!");
       queryClient.invalidateQueries({ queryKey: courseKeys.all });
     },

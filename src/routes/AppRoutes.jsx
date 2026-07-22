@@ -97,6 +97,7 @@ const CategoryManager = lazy(
 const HelpCenter = lazy(() => import("../pages/HelpCenter"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("../pages/TermsOfService"));
+const Unauthorized = lazy(() => import("../pages/Unauthorized"));
 
 const router = createBrowserRouter([
   {
@@ -516,6 +517,14 @@ const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: "unauthorized",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <Unauthorized />
+          </Suspense>
+        ),
       },
       {
         path: "*",

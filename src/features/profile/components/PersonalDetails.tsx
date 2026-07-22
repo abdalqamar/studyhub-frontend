@@ -3,8 +3,26 @@ import { useForm } from "react-hook-form";
 import { useProfile } from "../hooks/useProfile";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import FormInput from "@/shared/ui/FormInput";
+import type { User } from "@/types";
 
-const PersonalDetails = ({ user, isEditing, toggleEdit }) => {
+interface PersonalDetailsProps {
+  user: User;
+  isEditing: boolean;
+  toggleEdit: () => void;
+}
+
+interface PersonalDetailsFormData {
+  dob: string;
+  contact: string;
+  gender: string;
+  bio: string;
+}
+
+const PersonalDetails = ({
+  user,
+  isEditing,
+  toggleEdit,
+}: PersonalDetailsProps) => {
   const { updateProfileMutation } = useProfile();
 
   const {
@@ -12,7 +30,7 @@ const PersonalDetails = ({ user, isEditing, toggleEdit }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<PersonalDetailsFormData>();
 
   useEffect(() => {
     if (user) {
@@ -26,7 +44,7 @@ const PersonalDetails = ({ user, isEditing, toggleEdit }) => {
   }, [user, reset]);
 
   // Submit handler
-  const onSubmit = (data) => {
+  const onSubmit = (data: PersonalDetailsFormData) => {
     const payload = {
       dateOfBirth: data.dob,
       contactNumber: data.contact,

@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axiosInstance";
 import { errorToast } from "@/shared/utils/toastUtils";
 import ShareModal from "./ShareModal";
+import { profileKeys } from "@/lib/queryKeys";
 
 const CoursePurchaseCard = ({ course, user }) => {
   const [showShareModal, setShowShareModal] = useState(false);
@@ -43,7 +44,7 @@ const CoursePurchaseCard = ({ course, user }) => {
       order_id: order.id,
 
       handler: async () => {
-        queryClient.invalidateQueries({ queryKey: ["enrolledCourses"] });
+        queryClient.invalidateQueries({ queryKey: profileKeys.enrolledCourses() });
         navigate("/student/my-courses");
       },
 

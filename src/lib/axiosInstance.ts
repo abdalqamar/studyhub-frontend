@@ -4,6 +4,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { errorToast } from "@/shared/utils/toastUtils";
 import { API_ENDPOINTS } from "./endpoints";
 import { PUBLIC_ROUTES } from "@/constants/publicRoutes";
+import { profileKeys } from "@/lib/queryKeys";
 
 interface RetryableRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -65,7 +66,7 @@ axiosInstance.interceptors.response.use(
         errorToast(message ?? "Access denied");
       }
       useAuthStore.getState().clearAuth();
-      queryClient.removeQueries({ queryKey: ["profile"] });
+      queryClient.removeQueries({ queryKey: profileKeys.all });
       return Promise.reject(error);
     }
 

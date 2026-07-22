@@ -1,7 +1,34 @@
-import React from "react";
 import { Eye, EyeOff, Lock } from "lucide-react";
+import {
+  UseFormRegister,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  FieldError,
+} from "react-hook-form";
 
-const FormInput = ({
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+interface FormInputProps<T extends FieldValues> {
+  label?: string;
+  name: Path<T>;
+  type?: string;
+  register: UseFormRegister<T>;
+  validation?: RegisterOptions<T>;
+  error?: FieldError;
+  disabled?: boolean;
+  placeholder?: string;
+  defaultValue?: string;
+  options?: SelectOption[];
+  showPasswordToggle?: boolean;
+  isPasswordVisible?: boolean;
+  onPasswordToggle?: () => void;
+}
+
+const FormInput = <T extends FieldValues>({
   label,
   name,
   type = "text",
@@ -12,11 +39,10 @@ const FormInput = ({
   placeholder = "",
   defaultValue = "",
   options = [],
-  // password-only extras
   showPasswordToggle = false,
   isPasswordVisible = false,
   onPasswordToggle,
-}) => {
+}: FormInputProps<T>) => {
   const isPasswordField = type === "password";
   const inputType =
     isPasswordField && showPasswordToggle
