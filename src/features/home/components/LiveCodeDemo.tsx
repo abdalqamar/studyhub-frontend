@@ -1,9 +1,21 @@
-import React from "react";
-import { useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
-const codeLines = [
+interface CodeSegment {
+  t: string;
+  c?: keyof typeof codeSegClass;
+}
+
+const codeSegClass = {
+  kw: "text-indigo-400",
+  fn: "text-gold",
+  str: "text-emerald-400",
+  cm: "text-text-3 italic",
+  tag: "text-amber-400",
+  stamp: "text-emerald-400",
+  muted: "text-text-3",
+} as const;
+
+const codeLines: CodeSegment[][] = [
   [
     { t: "function ", c: "kw" },
     { t: "CourseProgress", c: "fn" },
@@ -36,24 +48,18 @@ const codeLines = [
   ],
 ];
 
-const termLines = [
+const termLines: CodeSegment[][] = [
   [{ t: "$ ", c: "muted" }, { t: "npm run build" }],
   [{ t: "✓ compiled in 412ms", c: "stamp" }],
   [{ t: "✓ 0 errors, 0 warnings", c: "stamp" }],
   [{ t: "✓ ready — served on :3000", c: "stamp" }],
 ];
 
-const codeSegClass = {
-  kw: "text-indigo-400",
-  fn: "text-gold",
-  str: "text-emerald-400",
-  cm: "text-text-3 italic",
-  tag: "text-amber-400",
-  stamp: "text-emerald-400",
-  muted: "text-text-3",
-};
+interface CodeLineProps {
+  segments: CodeSegment[];
+}
 
-function CodeLine({ segments }) {
+function CodeLine({ segments }: CodeLineProps) {
   return (
     <>
       {segments.map((seg, i) => (
@@ -67,9 +73,9 @@ function CodeLine({ segments }) {
 }
 
 const LiveCodeDemo = () => {
-  const [visibleCode, setVisibleCode] = useState(0);
-  const [visibleTerm, setVisibleTerm] = useState(0);
-  const mountedRef = useRef(true);
+  const [visibleCode, setVisibleCode] = useState<number>(0);
+  const [visibleTerm, setVisibleTerm] = useState<number>(0);
+  const mountedRef = useRef<boolean>(true);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -84,7 +90,8 @@ const LiveCodeDemo = () => {
       return;
     }
 
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const sleep = (ms: number): Promise<void> =>
+      new Promise((resolve) => setTimeout(resolve, ms));
 
     const run = async () => {
       while (mountedRef.current) {

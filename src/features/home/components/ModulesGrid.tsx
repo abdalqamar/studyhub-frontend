@@ -3,8 +3,8 @@ import { useCourses } from "@/features/courses/hooks";
 import { formatDuration } from "@/shared/utils/formatDuration.js";
 import ClipCorner from "@/shared/ui/ClipCorner";
 import { clipCardStyle } from "@/shared/ui/clipCardStyle";
+import { CourseDetail } from "@/types/course.types";
 
-// cycled gradient tints for the thumbnail banner — purely decorative
 const THUMB_GRADIENTS = [
   "linear-gradient(135deg, rgba(212,165,55,0.25), rgba(91,141,239,0.15))",
   "linear-gradient(135deg, rgba(45,212,191,0.22), rgba(91,141,239,0.16))",
@@ -19,7 +19,7 @@ const ModulesGrid = () => {
     limit: 4,
   });
 
-  const courses = coursesData?.courses || [];
+  const courses: CourseDetail[] = coursesData?.courses || [];
 
   if (isLoading) {
     return (
@@ -38,7 +38,8 @@ const ModulesGrid = () => {
   return (
     <div className="grid md:grid-cols-3 gap-5">
       {courses.map((course, i) => {
-        const instructorName = course.instructor?.name || "StudyHub Instructor";
+        const instructorName = `${course.instructor?.firstName || "StudyHub"} ${course.instructor?.lastName || ""}`;
+
         const instructorInitials = instructorName
           .split(" ")
           .map((w) => w[0])
@@ -86,15 +87,15 @@ const ModulesGrid = () => {
 
             <div className="flex items-center justify-between font-mono text-[11px] text-text-3 border-t border-border pt-3 mb-3.5">
               <span>
-                {course.totalDuration > 0
+                {course.totalDuration
                   ? formatDuration(course.totalDuration)
                   : "Self-paced"}
-                {course.totalLectures > 0
+                {course.totalLectures
                   ? ` · ${course.totalLectures} lessons`
                   : ""}
               </span>
               <span className="text-gold">
-                {course.averageRating > 0
+                {course.averageRating
                   ? `★ ${course.averageRating.toFixed(1)}`
                   : "New"}
               </span>
@@ -107,8 +108,8 @@ const ModulesGrid = () => {
               </div>
               <span className="text-[11.5px] text-text-2 truncate">
                 {instructorName}
-                {course.totalEnrollments > 0
-                  ? ` · ${course.totalEnrollments} enrolled`
+                {course.enrolledStudents
+                  ? ` · ${course.enrolledStudents} enrolled`
                   : ""}
               </span>
             </div>

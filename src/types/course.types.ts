@@ -39,6 +39,8 @@ export interface CourseDetail extends Course {
   discountedPrice?: number;
   totalLectures?: number;
   totalDuration?: string;
+  averageRating?: number;
+  enrolledStudents?: number;
 }
 
 export type CourseAction =
