@@ -1,4 +1,4 @@
-import { Category } from "@/types";
+import { Category } from "./category.types";
 
 export interface Lesson {
   _id: string;
@@ -39,8 +39,6 @@ export interface CourseDetail extends Course {
   discountedPrice?: number;
   totalLectures?: number;
   totalDuration?: string;
-  courseContent?: Section[];
-  whatYouWillLearn?: string[];
 }
 
 export type CourseAction =
