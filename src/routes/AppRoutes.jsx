@@ -1,7 +1,6 @@
 import { ROLES } from "../constants/roles";
 import { createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import PageLoader from "../shared/ui/PageLoader";
 
 const NotFound = lazy(() => import("../pages/NotFound"));
 const Home = lazy(() => import("../pages/Home"));
@@ -26,6 +25,8 @@ import RootLayout from "../layouts/RootLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import PublicRoute from "./PublicRoute";
 import InstructorAssignments from "@/features/instructor/pages/InstructorAssignments";
+import PaymentProcessing from "@/features/student/pages/PaymentProcessing";
+import RouteLoader from "@/shared/ui/RouteLoader";
 
 //Student
 const StudentDashboard = lazy(
@@ -109,7 +110,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <Home />
               </Suspense>
             ),
@@ -117,7 +118,7 @@ const router = createBrowserRouter([
           {
             path: "about",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <About />
               </Suspense>
             ),
@@ -125,7 +126,7 @@ const router = createBrowserRouter([
           {
             path: "courses",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CoursesPage />
               </Suspense>
             ),
@@ -133,15 +134,19 @@ const router = createBrowserRouter([
           {
             path: "course/:courseId",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CourseDetails />
               </Suspense>
             ),
           },
           {
+            path: "/payment-processing",
+            element: <PaymentProcessing />,
+          },
+          {
             path: "contact",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <Contact />
               </Suspense>
             ),
@@ -150,7 +155,7 @@ const router = createBrowserRouter([
           {
             path: "help",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <HelpCenter />
               </Suspense>
             ),
@@ -158,7 +163,7 @@ const router = createBrowserRouter([
           {
             path: "privacy-policy",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <PrivacyPolicy />
               </Suspense>
             ),
@@ -166,7 +171,7 @@ const router = createBrowserRouter([
           {
             path: "terms",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <TermsOfService />
               </Suspense>
             ),
@@ -175,7 +180,7 @@ const router = createBrowserRouter([
             path: "login",
             element: (
               <PublicRoute>
-                <Suspense fallback={<PageLoader />}>
+                <Suspense fallback={<RouteLoader />}>
                   <Login />
                 </Suspense>
               </PublicRoute>
@@ -185,7 +190,7 @@ const router = createBrowserRouter([
             path: "register",
             element: (
               <PublicRoute>
-                <Suspense fallback={<PageLoader />}>
+                <Suspense fallback={<RouteLoader />}>
                   <Register />
                 </Suspense>
               </PublicRoute>
@@ -195,7 +200,7 @@ const router = createBrowserRouter([
             path: "verify-otp",
             element: (
               <PublicRoute>
-                <Suspense fallback={<PageLoader />}>
+                <Suspense fallback={<RouteLoader />}>
                   <VerifyOtp />
                 </Suspense>
               </PublicRoute>
@@ -205,7 +210,7 @@ const router = createBrowserRouter([
             path: "forgot-password",
             element: (
               <PublicRoute>
-                <Suspense fallback={<PageLoader />}>
+                <Suspense fallback={<RouteLoader />}>
                   <ForgotPassword />
                 </Suspense>
               </PublicRoute>
@@ -215,7 +220,7 @@ const router = createBrowserRouter([
             path: "reset-password/:token",
             element: (
               <PublicRoute>
-                <Suspense fallback={<PageLoader />}>
+                <Suspense fallback={<RouteLoader />}>
                   <ResetPassword />
                 </Suspense>
               </PublicRoute>
@@ -235,7 +240,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <StudentDashboard />
               </Suspense>
             ),
@@ -243,7 +248,7 @@ const router = createBrowserRouter([
           {
             path: "my-courses",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <MyCourses />
               </Suspense>
             ),
@@ -251,7 +256,7 @@ const router = createBrowserRouter([
           {
             path: "assignments",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <Assignments />
               </Suspense>
             ),
@@ -259,7 +264,7 @@ const router = createBrowserRouter([
           {
             path: "live-classes",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <LiveClasses />
               </Suspense>
             ),
@@ -267,7 +272,7 @@ const router = createBrowserRouter([
           {
             path: "wishlist",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <Wishlist />
               </Suspense>
             ),
@@ -275,7 +280,7 @@ const router = createBrowserRouter([
           {
             path: "community",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <Community />
               </Suspense>
             ),
@@ -283,7 +288,7 @@ const router = createBrowserRouter([
           {
             path: "notifications",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <NotificationsPage />
               </Suspense>
             ),
@@ -291,7 +296,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <ProfileSettings />
               </Suspense>
             ),
@@ -299,7 +304,7 @@ const router = createBrowserRouter([
           {
             path: "course/:courseId",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CoursePreview />
               </Suspense>
             ),
@@ -311,7 +316,7 @@ const router = createBrowserRouter([
         path: "/student/view-course/:courseId",
         element: (
           <RoleProtectedRoute allowedRoles={[ROLES.STUDENT]}>
-            <Suspense fallback={<PageLoader />}>
+            <Suspense fallback={<RouteLoader />}>
               <ViewCourseLayout />
             </Suspense>
           </RoleProtectedRoute>
@@ -320,7 +325,7 @@ const router = createBrowserRouter([
           {
             path: "",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <ViewCoursePage />
               </Suspense>
             ),
@@ -329,7 +334,7 @@ const router = createBrowserRouter([
           {
             path: "sections/:sectionId/lessons/:lessonId",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <ViewCoursePage />
               </Suspense>
             ),
@@ -348,7 +353,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorDashboard />
               </Suspense>
             ),
@@ -356,7 +361,7 @@ const router = createBrowserRouter([
           {
             path: "add-course",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CourseBuilder />
               </Suspense>
             ),
@@ -364,7 +369,7 @@ const router = createBrowserRouter([
           {
             path: "edit-course/:courseId",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CourseBuilder />
               </Suspense>
             ),
@@ -372,7 +377,7 @@ const router = createBrowserRouter([
           {
             path: "manage-courses",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorManageCourses />
               </Suspense>
             ),
@@ -380,7 +385,7 @@ const router = createBrowserRouter([
           {
             path: "course/:courseId",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CoursePreview />
               </Suspense>
             ),
@@ -388,7 +393,7 @@ const router = createBrowserRouter([
           {
             path: "assignments",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorAssignments />
               </Suspense>
             ),
@@ -396,7 +401,7 @@ const router = createBrowserRouter([
           {
             path: "live-classes",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorLiveClasses />
               </Suspense>
             ),
@@ -404,7 +409,7 @@ const router = createBrowserRouter([
           {
             path: "manage-students",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorManageUsers />
               </Suspense>
             ),
@@ -412,7 +417,7 @@ const router = createBrowserRouter([
           {
             path: "notifications",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorNotifications />
               </Suspense>
             ),
@@ -420,7 +425,7 @@ const router = createBrowserRouter([
           {
             path: "earnings",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <InstructorEarnings />
               </Suspense>
             ),
@@ -428,7 +433,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <ProfileSettings />
               </Suspense>
             ),
@@ -447,7 +452,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <AdminDashboard />
               </Suspense>
             ),
@@ -455,7 +460,7 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <ManageUsers />
               </Suspense>
             ),
@@ -463,7 +468,7 @@ const router = createBrowserRouter([
           {
             path: "courses",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <AdminManageCourses />
               </Suspense>
             ),
@@ -471,7 +476,7 @@ const router = createBrowserRouter([
           {
             path: "course/:courseId",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CoursePreview />
               </Suspense>
             ),
@@ -479,7 +484,7 @@ const router = createBrowserRouter([
           {
             path: "transactions",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <TransactionsPage />
               </Suspense>
             ),
@@ -487,7 +492,7 @@ const router = createBrowserRouter([
           {
             path: "notifications",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <AdminNotifications />
               </Suspense>
             ),
@@ -495,7 +500,7 @@ const router = createBrowserRouter([
           {
             path: "settings",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <SystemSettings />
               </Suspense>
             ),
@@ -503,7 +508,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <ProfileSettings />
               </Suspense>
             ),
@@ -511,7 +516,7 @@ const router = createBrowserRouter([
           {
             path: "category",
             element: (
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<RouteLoader />}>
                 <CategoryManager />
               </Suspense>
             ),
@@ -521,7 +526,7 @@ const router = createBrowserRouter([
       {
         path: "unauthorized",
         element: (
-          <Suspense fallback={<PageLoader />}>
+          <Suspense fallback={<RouteLoader />}>
             <Unauthorized />
           </Suspense>
         ),
@@ -529,7 +534,7 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: (
-          <Suspense fallback={<PageLoader />}>
+          <Suspense fallback={<RouteLoader />}>
             <NotFound />
           </Suspense>
         ),

@@ -1,20 +1,31 @@
 import { Loader, Lock, Share } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axiosInstance";
 import { errorToast } from "@/shared/utils/toastUtils";
+import { loadRazorpayScript } from "@/shared/utils/loadRazorpayScript";
 import ShareModal from "./ShareModal";
-import { profileKeys } from "@/lib/queryKeys";
+import type { CourseDetail, UserRole } from "@/types";
+import type { RazorpayOrder, RazorpaySuccessResponse } from "@/types";
 
-const CoursePurchaseCard = ({ course, user }) => {
+interface CourseUser {
+  email?: string;
+  role?: UserRole;
+}
+
+interface CoursePurchaseCardProps {
+  course: CourseDetail;
+  user: CourseUser | null | undefined;
+}
+
+const CoursePurchaseCard = ({ course, user }: CoursePurchaseCardProps) => {
   const [showShareModal, setShowShareModal] = useState(false);
-
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const createOrderMutation = useMutation({
+  const createOrderMutation = useMutation<RazorpayOrder, Error>({
     mutationFn: async () => {
+      await loadRazorpayScript();
       const res = await axiosInstance.post("/payment/order", {
         courseIds: [course._id],
       });
@@ -23,18 +34,22 @@ const CoursePurchaseCard = ({ course, user }) => {
     onSuccess: (order) => {
       openRazorpay(order);
     },
-    onError: (err) => {
-      errorToast(err?.response?.data?.message || "Failed to start payment");
+    onError: (err: any) => {
+      errorToast(
+        err?.response?.data?.message ||
+          "Something went wrong, please try again later"
+      );
     },
   });
 
-  const originalPrice = course?.price || 5788;
-  const discountedPrice = course?.discountedPrice || 2069;
-  const discountPercentage = Math.round(
-    ((originalPrice - discountedPrice) / originalPrice) * 100
-  );
+  const originalPrice = Number(course?.price) || 5788;
+  const discountedPrice = 2069; // TODO: course.discountedPrice backend se aana chahiye
+  const discountPercentage =
+    originalPrice > 0
+      ? Math.round(((originalPrice - discountedPrice) / originalPrice) * 100)
+      : 0;
 
-  const openRazorpay = (order) => {
+  const openRazorpay = (order: RazorpayOrder) => {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -43,9 +58,8 @@ const CoursePurchaseCard = ({ course, user }) => {
       description: "Course Purchase",
       order_id: order.id,
 
-      handler: async () => {
-        queryClient.invalidateQueries({ queryKey: profileKeys.enrolledCourses() });
-        navigate("/student/my-courses");
+      handler: (_response: RazorpaySuccessResponse) => {
+        navigate("/payment-processing", { state: { courseId: course._id } });
       },
 
       prefill: { email: user?.email },
@@ -54,6 +68,7 @@ const CoursePurchaseCard = ({ course, user }) => {
     const rzp = new window.Razorpay(options);
 
     rzp.on("payment.failed", () => {
+      errorToast("Payment fail ho gaya, dobara try karein");
       navigate(`/course/${course._id}`);
     });
 
@@ -73,13 +88,13 @@ const CoursePurchaseCard = ({ course, user }) => {
         <div className="mb-5">
           <div className="flex items-center gap-2.5 mb-3">
             <span className="font-display text-2xl font-bold text-gold">
-              ₹{course?.price}
+              ₹{discountedPrice.toLocaleString("en-IN")}
             </span>
 
             {originalPrice > discountedPrice && (
               <>
                 <span className="text-sm text-text-3 line-through">
-                  ₹{originalPrice}
+                  ₹{originalPrice.toLocaleString("en-IN")}
                 </span>
                 <span className="bg-teal-soft text-teal px-2 py-0.5 rounded-full text-[11px] font-mono font-medium">
                   {discountPercentage}% OFF

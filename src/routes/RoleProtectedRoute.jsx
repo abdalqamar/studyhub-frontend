@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { Navigate } from "react-router-dom";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 
 const RoleProtectedRoute = ({ children, allowedRoles }) => {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -8,7 +8,7 @@ const RoleProtectedRoute = ({ children, allowedRoles }) => {
   const authChecked = useAuthStore((state) => state.authChecked);
 
   if (!authChecked) {
-    return <PageLoader />;
+    return <SkeletonLoader />;
   }
 
   if (!accessToken) {

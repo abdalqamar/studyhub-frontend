@@ -1,5 +1,5 @@
 import { useEnrolledCourses } from "@/features/courses/hooks/useEnrolledCourse";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 import { formatDuration } from "@/shared/utils/formatDuration";
 import { BookOpen, Clock, Award, CheckCircle } from "lucide-react";
 import EnrolledCourseCard from "../components/EnrolledCourseCard";
@@ -37,7 +37,7 @@ const calculateStats = (courses) => {
 
 const MyCourses = () => {
   const { data: courses, isLoading } = useEnrolledCourses();
-  if (isLoading) return <PageLoader />;
+  if (isLoading) return <SkeletonLoader />;
 
   const stats = calculateStats(courses);
 

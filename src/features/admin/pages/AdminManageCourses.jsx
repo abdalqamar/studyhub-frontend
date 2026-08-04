@@ -5,7 +5,7 @@ import { useCategories } from "@/features/categories/hooks/useCategories";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import { useApproveCourse } from "../hooks/useApproveCourse";
 import { useRejectCourse } from "../hooks/useRejectCourse";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 import LoadingSpinner from "@/shared/layout/LoadingSpinner";
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useDeleteCourse } from "@/features/courses/hooks/useDeleteCourse";
@@ -216,7 +216,7 @@ const AdminManageCourses = () => {
     rejectCourse.isLoading ||
     deleteCourse.isLoading;
 
-  if (coursesLoading) return <PageLoader />;
+  if (coursesLoading) return <SkeletonLoader />;
 
   return (
     <div className="relative min-h-screen">

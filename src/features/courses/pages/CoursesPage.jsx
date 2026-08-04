@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { useCourses } from "../hooks";
 import { useCategories } from "@/features/categories/hooks/useCategories";
 import { errorToast } from "@/shared/utils/toastUtils";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 import SearchBar from "@/shared/layout/SearchBar";
 import Pagination from "@/shared/components/Pagination";
 import CourseCard from "../components/CourseCard";
@@ -105,7 +105,7 @@ const CoursesPage = () => {
     [updateSearchParams]
   );
 
-  if (categoriesLoading) return <PageLoader />;
+  if (categoriesLoading) return <SkeletonLoader />;
 
   return (
     <div className="min-h-screen bg-surface">

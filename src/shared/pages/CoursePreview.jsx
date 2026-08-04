@@ -2,7 +2,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useCoursePreview } from "@/features/courses/hooks";
 import { ArrowLeft, Clock, Users, Star, User, Calendar } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import PageLoader from "../ui/PageLoader";
+import SkeletonLoader from "../ui/SkeletonLoader";
 import CourseTabs from "@/features/courses/components/CourseTabs";
 
 const statusConfig = {
@@ -16,7 +16,7 @@ const CoursePreview = () => {
   const { courseId } = useParams();
   const { data: courseData, isLoading } = useCoursePreview(courseId);
 
-  if (isLoading) return <PageLoader />;
+  if (isLoading) return <SkeletonLoader />;
 
   const status = statusConfig[courseData?.status] || statusConfig.pending;
 

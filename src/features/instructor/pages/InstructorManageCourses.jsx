@@ -4,7 +4,7 @@ import { useDeleteCourse } from "@/features/courses/hooks/useDeleteCourse";
 import { useManageCourses } from "@/features/courses/hooks/useManageCourses";
 import CoursesManagement from "@/shared/components/CoursesManagement";
 import LoadingSpinner from "@/shared/layout/LoadingSpinner";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -170,7 +170,7 @@ const InstructorManageCourses = () => {
     navigate("/instructor/add-course");
   }, [navigate]);
 
-  if (coursesLoading) return <PageLoader />;
+  if (coursesLoading) return <SkeletonLoader />;
 
   return (
     <div className="relative">

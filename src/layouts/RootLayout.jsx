@@ -4,7 +4,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import axiosInstance from "@/lib/axiosInstance";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import ErrorBoundary from "@/shared/components/ErrorBoundary";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 
 const RootLayout = () => {
   const setUser = useAuthStore((state) => state.setUser);
@@ -40,7 +40,7 @@ const RootLayout = () => {
   }, [setUser, setAccessToken, clearAuth, setAuthChecked, setInitializing]);
 
   if (isInitializing) {
-    return <PageLoader />;
+    return <SkeletonLoader />;
   }
 
   return (

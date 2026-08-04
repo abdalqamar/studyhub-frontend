@@ -9,7 +9,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { useCourseDetails } from "../hooks";
 import { useAuthStore } from "@/features/auth/store/auth.store";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 import renderStars from "@/shared/ui/renderStars";
 import { formatDuration } from "@/shared/utils/formatDuration";
 import CourseTabs from "../components/CourseTabs";
@@ -26,7 +26,8 @@ const CourseDetails = () => {
   } = useCourseDetails(courseId);
   const user = useAuthStore((state) => state.user);
 
-  if (isLoading) return <PageLoader />;
+  console.log(course);
+  if (isLoading) return <SkeletonLoader />;
 
   // Error Handling
   if (isError) {

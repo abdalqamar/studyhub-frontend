@@ -1,4 +1,4 @@
-const PageLoader = () => {
+const SkeletonLoader = () => {
   return (
     <div className="bg-bg min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
@@ -48,4 +48,4 @@ const PageLoader = () => {
   );
 };
 
-export default PageLoader;
+export default SkeletonLoader;

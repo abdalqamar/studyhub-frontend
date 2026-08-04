@@ -1,14 +1,14 @@
-import PageLoader from "@/shared/ui/PageLoader";
 import { useAdminDashboardStats } from "../hooks/useAdminDashboardStats";
 import ErrorPage from "@/shared/ui/ErrorPage";
 import OverviewStats from "../components/OverviewStats";
 import AnalyticsCharts from "../components/charts/AnalyticsCharts";
+import DashboardSkeletonLoader from "@/shared/ui/DashboardSkeletonLoader";
 
 const AdminDashboard = () => {
   const { data, isLoading, isError } = useAdminDashboardStats();
 
   if (isLoading) {
-    return <PageLoader />;
+    return <DashboardSkeletonLoader />;
   }
 
   if (isError) {

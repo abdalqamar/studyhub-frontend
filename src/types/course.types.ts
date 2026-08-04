@@ -35,6 +35,14 @@ export interface Course {
   duration?: string;
 }
 
+export interface CourseDetail extends Course {
+  discountedPrice?: number;
+  totalLectures?: number;
+  totalDuration?: string;
+  courseContent?: Section[];
+  whatYouWillLearn?: string[];
+}
+
 export type CourseAction =
   | "delete"
   | "feedback"

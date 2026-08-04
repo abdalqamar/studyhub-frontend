@@ -7,7 +7,7 @@ import { useInstructorStudents } from "../hooks/useInstructorStudents";
 import LoadingSpinner from "@/shared/layout/LoadingSpinner";
 import ErrorPage from "@/shared/ui/ErrorPage";
 import SearchBar from "@/shared/layout/SearchBar";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 import StudentsTable from "./StudentsTable";
 
 const StudentManagement = () => {
@@ -126,7 +126,7 @@ const StudentManagement = () => {
       />
     );
   }
-  if (isLoading) return <PageLoader />;
+  if (isLoading) return <SkeletonLoader />;
 
   return (
     <div className="min-h-screen bg-bg text-text-1">

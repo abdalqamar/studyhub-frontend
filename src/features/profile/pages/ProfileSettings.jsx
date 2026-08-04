@@ -5,7 +5,7 @@ import ProfileInfoSection from "@/features/profile/components/ProfileInfoSection
 import PersonalDetails from "@/features/profile/components/PersonalDetails";
 import PasswordSection from "@/features/profile/components/PasswordSection";
 import { useProfile } from "@/features/profile/hooks/useProfile";
-import PageLoader from "@/shared/ui/PageLoader";
+import SkeletonLoader from "@/shared/ui/SkeletonLoader";
 
 const ProfileSettings = () => {
   const { profileQuery } = useProfile();
@@ -13,7 +13,7 @@ const ProfileSettings = () => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((prev) => !prev);
 
-  if (isLoading) return <PageLoader />;
+  if (isLoading) return <SkeletonLoader />;
 
   return (
     <div className="min-h-screen text-gray-100 p-6 mx-auto max-w-5xl space-y-8">
