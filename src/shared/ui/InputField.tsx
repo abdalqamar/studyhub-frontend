@@ -1,12 +1,21 @@
-import { forwardRef } from "react";
-import { Mail, Lock, User, Phone, Eye, EyeOff } from "lucide-react";
+import { forwardRef, InputHTMLAttributes } from "react";
+import { Mail, Lock, User, Phone, Eye, EyeOff, LucideIcon } from "lucide-react";
 
-const InputField = forwardRef(
+interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  icon?: LucideIcon;
+  error?: string;
+  helpText?: string;
+  showPasswordToggle?: boolean;
+  onPasswordToggle?: () => void;
+  isPasswordVisible?: boolean;
+}
+
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
     {
       label,
       type = "text",
-      name,
       placeholder,
       icon: IconComponent,
       error,
@@ -21,7 +30,7 @@ const InputField = forwardRef(
     },
     ref
   ) => {
-    const getIconComponent = () => {
+    const getIconComponent = (): LucideIcon | null => {
       if (IconComponent) return IconComponent;
 
       switch (type) {
@@ -63,7 +72,6 @@ const InputField = forwardRef(
           <input
             ref={ref}
             type={inputType}
-            name={name}
             placeholder={placeholder}
             required={required}
             disabled={disabled}
@@ -97,7 +105,6 @@ const InputField = forwardRef(
         </div>
 
         {error && <p className="text-xs text-danger font-medium">{error}</p>}
-
         {helpText && !error && (
           <p className="text-xs text-text-2">{helpText}</p>
         )}

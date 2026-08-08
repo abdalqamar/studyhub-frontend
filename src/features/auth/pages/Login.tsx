@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SocialLoginButtons from "@/features/auth/components/SocialLoginButtons";
 import AuthSidebar from "@/features/auth/components/AuthSidebar";
@@ -10,15 +9,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import InputField from "@/shared/ui/InputField";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import { useAuthStore } from "@/features/auth/store/auth.store";
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Email is required" })
-    .pipe(z.email({ message: "Please enter a valid email address" })),
-
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
+import { LoginFormData, loginSchema } from "../schemas/loginSchema";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,7 +23,7 @@ const Login = () => {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -40,7 +31,7 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: LoginFormData) => {
     loginMutation.mutate(data, {
       onSuccess: (res) => {
         setAccessToken(res.accessToken);
@@ -52,11 +43,13 @@ const Login = () => {
 
       onError: (error) => {
         const message = error?.response?.data?.message || "Login failed";
-        const backendErrors = error?.response?.data?.errors;
+        const backendErrors = error?.response?.data?.errors as
+          | Record<string, string>
+          | undefined;
 
         if (backendErrors) {
           Object.keys(backendErrors).forEach((field) => {
-            setError(field, {
+            setError(field as keyof LoginFormData, {
               type: "server",
               message: backendErrors[field],
             });

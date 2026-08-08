@@ -1,4 +1,12 @@
-import { Loader } from "lucide-react";
+import { Loader, LucideIcon } from "lucide-react";
+import { ButtonHTMLAttributes } from "react";
+
+interface LoaderButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
+  loadingText?: string;
+  icon?: LucideIcon;
+  loading?: boolean;
+}
 
 const LoaderButton = ({
   text,
@@ -6,7 +14,7 @@ const LoaderButton = ({
   icon: Icon,
   loading = false,
   ...rest
-}) => {
+}: LoaderButtonProps) => {
   return (
     <button
       disabled={loading}

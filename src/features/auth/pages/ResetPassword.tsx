@@ -36,13 +36,12 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [tokenValid, setTokenValid] = useState(true);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-
-  const redirectTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (!token) {
@@ -51,7 +50,7 @@ const ResetPassword = () => {
     }
   }, [token]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (name === "newPassword")
@@ -60,7 +59,9 @@ const ResetPassword = () => {
     if (error) setError("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.SyntheticEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -77,9 +78,9 @@ const ResetPassword = () => {
       passwordSchema.parse(formData);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const errors = {};
+        const errors: Record<string, string> = {};
         err.issues.forEach((issue) => {
-          errors[issue.path[0]] = issue.message;
+          errors[issue.path[0] as string] = issue.message;
         });
         setFieldErrors(errors);
         setLoading(false);
@@ -108,7 +109,8 @@ const ResetPassword = () => {
           setTokenValid(false);
       }
     } catch (err) {
-      const backendMessage = err?.response?.data?.message;
+      const error = err as { response?: { data?: { message?: string } } };
+      const backendMessage = error?.response?.data?.message;
       setError(
         backendMessage ||
           "Network error. Please check your connection and try again."
@@ -118,8 +120,6 @@ const ResetPassword = () => {
         backendMessage?.includes("Invalid")
       )
         setTokenValid(false);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -190,7 +190,7 @@ const ResetPassword = () => {
               required
               value={formData.newPassword}
               onChange={handleChange}
-              minLength="6"
+              minLength={6}
               className="w-full px-3.5 py-2.5 pr-11 text-sm bg-slate-900/40 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 transition-all"
               placeholder="Enter new password"
             />
@@ -234,7 +234,7 @@ const ResetPassword = () => {
               required
               value={formData.confirmNewPassword}
               onChange={handleChange}
-              minLength="6"
+              minLength={6}
               className="w-full px-3.5 py-2.5 pr-11 text-sm bg-slate-900/40 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/15 transition-all"
               placeholder="Confirm new password"
             />

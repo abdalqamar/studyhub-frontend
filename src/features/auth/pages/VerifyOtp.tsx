@@ -3,11 +3,17 @@ import OTPInput from "otp-input-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import LoaderButton from "@/shared/ui/LoaderButton";
-import { authService } from "../services/authServices";
+import { AuthResponse, authService } from "../services/authServices";
 import { useAuthStore } from "../store/auth.store";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
+import { AxiosError } from "axios";
+import { ApiErrorData } from "@/types";
 
-function RegMark({ className }) {
+interface RegMarkProps {
+  className: string;
+}
+
+function RegMark({ className }: RegMarkProps) {
   return (
     <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
       <span className="absolute top-1/2 left-0 w-4 h-px bg-gold/70 -translate-y-1/2" />
@@ -24,12 +30,19 @@ const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
-  const registerMutation = useMutation({
+  const registerMutation = useMutation<
+    AuthResponse,
+    AxiosError<ApiErrorData>,
+    { email: string; otp: string }
+  >({
     mutationFn: authService.register,
   });
-
-  const resendOtpMutation = useMutation({
-    mutationFn: authService.sendOtp,
+  const resendOtpMutation = useMutation<
+    { message: string },
+    AxiosError<ApiErrorData>,
+    { email: string }
+  >({
+    mutationFn: ({ email }) => authService.sendOtp({ email }),
   });
 
   const handleVerify = () => {
@@ -44,7 +57,10 @@ const VerifyOtp = () => {
     }
 
     registerMutation.mutate(
-      { email: signupState.email, otp },
+      {
+        email: signupState.email,
+        otp,
+      },
       {
         onSuccess: (res) => {
           successToast(res?.message || "Registration successful!");

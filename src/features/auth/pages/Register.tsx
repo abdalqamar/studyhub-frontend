@@ -9,8 +9,13 @@ import LoaderButton from "@/shared/ui/LoaderButton";
 import InputField from "@/shared/ui/InputField";
 import { errorToast, successToast } from "@/shared/utils/toastUtils";
 import { authService } from "@/features/auth/services/authServices";
-import { registerSchema } from "@/features/auth/schemas/registerSchema";
+import {
+  RegisterFormData,
+  registerSchema,
+} from "@/features/auth/schemas/registerSchema";
 import SocialLoginButtons from "@/features/auth/components/SocialLoginButtons";
+import { AxiosError } from "axios";
+import { ApiErrorData } from "@/types";
 
 const Register = () => {
   const setSignupState = useAuthStore((state) => state.setSignupState);
@@ -24,7 +29,7 @@ const Register = () => {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       firstName: "",
@@ -35,20 +40,18 @@ const Register = () => {
     },
   });
 
-  const otpMutation = useMutation({
+  const otpMutation = useMutation<
+    { message: string },
+    AxiosError<ApiErrorData>,
+    { email: string }
+  >({
     mutationFn: authService.sendOtp,
   });
 
   //  Submit Handler
-  const onSubmit = (data) => {
+  const onSubmit = (data: RegisterFormData): void => {
     otpMutation.mutate(
-      {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-      },
+      { email: data.email },
       {
         onSuccess: (res) => {
           setSignupState({ email: data.email });
@@ -58,11 +61,13 @@ const Register = () => {
         onError: (error) => {
           const message =
             error?.response?.data?.message || "Failed to send OTP";
-          const backendErrors = error?.response?.data?.errors;
+          const backendErrors = error?.response?.data?.errors as
+            | Record<string, string>
+            | undefined;
 
           if (backendErrors) {
             Object.keys(backendErrors).forEach((field) => {
-              setError(field, {
+              setError(field as keyof RegisterFormData, {
                 type: "server",
                 message: backendErrors[field],
               });
