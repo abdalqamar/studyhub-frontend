@@ -1,6 +1,16 @@
-import React from "react";
+interface AuthSidebarProps {
+  image: string;
+  title: string;
+  subtitle: string;
+  children: React.ReactNode;
+}
 
-const AuthSidebar = ({ image, title, subtitle, children }) => {
+const AuthSidebar = ({
+  image,
+  title,
+  subtitle,
+  children,
+}: AuthSidebarProps) => {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-6 py-16 sm:py-20 bg-bg relative overflow-hidden"

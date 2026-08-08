@@ -4,8 +4,14 @@ import { ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import LoaderButton from "@/shared/ui/LoaderButton";
 import InputField from "@/shared/ui/InputField";
+import { AxiosError } from "axios";
+import { ApiErrorData } from "@/types";
 
-function RegMark({ className }) {
+interface RegMarkProps {
+  className?: string;
+}
+
+function RegMark({ className }: RegMarkProps) {
   return (
     <span className={`absolute w-4 h-4 pointer-events-none ${className}`}>
       <span className="absolute top-1/2 left-0 w-4 h-px bg-gold/70 -translate-y-1/2" />
@@ -21,7 +27,9 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const { forgotPasswordMutation } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.SyntheticEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setError("");
     setMessage("");
@@ -39,7 +47,8 @@ const ForgotPassword = () => {
       setMessage(res?.message || "Reset link sent!");
       setEmail("");
     } catch (err) {
-      setError(err?.response?.data?.message || "Failed to send reset link");
+      const error = err as AxiosError<ApiErrorData>;
+      setError(error?.response?.data?.message || "Failed to send reset link");
     }
   };
 

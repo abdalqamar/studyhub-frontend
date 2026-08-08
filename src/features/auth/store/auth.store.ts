@@ -1,4 +1,25 @@
+import { User } from "@/types";
 import { create } from "zustand";
+
+interface SignupState {
+  email: string;
+}
+
+interface AuthState {
+  user: User | null;
+  accessToken: string | null;
+  signupState: SignupState | null;
+  isInitializing: boolean;
+  authChecked: boolean;
+  setUser: (user: User) => void;
+  setAccessToken: (accessToken: string | null) => void;
+  setSignupState: (signupState: SignupState) => void;
+  resetSignupState: () => void;
+  setInitializing: (value: boolean) => void;
+  setAuthChecked: (value: boolean) => void;
+  clearAuth: () => void;
+  reset: () => void;
+}
 
 const initialState = {
   user: null,
@@ -9,10 +30,10 @@ const initialState = {
   authChecked: false,
 };
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   ...initialState,
 
-  setUser: (user) =>
+  setUser: (user: User) =>
     set({
       user,
     }),
